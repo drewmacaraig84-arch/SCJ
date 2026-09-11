@@ -1,0 +1,9 @@
+{
+    "git.openRepositoryInParentFolders": "never",
+    "git.ignoredRepositories": [
+        "C:/laragon/www",
+        "c:/laragon/www",
+        "C:\\laragon\\www",
+        "c:\\laragon\\www"
+    ]
+}
