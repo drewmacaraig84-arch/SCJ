@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="400" height="240">
+  <defs>
+    <linearGradient id="bgLab4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#451A03"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#78350F"/>
+    </linearGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="40%" stop-color="#CA8A04"/>
+      <stop offset="70%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#854D0E"/>
+    </linearGradient>
+    <linearGradient id="bulletCopper" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="50%" stop-color="#C2410C"/>
+      <stop offset="100%" stop-color="#7C2D12"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#bgLab4)"/>
+  <!-- Target Crosshairs in Background -->
+  <g fill="none" stroke="#F59E0B" stroke-width="1.5" opacity="0.3" transform="translate(240, 90)">
+    <circle cx="0" cy="0" r="25"/>
+    <circle cx="0" cy="0" r="50"/>
+    <circle cx="0" cy="0" r="75"/>
+    <line x1="-85" y1="0" x2="85" y2="0"/>
+    <line x1="0" y1="-85" x2="0" y2="85"/>
+  </g>
+  <!-- Fired Cartridge Casings & Bullets (Matching Sample Image) -->
+  <g transform="translate(60, 80)">
+    <!-- Cartridge 1 (Horizontal) -->
+    <rect x="20" y="30" width="90" height="28" rx="2" fill="url(#brassGrad)"/>
+    <path d="M 110,30 Q 135,44 110,58 Z" fill="url(#bulletCopper)"/>
+    <line x1="16" y1="28" x2="20" y2="28" stroke="#CA8A04" stroke-width="32"/>
+    
+    <!-- Cartridge 2 (Angled) -->
+    <g transform="translate(130, 20) rotate(25)">
+      <rect x="0" y="0" width="80" height="24" rx="2" fill="url(#brassGrad)"/>
+      <path d="M 80,0 Q 102,12 80,24 Z" fill="url(#bulletCopper)"/>
+      <line x1="-4" y1="-2" x2="0" y2="-2" stroke="#CA8A04" stroke-width="28"/>
+    </g>
+  </g>
+  <text x="20" y="215" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#F8FAFC" letter-spacing="1">FORENSIC BALLISTICS LABORATORY</text>
+</svg>

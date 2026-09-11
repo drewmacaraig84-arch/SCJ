@@ -1,0 +1,15 @@
+# Environment variables
+.env
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Cache
+database/cache/*
+!database/cache/.gitkeep
+
+# System files
+.DS_Store
+Thumbs.db
+*.log

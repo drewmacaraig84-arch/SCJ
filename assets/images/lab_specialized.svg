@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="400" height="240">
+  <defs>
+    <linearGradient id="bgLab5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#bgLab5)"/>
+  <!-- Polygraph Waveform Chart Grid -->
+  <g stroke="#334155" stroke-width="1" opacity="0.6">
+    <line x1="20" y1="50" x2="380" y2="50"/>
+    <line x1="20" y1="80" x2="380" y2="80"/>
+    <line x1="20" y1="110" x2="380" y2="110"/>
+    <line x1="20" y1="140" x2="380" y2="140"/>
+    <line x1="20" y1="170" x2="380" y2="170"/>
+    <line x1="60" y1="30" x2="60" y2="190"/>
+    <line x1="140" y1="30" x2="140" y2="190"/>
+    <line x1="220" y1="30" x2="220" y2="190"/>
+    <line x1="300" y1="30" x2="300" y2="190"/>
+  </g>
+  <!-- Polygraph Analog Needle Waveforms (Red, Green, Blue) -->
+  <!-- Thoracic Respiration -->
+  <path d="M 20,65 Q 40,55 60,65 T 100,65 T 140,65 Q 160,35 180,65 T 220,65 T 260,65 T 300,65 T 340,65 T 380,65" fill="none" stroke="#38BDF8" stroke-width="2.5"/>
+  <!-- Galvanic Skin Response (EDA) -->
+  <path d="M 20,110 L 120,110 Q 150,70 170,95 Q 190,130 220,110 L 380,110" fill="none" stroke="#F43F5E" stroke-width="3"/>
+  <!-- Cardio-Sphygmograph -->
+  <path d="M 20,155 Q 30,150 40,155 T 60,155 T 80,155 Q 90,140 100,165 T 120,155 T 160,155 Q 180,130 200,170 T 220,155 T 380,155" fill="none" stroke="#10B981" stroke-width="2.5"/>
+  <text x="20" y="215" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="800" fill="#F8FAFC" letter-spacing="1">SPECIALIZED LABS &amp; POLYGRAPH</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 520" width="1440" height="520">
+  <defs>
+    <radialGradient id="heroGlow1" cx="25%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#1E3A8A" stop-opacity="0.9"/>
+      <stop offset="45%" stop-color="#0F254B" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#071324" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="heroGlow2" cx="85%" cy="65%" r="60%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#071324" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="tacticalHex" width="36" height="62.35" patternUnits="userSpaceOnUse">
+      <path d="M 18 0 L 36 10.39 L 36 31.18 L 18 41.57 L 0 31.18 L 0 10.39 Z" fill="none" stroke="#1E3A8A" stroke-width="0.8" opacity="0.18"/>
+      <path d="M 0 31.18 L 18 41.57 L 18 62.35 L 0 51.96 Z" fill="none" stroke="#1E3A8A" stroke-width="0.8" opacity="0.18"/>
+      <path d="M 36 31.18 L 18 41.57 L 18 62.35 L 36 51.96 Z" fill="none" stroke="#1E3A8A" stroke-width="0.8" opacity="0.18"/>
+      <circle cx="18" cy="20.78" r="1.5" fill="#38BDF8" opacity="0.25"/>
+    </pattern>
+  </defs>
+
+  <rect width="1440" height="520" fill="#071324"/>
+  <rect width="1440" height="520" fill="url(#heroGlow1)"/>
+  <rect width="1440" height="520" fill="url(#heroGlow2)"/>
+  <rect width="1440" height="520" fill="url(#tacticalHex)"/>
+
+  <!-- Tactical Officer Silhouette & Criminology Insignia -->
+  <g opacity="0.3" transform="translate(40, 10)">
+    <!-- Body Armor Silhouette -->
+    <path d="M 80,180 L 140,90 L 300,90 L 360,180 L 350,440 L 90,440 Z" fill="#050C17" stroke="#38BDF8" stroke-width="1.8"/>
+    <!-- Shoulder Straps -->
+    <rect x="145" y="90" width="30" height="90" fill="#0A192F" stroke="#1E3A8A" stroke-width="1"/>
+    <rect x="265" y="90" width="30" height="90" fill="#0A192F" stroke="#1E3A8A" stroke-width="1"/>
+    <!-- Patch Plate -->
+    <rect x="130" y="240" width="180" height="50" rx="6" fill="#040A14" stroke="#F59E0B" stroke-width="2"/>
+    <text x="220" y="272" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="20" font-weight="900" fill="#FEF08A" text-anchor="middle" letter-spacing="4">CRIMINOLOGY</text>
+    <text x="220" y="285" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="8" font-weight="800" fill="#38BDF8" text-anchor="middle" letter-spacing="3">SCJE • TACTICAL DIV</text>
+  </g>
+</svg>

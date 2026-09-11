@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="dwccGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A"/>
+      <stop offset="50%" stop-color="#0F254B"/>
+      <stop offset="100%" stop-color="#0A192F"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Ring -->
+  <circle cx="100" cy="100" r="96" fill="url(#dwccGrad)" stroke="url(#goldGrad)" stroke-width="5" filter="url(#glow)"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <circle cx="100" cy="100" r="70" fill="#0B192C" stroke="url(#goldGrad)" stroke-width="3"/>
+
+  <!-- Curved Text Path -->
+  <path id="textCircleTop" d="M 24,100 A 76,76 0 1,1 176,100" fill="none"/>
+  <path id="textCircleBottom" d="M 176,100 A 76,76 0 0,1 24,100" fill="none"/>
+
+  <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="10.5" font-weight="900" fill="#FDE68A" letter-spacing="2">
+    <textPath href="#textCircleTop" startOffset="50%" text-anchor="middle">
+      DIVINE WORD COLLEGE OF CALAPAN
+    </textPath>
+  </text>
+  <text font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="11" font-weight="900" fill="#FFFFFF" letter-spacing="3">
+    <textPath href="#textCircleBottom" startOffset="50%" text-anchor="middle">
+      ★ SCJE ★
+    </textPath>
+  </text>
+
+  <!-- Center Shield & Emblems -->
+  <g transform="translate(100, 100) scale(0.85)">
+    <!-- Shield -->
+    <path d="M -35,-40 L 35,-40 Q 40,5 0,48 Q -40,5 -35,-40 Z" fill="#1E3A8A" stroke="url(#goldGrad)" stroke-width="3"/>
+    
+    <!-- Dividing Cross -->
+    <path d="M 0,-38 L 0,44" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    <path d="M -33,-12 L 33,-12" stroke="url(#goldGrad)" stroke-width="2.5"/>
+    
+    <!-- Top Left: Light Rays / Sun -->
+    <circle cx="-16" cy="-25" r="7" fill="#F59E0B"/>
+    <path d="M -16,-34 L -16,-36 M -7,-25 L -5,-25 M -16,-16 L -16,-14 M -25,-25 L -27,-25" stroke="#FDE68A" stroke-width="1.5"/>
+
+    <!-- Top Right: Book of Knowledge -->
+    <path d="M 8,-28 C 12,-30 17,-30 24,-28 L 24,-20 C 17,-22 12,-22 8,-20 Z" fill="#FFFFFF"/>
+    <path d="M 8,-28 C 12,-26 17,-26 24,-28" fill="none" stroke="#0F254B" stroke-width="1"/>
+
+    <!-- Bottom: Laurel / Flame of Justice -->
+    <path d="M -15,10 Q 0,2 0,-5 Q 0,2 15,10 Q 0,28 -15,10 Z" fill="url(#goldGrad)"/>
+    <path d="M 0,-8 L 0,24" stroke="#FFFFFF" stroke-width="1.5"/>
+  </g>
+</svg>
