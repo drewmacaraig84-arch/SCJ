@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $pdo = get_db();
-                $stmt = $pdo->prepare("SELECT * FROM users WHERE id_number = ? LIMIT 1");
-                $stmt->execute([$idNumber]);
+                $stmt = $pdo->prepare("SELECT * FROM users WHERE LOWER(id_number) = LOWER(?) OR LOWER(name) = LOWER(?) OR LOWER(email) = LOWER(?) LIMIT 1");
+                $stmt->execute([$idNumber, $idNumber, $idNumber]);
                 $user = $stmt->fetch();
 
                 if ($user && password_verify($password, $user['password'])) {
@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
                 } else {
                     RateLimitMiddleware::hit('login');
-                    $error = 'Invalid ID Number or Password. Please try again.';
+                    $error = 'Invalid Username / ID Number or Password. Please try again.';
                 }
             } catch (Exception $e) {
                 $error = 'Database connection error: ' . $e->getMessage();
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="idNumber"><i class="fa-solid fa-id-card"></i> USERNAME: ID NUMBER</label>
-                    <input type="text" id="idNumber" name="id_number" class="form-control" placeholder="e.g. ADMIN-001 or ID Number" required autofocus value="<?= e($_POST['id_number'] ?? '') ?>">
+                    <input type="text" id="idNumber" name="id_number" class="form-control" placeholder="e.g. Drew or ID Number" required autofocus value="<?= e($_POST['id_number'] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
@@ -195,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div style="margin-top:20px; padding:14px; background:var(--color-bg-subtle); border-radius:6px; border:1px solid var(--color-border); font-size:0.8rem; color:var(--color-text-secondary);">
             <p style="font-weight:700; color:var(--color-text-primary); margin-bottom:4px;">Demo Test Accounts:</p>
-            <p>Admin: <code style="color:var(--color-gold);">ADMIN-001</code> / <code>password123</code></p>
+            <p>Admin: <code style="color:var(--color-gold);">Drew</code> / <code>admin</code></p>
             <p>Faculty: <code style="color:var(--color-gold);">FAC-2024-001</code> / <code>password123</code></p>
             <p>Student: <code style="color:var(--color-gold);">2024-10045</code> / <code>password123</code></p>
         </div>

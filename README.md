@@ -95,8 +95,8 @@ DB_PASSWORD=
 DB_SQLITE_PATH=database/scj.sqlite
 
 # Default Administrator Credentials
-DEFAULT_ADMIN_ID=ADMIN-001
-DEFAULT_ADMIN_PASSWORD=password123
+DEFAULT_ADMIN_ID=Drew
+DEFAULT_ADMIN_PASSWORD=admin
 ```
 
 ---
@@ -105,6 +105,6 @@ DEFAULT_ADMIN_PASSWORD=password123
 
 | Role | Username / ID Number | Password | Portal Access |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `ADMIN-001` | `password123` | Full CRUD Admin Dashboard (`/admin`) |
+| **Administrator** | `Drew` | `admin` | Full CRUD Admin Dashboard (`/admin`) |
 | **Faculty Member** | `FAC-2024-001` | `password123` | Can Add Research Papers |
 | **Student** | `2024-10045` | `password123` | Portal Student Account |

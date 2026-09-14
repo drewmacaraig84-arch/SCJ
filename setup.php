@@ -108,14 +108,15 @@ function init_database(PDO $pdo, string $driver): array {
     // 2. Seed Default Users
     $checkUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
     if ($checkUsers == 0) {
-        $defaultPassword = password_hash(env('DEFAULT_ADMIN_PASSWORD', 'password123'), PASSWORD_BCRYPT);
+        $adminPassword = password_hash(env('DEFAULT_ADMIN_PASSWORD', 'admin'), PASSWORD_BCRYPT);
+        $userPassword = password_hash('password123', PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("INSERT INTO users (id_number, name, email, password, role) VALUES (?, ?, ?, ?, ?)");
         
         $stmt->execute([
-            env('DEFAULT_ADMIN_ID', 'ADMIN-001'),
-            env('DEFAULT_ADMIN_NAME', 'Dean Office Admin'),
-            env('DEFAULT_ADMIN_EMAIL', 'admin@dwcc-scje.edu.ph'),
-            $defaultPassword,
+            env('DEFAULT_ADMIN_ID', 'Drew'),
+            env('DEFAULT_ADMIN_NAME', 'Drew'),
+            env('DEFAULT_ADMIN_EMAIL', 'drew@dwcc-scje.edu.ph'),
+            $adminPassword,
             'admin'
         ]);
 
@@ -123,7 +124,7 @@ function init_database(PDO $pdo, string $driver): array {
             'FAC-2024-001',
             'Prof. Joan Mae A. Gayacan, RCrim.',
             'j.gayacan@dwcc-scje.edu.ph',
-            $defaultPassword,
+            $userPassword,
             'faculty'
         ]);
 
@@ -131,11 +132,11 @@ function init_database(PDO $pdo, string $driver): array {
             '2024-10045',
             'Mark Justin S. Reyes',
             'mreyes@student.dwcc-scje.edu.ph',
-            $defaultPassword,
+            $userPassword,
             'student'
         ]);
 
-        $results[] = "Seeded 3 user accounts (Admin: ADMIN-001, Faculty: FAC-2024-001, Student: 2024-10045).";
+        $results[] = "Seeded 3 user accounts (Admin: Drew, Faculty: FAC-2024-001, Student: 2024-10045).";
     }
 
     // 3. Seed Research Papers (Matching 16 Categories + Sketch Columns)
@@ -1291,8 +1292,8 @@ if (php_sapi_name() === 'cli' || basename($_SERVER['SCRIPT_NAME'] ?? '') === 'se
                 echo "  [OK] {$log}\n";
             }
             echo "\nDefault Credentials:\n";
-            echo "  Admin ID Number : " . env('DEFAULT_ADMIN_ID', 'ADMIN-001') . "\n";
-            echo "  Password        : " . env('DEFAULT_ADMIN_PASSWORD', 'password123') . "\n";
+            echo "  Admin ID Number : " . env('DEFAULT_ADMIN_ID', 'Drew') . "\n";
+            echo "  Password        : " . env('DEFAULT_ADMIN_PASSWORD', 'admin') . "\n";
             echo "=====================================================\n";
         } else {
             echo '<!DOCTYPE html><html><head><title>Database Setup - SCJE</title><style>body{font-family:Segoe UI,sans-serif;background:#0A192F;color:#E2E8F0;padding:40px;}h1{color:#38BDF8;}li{margin:8px 0;}.card{background:#1E293B;padding:24px;border-radius:12px;max-width:650px;margin:auto;box-shadow:0 10px 25px rgba(0,0,0,0.5);}a{display:inline-block;margin-top:20px;padding:10px 20px;background:#2563EB;color:#fff;text-decoration:none;border-radius:6px;font-weight:bold;}</style></head><body>';
@@ -1304,7 +1305,7 @@ if (php_sapi_name() === 'cli' || basename($_SERVER['SCRIPT_NAME'] ?? '') === 'se
                 echo "<li>{$log}</li>";
             }
             echo '</ul>';
-            echo '<p>Default Admin: <strong>' . htmlspecialchars(env('DEFAULT_ADMIN_ID', 'ADMIN-001')) . '</strong> / Password: <strong>' . htmlspecialchars(env('DEFAULT_ADMIN_PASSWORD', 'password123')) . '</strong></p>';
+            echo '<p>Default Admin: <strong>' . htmlspecialchars(env('DEFAULT_ADMIN_ID', 'Drew')) . '</strong> / Password: <strong>' . htmlspecialchars(env('DEFAULT_ADMIN_PASSWORD', 'admin')) . '</strong></p>';
             echo '<a href="' . base_url() . '">Go to Website Homepage &rarr;</a>';
             echo '</div></body></html>';
         }
