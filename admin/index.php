@@ -19,6 +19,7 @@ $pdo = get_db();
 // Counts
 $totalResearch = $pdo->query("SELECT COUNT(*) FROM research")->fetchColumn();
 $totalEquipment = $pdo->query("SELECT COUNT(*) FROM equipment")->fetchColumn();
+$totalMaterials = $pdo->query("SELECT COUNT(*) FROM materials_chemicals")->fetchColumn();
 $totalFaculty = $pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
 $totalMessages = $pdo->query("SELECT COUNT(*) FROM contact_messages")->fetchColumn();
 
@@ -83,26 +84,26 @@ $activeDriver = DB::getDriver();
             border-left: 4px solid var(--color-primary-accent);
         }
         .admin-main {
-            background: #F1F5F9;
+            background: var(--color-bg-page);
+            color: var(--color-text-primary);
             padding: 30px;
             overflow-y: auto;
         }
         .stat-cards-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
         @media (max-width: 1024px) {
-            .stat-cards-grid { grid-template-columns: repeat(2, 1fr); }
             .admin-layout { grid-template-columns: 1fr; }
         }
         .stat-card {
-            background: #FFFFFF;
+            background: var(--color-bg-surface);
             border-radius: var(--radius-md);
             padding: 22px;
             box-shadow: var(--shadow-sm);
-            border: 1px solid #E2E8F0;
+            border: 1px solid var(--color-border);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -110,7 +111,7 @@ $activeDriver = DB::getDriver();
         .stat-val {
             font-size: 2rem;
             font-weight: 900;
-            color: var(--color-primary-dark);
+            color: var(--color-text-primary);
             line-height: 1;
         }
         .stat-label {
@@ -118,20 +119,30 @@ $activeDriver = DB::getDriver();
             font-weight: 700;
             color: var(--color-text-muted);
             margin-top: 4px;
-            text-transform: uppercase;
         }
         .stat-icon {
             width: 50px;
             height: 50px;
             border-radius: var(--radius-sm);
-            background: #EFF6FF;
-            color: var(--color-primary-light);
+            background: var(--color-bg-subtle);
+            color: var(--color-gold);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
         }
     </style>
+    <!-- Theme Mode Pre-Render Hydration -->
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('scj_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -151,8 +162,10 @@ $activeDriver = DB::getDriver();
         <ul class="admin-nav">
             <li><a href="<?= base_url('admin/index.php') ?>" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
             <li><a href="<?= base_url('admin/researches.php') ?>"><i class="fa-solid fa-book-open"></i> Manage Research</a></li>
-            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-flask"></i> Manage Equipment</a></li>
+            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-microscope"></i> Manage Equipment</a></li>
+            <li><a href="<?= base_url('admin/materials.php') ?>"><i class="fa-solid fa-flask-vial"></i> Manage Materials</a></li>
             <li><a href="<?= base_url('admin/faculty.php') ?>"><i class="fa-solid fa-users"></i> Manage Faculty</a></li>
+            <li><a href="<?= base_url('admin/content.php') ?>"><i class="fa-solid fa-compass"></i> Site Content</a></li>
             <li><a href="<?= base_url('admin/messages.php') ?>"><i class="fa-solid fa-envelope"></i> Inquiries</a></li>
             <li style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1);"><a href="<?= base_url() ?>"><i class="fa-solid fa-globe"></i> View Public Site</a></li>
             <li><a href="<?= base_url('logout.php') ?>" style="color:#F87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
@@ -167,8 +180,8 @@ $activeDriver = DB::getDriver();
     <main class="admin-main">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
             <div>
-                <h2 style="font-size:1.6rem; font-weight:900; color:#0A192F;">System Administration</h2>
-                <p style="color:#64748B; font-size:0.9rem;">Welcome back, <strong><?= e($user['name']) ?></strong> (<?= e($user['id_number']) ?>)</p>
+                <h2 style="font-size:1.6rem; font-weight:900; color:var(--color-text-primary);">System Administration</h2>
+                <p style="color:var(--color-text-muted); font-size:0.9rem;">Welcome back, <strong><?= e($user['name']) ?></strong> (<?= e($user['id_number']) ?>)</p>
             </div>
             <a href="<?= base_url() ?>" class="btn-primary" target="_blank">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Website
@@ -182,23 +195,31 @@ $activeDriver = DB::getDriver();
                     <div class="stat-val"><?= $totalResearch ?></div>
                     <div class="stat-label">Research Papers</div>
                 </div>
-                <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
+                <div class="stat-icon" style="color:var(--color-gold); background:rgba(212, 175, 55, 0.15);"><i class="fa-solid fa-book"></i></div>
             </div>
 
             <div class="stat-card">
                 <div>
                     <div class="stat-val"><?= $totalEquipment ?></div>
-                    <div class="stat-label">Lab Equipment</div>
+                    <div class="stat-label">Equipment Units</div>
                 </div>
-                <div class="stat-icon" style="color:#059669; background:#ECFDF5;"><i class="fa-solid fa-flask"></i></div>
+                <div class="stat-icon" style="color:#F59E0B; background:rgba(245, 158, 11, 0.15);"><i class="fa-solid fa-microscope"></i></div>
+            </div>
+
+            <div class="stat-card">
+                <div>
+                    <div class="stat-val"><?= $totalMaterials ?></div>
+                    <div class="stat-label">Materials &amp; Chemicals</div>
+                </div>
+                <div class="stat-icon" style="color:#38BDF8; background:rgba(56, 189, 248, 0.15);"><i class="fa-solid fa-flask-vial"></i></div>
             </div>
 
             <div class="stat-card">
                 <div>
                     <div class="stat-val"><?= $totalFaculty ?></div>
-                    <div class="stat-label">Faculty & Staff</div>
+                    <div class="stat-label">Faculty &amp; Staff</div>
                 </div>
-                <div class="stat-icon" style="color:#D97706; background:#FFFBEB;"><i class="fa-solid fa-users"></i></div>
+                <div class="stat-icon" style="color:#10B981; background:rgba(16, 185, 129, 0.15);"><i class="fa-solid fa-users"></i></div>
             </div>
 
             <div class="stat-card">
@@ -206,7 +227,7 @@ $activeDriver = DB::getDriver();
                     <div class="stat-val"><?= $totalMessages ?></div>
                     <div class="stat-label">Inquiries Received</div>
                 </div>
-                <div class="stat-icon" style="color:#7C3AED; background:#F5F3FF;"><i class="fa-solid fa-envelope"></i></div>
+                <div class="stat-icon" style="color:#A855F7; background:rgba(168, 85, 247, 0.15);"><i class="fa-solid fa-envelope"></i></div>
             </div>
         </div>
 

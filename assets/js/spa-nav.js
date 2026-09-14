@@ -5,6 +5,7 @@
 
 (function () {
     const pageCache = new Map();
+    window.scjPageCache = pageCache;
     const parser = new DOMParser();
 
     // Cache the current initial page
@@ -31,7 +32,10 @@
         if (pageCache.has(url)) return;
 
         try {
-            const res = await fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+            const res = await fetch(url, { 
+                cache: 'no-cache',
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'Cache-Control': 'no-cache' } 
+            });
             if (!res.ok) return;
 
             const html = await res.text();
@@ -66,33 +70,48 @@
 
         let pageData = pageCache.get(url);
 
-        if (!pageData) {
-            try {
-                const res = await fetch(url);
-                if (!res.ok) {
-                    window.location.href = url;
-                    return;
-                }
+        try {
+            const res = await fetch(url, { 
+                cache: 'no-cache', 
+                headers: { 'Cache-Control': 'no-cache', 'X-Requested-With': 'XMLHttpRequest' } 
+            });
+            if (res.ok) {
                 const html = await res.text();
                 const doc = parser.parseFromString(html, 'text/html');
                 const content = doc.getElementById('appContent')?.innerHTML;
                 const title = doc.title;
 
-                if (!content) {
-                    window.location.href = url;
-                    return;
+                if (content) {
+                    pageData = {
+                        title: title,
+                        content: content,
+                        activePage: getActivePageName(url)
+                    };
+                    pageCache.set(url, pageData);
                 }
 
-                pageData = {
-                    title: title,
-                    content: content,
-                    activePage: getActivePageName(url)
-                };
-                pageCache.set(url, pageData);
-            } catch (err) {
+                // Synchronize stylesheet version from target document if updated
+                try {
+                    const newCss = doc.querySelector('link[rel="stylesheet"][href*="style.css"]');
+                    const curCss = document.querySelector('link[rel="stylesheet"][href*="style.css"]');
+                    if (newCss && curCss && newCss.getAttribute('href') !== curCss.getAttribute('href')) {
+                        curCss.setAttribute('href', newCss.getAttribute('href'));
+                    }
+                } catch (cssErr) {}
+            } else if (!pageData) {
                 window.location.href = url;
                 return;
             }
+        } catch (err) {
+            if (!pageData) {
+                window.location.href = url;
+                return;
+            }
+        }
+
+        if (!pageData) {
+            window.location.href = url;
+            return;
         }
 
         // Apply smooth transition

@@ -79,37 +79,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     <link rel="stylesheet" href="<?= asset_url('assets/css/style.css') ?>">
+    <!-- Theme Mode Pre-Render Hydration -->
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('scj_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
     <style>
         body {
-            background: linear-gradient(135deg, #0A192F 0%, #0F254B 50%, #040D1A 100%);
+            background-color: var(--color-bg-page);
+            color: var(--color-text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            transition: background-color 0.25s ease, color 0.25s ease;
         }
         .login-card-container {
             max-width: 480px;
             width: 100%;
-            background: #FFFFFF;
+            background: var(--color-bg-surface);
             border-radius: var(--radius-lg);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 40px -4px rgba(0, 0, 0, 0.4);
             overflow: hidden;
-            border: 2px solid var(--color-primary-light);
+            border: 1px solid var(--color-border);
         }
         .login-card-header {
-            background: linear-gradient(135deg, #0A192F 0%, #1E3A8A 100%);
+            background: linear-gradient(135deg, #0B192E 0%, #152A4A 100%);
             padding: 25px;
             text-align: center;
             color: #FFFFFF;
-        }
-        .login-card-header img {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 10px;
+            border-bottom: 3px solid var(--color-gold);
         }
         .login-card-body {
             padding: 30px;
+            background: var(--color-bg-surface);
         }
         @media (max-width: 480px) {
             body {
@@ -121,10 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             .login-card-header {
                 padding: 20px 16px;
-            }
-            .login-card-header img {
-                width: 56px;
-                height: 56px;
             }
             .login-card-header h2 {
                 font-size: 1.15rem !important;
@@ -187,15 +193,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
 
-        <div style="margin-top:20px; padding:12px; background:#F8FAFC; border-radius:6px; border:1px solid #E2E8F0; font-size:0.8rem; color:#475569;">
-            <p><strong>Demo Test Accounts:</strong></p>
-            <p>Admin: <code>ADMIN-001</code> / <code>password123</code></p>
-            <p>Faculty: <code>FAC-2024-001</code> / <code>password123</code></p>
-            <p>Student: <code>2024-10045</code> / <code>password123</code></p>
+        <div style="margin-top:20px; padding:14px; background:var(--color-bg-subtle); border-radius:6px; border:1px solid var(--color-border); font-size:0.8rem; color:var(--color-text-secondary);">
+            <p style="font-weight:700; color:var(--color-text-primary); margin-bottom:4px;">Demo Test Accounts:</p>
+            <p>Admin: <code style="color:var(--color-gold);">ADMIN-001</code> / <code>password123</code></p>
+            <p>Faculty: <code style="color:var(--color-gold);">FAC-2024-001</code> / <code>password123</code></p>
+            <p>Student: <code style="color:var(--color-gold);">2024-10045</code> / <code>password123</code></p>
         </div>
 
         <div style="text-align:center; margin-top:16px;">
-            <a href="<?= base_url() ?>" style="font-size:0.85rem; color:var(--color-primary-light); font-weight:700;">
+            <a href="<?= base_url() ?>" style="font-size:0.85rem; color:var(--color-gold); font-weight:700;">
                 &larr; Return to Public Website
             </a>
         </div>

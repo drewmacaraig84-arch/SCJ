@@ -73,8 +73,19 @@ $researches = $pdo->query("SELECT * FROM research ORDER BY id DESC")->fetchAll()
         .admin-nav { list-style: none; padding: 20px 0; }
         .admin-nav li a { display: flex; align-items: center; gap: 12px; padding: 12px 24px; color: #CBD5E1; font-weight: 600; font-size: 0.9rem; }
         .admin-nav li a:hover, .admin-nav li a.active { background: rgba(30,58,138,0.5); color: var(--color-primary-accent); border-left: 4px solid var(--color-primary-accent); }
-        .admin-main { background: #F1F5F9; padding: 30px; overflow-y: auto; }
+        .admin-main { background: var(--color-bg-page); color: var(--color-text-primary); padding: 30px; overflow-y: auto; }
     </style>
+    <!-- Theme Mode Pre-Render Hydration -->
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('scj_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -92,8 +103,10 @@ $researches = $pdo->query("SELECT * FROM research ORDER BY id DESC")->fetchAll()
         <ul class="admin-nav">
             <li><a href="<?= base_url('admin/index.php') ?>"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
             <li><a href="<?= base_url('admin/researches.php') ?>" class="active"><i class="fa-solid fa-book-open"></i> Manage Research</a></li>
-            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-flask"></i> Manage Equipment</a></li>
+            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-microscope"></i> Manage Equipment</a></li>
+            <li><a href="<?= base_url('admin/materials.php') ?>"><i class="fa-solid fa-flask-vial"></i> Manage Materials</a></li>
             <li><a href="<?= base_url('admin/faculty.php') ?>"><i class="fa-solid fa-users"></i> Manage Faculty</a></li>
+            <li><a href="<?= base_url('admin/content.php') ?>"><i class="fa-solid fa-compass"></i> Site Content</a></li>
             <li><a href="<?= base_url('admin/messages.php') ?>"><i class="fa-solid fa-envelope"></i> Inquiries</a></li>
             <li style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1);"><a href="<?= base_url() ?>"><i class="fa-solid fa-globe"></i> View Public Site</a></li>
             <li><a href="<?= base_url('logout.php') ?>" style="color:#F87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>

@@ -35,16 +35,14 @@ $categories = [
 ?>
 
     <!-- Page Banner -->
-    <div style="background: linear-gradient(135deg, #0A192F 0%, #0F254B 50%, #1E3A8A 100%); color: #FFFFFF; padding: 40px 0; border-bottom: 3px solid var(--color-primary-accent);">
-        <div class="container">
-            <div style="display:flex; align-items:center; gap:16px;">
-                <div style="width:60px; height:60px; border-radius:var(--radius-sm); background:rgba(56,189,248,0.2); border:1px solid var(--color-primary-accent); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--color-primary-accent);">
-                    <i class="fa-solid fa-book-open"></i>
-                </div>
-                <div>
-                    <h2 style="font-size:1.85rem; font-weight:900; letter-spacing:1px; text-transform:uppercase;">Criminological Research</h2>
-                    <p style="color:#94A3B8; font-size:0.9rem;">Empirical Studies, Theses, and Forensics Research Repository</p>
-                </div>
+    <div class="page-banner">
+        <div class="container page-banner-inner">
+            <div class="page-banner-icon">
+                <i class="fa-solid fa-book-open"></i>
+            </div>
+            <div class="page-banner-content">
+                <h2>Criminological Research</h2>
+                <p>Empirical Studies, Theses, and Forensics Research Repository</p>
             </div>
         </div>
     </div>
@@ -115,17 +113,17 @@ $categories = [
                                         data-title="<?= strtolower(e($r['research_title'])) ?>" 
                                         data-category="<?= strtolower(e($r['category'])) ?>" 
                                         data-date="<?= strtolower(e($r['month_year'])) ?>">
-                                        <td style="font-weight:700; color:var(--color-primary-dark);">
-                                            <i class="fa-solid fa-user-pen" style="color:var(--color-primary-light); margin-right:6px;"></i>
+                                        <td class="research-author-cell">
+                                            <i class="fa-solid fa-user-pen"></i>
                                             <?= e($r['author_name']) ?>
                                         </td>
                                         <td>
-                                            <span style="font-weight:600; color:#1E293B;"><?= e($r['research_title']) ?></span>
-                                            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:2px;">
+                                            <span class="research-title-text"><?= e($r['research_title']) ?></span>
+                                            <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:3px;">
                                                 <span class="badge badge-info"><?= e($r['category']) ?></span>
                                             </div>
                                         </td>
-                                        <td style="font-weight:600; color:#475569;"><?= e($r['month_year']) ?></td>
+                                        <td class="research-date-cell"><?= e($r['month_year']) ?></td>
                                         <td style="text-align:center;">
                                             <button type="button" class="btn-primary btn-view-research" 
                                                     style="padding:5px 12px; font-size:0.75rem;"

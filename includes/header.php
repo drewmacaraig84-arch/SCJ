@@ -34,6 +34,17 @@ $csrfToken = CsrfMiddleware::getToken();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= asset_url('assets/css/style.css') ?>">
+    <!-- Theme Mode Pre-Render Hydration (Defaults to Executive Midnight Dark, Prevents FOUC) -->
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('scj_theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
 </head>
 <body>
 
@@ -44,21 +55,21 @@ $csrfToken = CsrfMiddleware::getToken();
         <div class="container top-header-inner">
             <!-- Left Logo: DWCC Official Seal -->
             <a href="<?= base_url() ?>" class="header-logo" title="Divine Word College of Calapan">
-                <img src="<?= asset_url('assets/images/dwcc_logo.png') ?>" alt="Divine Word College of Calapan Official Seal" width="75" height="75">
+                <img src="<?= asset_url('assets/images/dwcc_logo.png') ?>" alt="Divine Word College of Calapan Official Seal" width="82" height="82">
             </a>
 
             <!-- Center Title: SCHOOL OF CRIMINAL JUSTICE INFORMATION SYSTEM -->
             <div class="header-title-center">
-                <div style="font-family:var(--font-heading); font-size:0.78rem; font-weight:800; letter-spacing:3.5px; color:var(--color-gold); text-transform:uppercase; margin-bottom:3px; opacity:0.95;">
-                    Divine Word College of Calapan
+                <div class="header-sub-institution">
+                    <i class="fa-solid fa-graduation-cap"></i> Divine Word College of Calapan
                 </div>
                 <h1>School of Criminal Justice</h1>
-                <div class="sub-title">Information System</div>
+                <div class="sub-title"><i class="fa-solid fa-shield-halved" style="font-size:0.8rem; margin-right:4px;"></i> Information System</div>
             </div>
 
             <!-- Right Logo: SCJ Department Seal -->
             <div class="header-logo" title="School of Criminal Justice - Criminology Department">
-                <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="School of Criminal Justice Department Seal" width="75" height="75">
+                <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="School of Criminal Justice Department Seal" width="82" height="82">
             </div>
         </div>
     </header>
@@ -106,8 +117,15 @@ $csrfToken = CsrfMiddleware::getToken();
                 </li>
             </ul>
 
-            <!-- Authentication / Portal Action Button -->
+            <!-- Theme Mode Toggle & Portal Action Button -->
             <div class="nav-auth-action">
+                <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Switch Theme Mode" title="Switch Light / Dark Theme">
+                    <span class="theme-toggle-icon">
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                        <i class="fa-solid fa-sun icon-sun"></i>
+                    </span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
                 <?php if ($isLoggedIn): ?>
                     <div style="display:flex; align-items:center; gap:10px;">
                         <a href="<?= base_url('admin/') ?>" class="nav-portal-btn" style="background:#10B981; border-color:#34D399;">

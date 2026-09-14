@@ -5,6 +5,57 @@
 
 window.initSCJEApp = function () {
     // -------------------------------------------------------------
+    // Theme Mode Switcher (Executive Midnight Dark vs. Classic Light)
+    // -------------------------------------------------------------
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    
+    function updateThemeUI(theme) {
+        if (!themeToggleBtn) return;
+        const textSpan = themeToggleBtn.querySelector('.theme-toggle-text');
+        const iconMoon = themeToggleBtn.querySelector('.icon-moon');
+        const iconSun = themeToggleBtn.querySelector('.icon-sun');
+        
+        if (theme === 'dark') {
+            themeToggleBtn.setAttribute('data-current-theme', 'dark');
+            themeToggleBtn.setAttribute('title', 'Switch to Light Theme');
+            themeToggleBtn.setAttribute('aria-label', 'Switch to Light Theme');
+            if (textSpan) textSpan.textContent = 'Dark';
+            if (iconMoon) iconMoon.style.display = 'inline-block';
+            if (iconSun) iconSun.style.display = 'none';
+        } else {
+            themeToggleBtn.setAttribute('data-current-theme', 'light');
+            themeToggleBtn.setAttribute('title', 'Switch to Executive Dark Theme');
+            themeToggleBtn.setAttribute('aria-label', 'Switch to Executive Dark Theme');
+            if (textSpan) textSpan.textContent = 'Light';
+            if (iconMoon) iconMoon.style.display = 'none';
+            if (iconSun) iconSun.style.display = 'inline-block';
+        }
+    }
+
+    // Read current theme state
+    const currentTheme = document.documentElement.getAttribute('data-theme') || (function() {
+        try { return localStorage.getItem('scj_theme') || 'dark'; } catch(e) { return 'dark'; }
+    })();
+    updateThemeUI(currentTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.onclick = function (e) {
+            e.preventDefault();
+            const activeTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            try {
+                localStorage.setItem('scj_theme', nextTheme);
+            } catch (err) {}
+            if (window.scjPageCache) {
+                window.scjPageCache.clear();
+            }
+            updateThemeUI(nextTheme);
+        };
+    }
+
+    // -------------------------------------------------------------
     // Mobile Navigation Hamburger Toggle
     // -------------------------------------------------------------
     const navToggle = document.getElementById('navMobileToggle');
@@ -149,7 +200,9 @@ window.initSCJEApp = function () {
                 model.includes(query) || 
                 location.includes(query);
 
-            const matchesLab = selectedLab === 'all' || lab === selectedLab;
+            const matchesLab = selectedLab === 'all' || 
+                location.includes(selectedLab) || 
+                lab === selectedLab;
 
             if (matchesQuery && matchesLab) {
                 row.style.display = '';
@@ -181,12 +234,56 @@ window.initSCJEApp = function () {
                 equipCategoryFilter.value = labName;
                 filterEquipTable();
             }
-            const tableElem = document.getElementById('equipTableSection');
+            const tableElem = document.getElementById('inventoryDirectory');
             if (tableElem) {
                 tableElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     });
+
+    // -------------------------------------------------------------
+    // 2b. Materials & Chemicals Table Filtering
+    // -------------------------------------------------------------
+    const matSearchInput = document.getElementById('matSearchInput');
+    const matLocationFilter = document.getElementById('matLocationFilter');
+    const matTableBody = document.getElementById('matTableBody');
+    const matRows = matTableBody ? matTableBody.querySelectorAll('tr.mat-row') : [];
+
+    function filterMatTable() {
+        const query = (matSearchInput ? matSearchInput.value : '').toLowerCase().trim();
+        const selectedLoc = (matLocationFilter ? matLocationFilter.value : 'all').toLowerCase();
+        let visibleCount = 0;
+
+        matRows.forEach(row => {
+            const code = row.getAttribute('data-code') || '';
+            const name = row.getAttribute('data-name') || '';
+            const brand = row.getAttribute('data-brand') || '';
+            const location = row.getAttribute('data-location') || '';
+
+            const matchesQuery = query === '' || 
+                code.includes(query) || 
+                name.includes(query) || 
+                brand.includes(query) || 
+                location.includes(query);
+
+            const matchesLoc = selectedLoc === 'all' || location.includes(selectedLoc);
+
+            if (matchesQuery && matchesLoc) {
+                row.style.display = '';
+                visibleCount++;
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        const noMatRow = document.getElementById('matNoDataRow');
+        if (noMatRow) {
+            noMatRow.style.display = visibleCount === 0 ? '' : 'none';
+        }
+    }
+
+    if (matSearchInput) matSearchInput.addEventListener('input', filterMatTable);
+    if (matLocationFilter) matLocationFilter.addEventListener('change', filterMatTable);
 
     // -------------------------------------------------------------
     // 3. Modal Manager (Login & Details Viewers)
@@ -239,13 +336,13 @@ window.initSCJEApp = function () {
                     <span class="badge badge-info">${escapeHtml(category)}</span>
                     <span class="badge badge-warning" style="margin-left:6px;">${escapeHtml(date)}</span>
                 </div>
-                <h3 style="color: #0F254B; font-size: 1.25rem; font-weight:800; margin-bottom: 10px; line-height: 1.35;">${escapeHtml(title)}</h3>
-                <p style="font-size: 0.9rem; color: #475569; font-weight: 600; margin-bottom: 16px;">Author(s): <strong>${escapeHtml(author)}</strong></p>
-                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-                    <h4 style="font-size: 0.85rem; color: #1E3A8A; text-transform:uppercase; margin-bottom: 8px;">Abstract</h4>
-                    <p style="font-size: 0.88rem; line-height: 1.6; color: #334155;">${escapeHtml(abstract)}</p>
+                <h3 style="color: var(--color-text-primary); font-size: 1.25rem; font-weight:800; margin-bottom: 10px; line-height: 1.35;">${escapeHtml(title)}</h3>
+                <p style="font-size: 0.9rem; color: var(--color-text-secondary); font-weight: 600; margin-bottom: 16px;">Author(s): <strong style="color:var(--color-text-primary);">${escapeHtml(author)}</strong></p>
+                <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                    <h4 style="font-size: 0.85rem; color: var(--color-gold); text-transform:uppercase; margin-bottom: 8px; font-weight:800;">Abstract</h4>
+                    <p style="font-size: 0.88rem; line-height: 1.6; color: var(--color-text-secondary);">${escapeHtml(abstract)}</p>
                 </div>
-                <p style="font-size: 0.82rem; color: #64748B;"><strong>Keywords:</strong> ${escapeHtml(keywords)}</p>
+                <p style="font-size: 0.82rem; color: var(--color-text-muted);"><strong style="color:var(--color-text-secondary);">Keywords:</strong> ${escapeHtml(keywords)}</p>
             `;
             if (detailsModal) detailsModal.classList.add('active');
         });
@@ -262,26 +359,77 @@ window.initSCJEApp = function () {
             const location = btn.getAttribute('data-location');
             const status = btn.getAttribute('data-status');
             const serial = btn.getAttribute('data-serial') || 'N/A';
-            const desc = btn.getAttribute('data-desc') || 'No description recorded.';
+            const person = btn.getAttribute('data-person') || 'Sir Jom';
+            const desc = btn.getAttribute('data-desc') || 'Official SCJE Department Asset.';
 
-            const statusClass = status === 'Available' ? 'badge-success' : (status === 'In Use' ? 'badge-warning' : 'badge-danger');
+            const statusLower = status.toLowerCase();
+            let statusClass = 'badge-success';
+            if (statusLower.includes('out of service')) {
+                statusClass = 'badge-danger';
+            } else if (statusLower.includes('brand')) {
+                statusClass = 'badge-info';
+            }
 
-            document.getElementById('detailsModalTitle').textContent = 'Laboratory Equipment Specification';
+            document.getElementById('detailsModalTitle').textContent = 'Laboratory Equipment Details';
             document.getElementById('detailsModalBody').innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-                    <span style="font-family: monospace; font-size: 0.95rem; font-weight:800; color: #1E3A8A;">${escapeHtml(code)}</span>
+                    <span style="font-family: monospace; font-size: 0.95rem; font-weight:800; color: var(--color-gold);">${escapeHtml(code)}</span>
                     <span class="badge ${statusClass}">${escapeHtml(status)}</span>
                 </div>
-                <h3 style="color: #0F254B; font-size: 1.2rem; font-weight:800; margin-bottom: 14px;">${escapeHtml(name)}</h3>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: #F1F5F9; padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem;">
-                    <div><strong>Brand:</strong> ${escapeHtml(brand)}</div>
-                    <div><strong>Model:</strong> ${escapeHtml(model)}</div>
-                    <div><strong>Serial Number:</strong> ${escapeHtml(serial)}</div>
-                    <div><strong>Location:</strong> ${escapeHtml(location)}</div>
+                <h3 style="color: var(--color-text-primary); font-size: 1.2rem; font-weight:800; margin-bottom: 14px;">${escapeHtml(name)}</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem; color: var(--color-text-secondary);">
+                    <div><strong style="color:var(--color-text-primary);">Brand:</strong> ${escapeHtml(brand)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Model:</strong> ${escapeHtml(model)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Serial No.:</strong> ${escapeHtml(serial)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Location:</strong> ${escapeHtml(location)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Accountable:</strong> ${escapeHtml(person)}</div>
                 </div>
-                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 14px; border-radius: 8px;">
-                    <h4 style="font-size: 0.82rem; color: #1E3A8A; text-transform:uppercase; margin-bottom: 6px;">Technical Description</h4>
-                    <p style="font-size: 0.88rem; line-height: 1.5; color: #334155;">${escapeHtml(desc)}</p>
+                <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 14px; border-radius: 8px;">
+                    <h4 style="font-size: 0.82rem; color: var(--color-gold); text-transform:uppercase; margin-bottom: 6px; font-weight:800;">Asset Information</h4>
+                    <p style="font-size: 0.88rem; line-height: 1.5; color: var(--color-text-secondary);">${escapeHtml(desc)}</p>
+                </div>
+            `;
+            if (detailsModal) detailsModal.classList.add('active');
+        });
+    });
+
+    // Details Modal Logic for Materials & Chemicals
+    const viewMaterialButtons = document.querySelectorAll('.btn-view-material');
+    viewMaterialButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const code = btn.getAttribute('data-code');
+            const name = btn.getAttribute('data-name');
+            const qty = btn.getAttribute('data-qty');
+            const unit = btn.getAttribute('data-unit') || 'N/A';
+            const brand = btn.getAttribute('data-brand') || 'N/A';
+            const location = btn.getAttribute('data-location');
+            const status = btn.getAttribute('data-status');
+            const person = btn.getAttribute('data-person') || 'Sir Jom';
+
+            const statusLower = status.toLowerCase();
+            let statusClass = 'badge-success';
+            if (statusLower.includes('out of service')) {
+                statusClass = 'badge-danger';
+            } else if (statusLower.includes('brand')) {
+                statusClass = 'badge-info';
+            }
+
+            document.getElementById('detailsModalTitle').textContent = 'Material & Chemical Reagent Details';
+            document.getElementById('detailsModalBody').innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                    <span style="font-family: monospace; font-size: 0.95rem; font-weight:800; color: var(--color-gold);">${escapeHtml(code)}</span>
+                    <span class="badge ${statusClass}">${escapeHtml(status)}</span>
+                </div>
+                <h3 style="color: var(--color-text-primary); font-size: 1.2rem; font-weight:800; margin-bottom: 14px;">${escapeHtml(name)}</h3>
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; font-size: 0.85rem; color: var(--color-text-secondary);">
+                    <div><strong style="color:var(--color-text-primary);">Quantity:</strong> ${escapeHtml(qty)} ${unit !== 'N/A' ? escapeHtml(unit) : ''}</div>
+                    <div><strong style="color:var(--color-text-primary);">Brand / Spec:</strong> ${escapeHtml(brand)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Storage Location:</strong> ${escapeHtml(location)}</div>
+                    <div><strong style="color:var(--color-text-primary);">Accountable:</strong> ${escapeHtml(person)}</div>
+                </div>
+                <div style="background: var(--color-bg-subtle); border: 1px solid var(--color-border); padding: 14px; border-radius: 8px;">
+                    <h4 style="font-size: 0.82rem; color: var(--color-gold); text-transform:uppercase; margin-bottom: 6px; font-weight:800;">Inventory & Safety Classification</h4>
+                    <p style="font-size: 0.88rem; line-height: 1.5; color: var(--color-text-secondary);">Department forensic consumable / reagent recorded under the AY 2025-2026 active laboratory inventory schedule.</p>
                 </div>
             `;
             if (detailsModal) detailsModal.classList.add('active');

@@ -37,41 +37,67 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
 ?>
 
     <!-- ========================================================= -->
-    <!-- HERO SECTION WITH QUICK TILES (MATCHING REFERENCE IMAGE)  -->
+    <!-- ========================================================= -->
+    <!-- HERO SECTION WITH QUICK TILES (EXECUTIVE MODERN)          -->
     <!-- ========================================================= -->
     <section class="hero-section">
         <div class="container hero-grid">
             <!-- Left Headline & Description -->
             <div class="hero-content">
-                <span class="hero-badge">Divine Word College of Calapan &bull; SCJE</span>
+                <span class="hero-badge">
+                    <i class="fa-solid fa-shield-halved"></i> Divine Word College of Calapan &bull; SCJE
+                </span>
+                <div class="hero-kicker">
+                    <i class="fa-solid fa-scale-balanced"></i> Center of Excellence in Criminological Education
+                </div>
                 <h2>
                     WELCOME TO THE
-                    <span>SCHOOL OF CRIMINAL JUSTICE</span>
+                    <span class="hero-title-highlight">SCHOOL OF CRIMINAL JUSTICE</span>
                 </h2>
                 <p>
-                    The School of Criminal Justice provides quality education, practical training, research opportunities, 
-                    and professional development in the field of criminology and criminal justice.
+                    The School of Criminal Justice provides quality criminological education, forensic laboratory training, 
+                    empirical research opportunities, and leadership development for aspiring law enforcement and criminal justice professionals.
                 </p>
+
+                <!-- 3 Metric Highlight Chips -->
+                <div class="hero-stats-chips">
+                    <div class="hero-chip">
+                        <i class="fa-solid fa-flask"></i>
+                        <span><strong>5</strong> Forensic Labs</span>
+                    </div>
+                    <div class="hero-chip">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span><strong>82</strong> Tracked Assets</span>
+                    </div>
+                    <div class="hero-chip">
+                        <i class="fa-solid fa-award"></i>
+                        <span><strong>AY 2025-2026</strong> Accredited</span>
+                    </div>
+                </div>
+
                 <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                    <a href="<?= base_url('research.php') ?>" class="btn-primary">
+                    <a href="<?= base_url('research.php') ?>" class="btn-primary" style="box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);">
                         <i class="fa-solid fa-magnifying-glass"></i> Criminological Research
                     </a>
-                    <a href="<?= base_url('laboratories.php') ?>" class="btn-primary" style="background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);">
+                    <a href="<?= base_url('laboratories.php') ?>" class="btn-secondary">
                         <i class="fa-solid fa-flask"></i> Laboratory Facilities
                     </a>
-                    <a href="<?= base_url('about.php') ?>" class="btn-primary" style="background:transparent; border:1px solid rgba(255,255,255,0.4);">
+                    <a href="<?= base_url('about.php') ?>" class="btn-outline">
                         <i class="fa-solid fa-circle-info"></i> About SCJE
                     </a>
                 </div>
             </div>
 
-            <!-- Right: 4 Quick Access Tiles (From Reference Screenshot) -->
+            <!-- Right: 4 Quick Access Tiles -->
             <div class="hero-tiles-grid">
                 <!-- Tile 1: Criminological Research -->
                 <a href="<?= base_url('research.php') ?>" class="hero-tile">
                     <div class="hero-tile-left">
-                        <div class="hero-tile-icon"><i class="fa-solid fa-book"></i></div>
-                        <div class="hero-tile-title">Criminological<br>Research</div>
+                        <div class="hero-tile-icon icon-research"><i class="fa-solid fa-book-bookmark"></i></div>
+                        <div class="hero-tile-text">
+                            <span class="hero-tile-meta">Forensics &bull; Theses</span>
+                            <div class="hero-tile-title">Criminological Research</div>
+                        </div>
                     </div>
                     <div class="hero-tile-arrow"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
@@ -79,8 +105,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                 <!-- Tile 2: Laboratory Equipment -->
                 <a href="<?= base_url('laboratories.php') ?>" class="hero-tile">
                     <div class="hero-tile-left">
-                        <div class="hero-tile-icon"><i class="fa-solid fa-flask-vial"></i></div>
-                        <div class="hero-tile-title">Laboratory<br>Equipment</div>
+                        <div class="hero-tile-icon icon-lab"><i class="fa-solid fa-microscope"></i></div>
+                        <div class="hero-tile-text">
+                            <span class="hero-tile-meta">Crime Lab &bull; Ballistics &bull; CSI</span>
+                            <div class="hero-tile-title">Laboratory Equipment</div>
+                        </div>
                     </div>
                     <div class="hero-tile-arrow"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
@@ -88,8 +117,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                 <!-- Tile 3: Faculty -->
                 <a href="<?= base_url('faculty.php') ?>" class="hero-tile">
                     <div class="hero-tile-left">
-                        <div class="hero-tile-icon"><i class="fa-solid fa-users"></i></div>
-                        <div class="hero-tile-title">Faculty &amp;<br>Staff</div>
+                        <div class="hero-tile-icon icon-faculty"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="hero-tile-text">
+                            <span class="hero-tile-meta">Dean &bull; Instructors &bull; Roster</span>
+                            <div class="hero-tile-title">Faculty &amp; Staff</div>
+                        </div>
                     </div>
                     <div class="hero-tile-arrow"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
@@ -97,8 +129,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                 <!-- Tile 4: Contact & Inquiries -->
                 <a href="<?= base_url('contact.php') ?>" class="hero-tile">
                     <div class="hero-tile-left">
-                        <div class="hero-tile-icon"><i class="fa-solid fa-envelope"></i></div>
-                        <div class="hero-tile-title">Contact &amp;<br>Inquiries</div>
+                        <div class="hero-tile-icon icon-contact"><i class="fa-solid fa-envelope-circle-check"></i></div>
+                        <div class="hero-tile-text">
+                            <span class="hero-tile-meta">Dean's Office &bull; Advising</span>
+                            <div class="hero-tile-title">Contact &amp; Inquiries</div>
+                        </div>
                     </div>
                     <div class="hero-tile-arrow"><i class="fa-solid fa-chevron-right"></i></div>
                 </a>
@@ -113,29 +148,32 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
         <div class="container">
             <div class="pillars-grid">
                 <!-- Vision -->
-                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card" style="color:inherit;">
+                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card pillar-vision" style="color:inherit;">
+                    <i class="fa-solid fa-eye pillar-watermark"></i>
                     <div class="pillar-icon-badge"><i class="fa-solid fa-eye"></i></div>
                     <div class="pillar-text">
-                        <h3><?= e($siteContent['vision']['title'] ?? 'VISION') ?></h3>
-                        <p><?= nl2br(e($siteContent['vision']['content'] ?? 'A leading center of excellence in criminology and criminal justice education.')) ?></p>
+                        <h3><i class="fa-solid fa-compass" style="color:var(--color-blue-royal); font-size:0.95rem;"></i> <?= e($siteContent['vision']['title'] ?? 'VISION') ?></h3>
+                        <p><?= nl2br(e($siteContent['vision']['content'] ?? 'To become the center and primer in the pursuit of quality instruction in the field of Criminal Justice in the entire Mindoro Region.')) ?></p>
                     </div>
                 </a>
 
                 <!-- Mission -->
-                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card" style="color:inherit;">
+                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card pillar-mission" style="color:inherit;">
+                    <i class="fa-solid fa-bullseye pillar-watermark"></i>
                     <div class="pillar-icon-badge"><i class="fa-solid fa-bullseye"></i></div>
                     <div class="pillar-text">
-                        <h3><?= e($siteContent['mission']['title'] ?? 'MISSION') ?></h3>
-                        <p><?= nl2br(e($siteContent['mission']['content'] ?? 'To provide quality education, research, and professional training for a safer and just society.')) ?></p>
+                        <h3><i class="fa-solid fa-flag" style="color:var(--color-gold); font-size:0.95rem;"></i> <?= e($siteContent['mission']['title'] ?? 'MISSION') ?></h3>
+                        <p><?= nl2br(e($siteContent['mission']['content'] ?? 'To produce professionally competent and morally upright graduates equipped with contemporary and functional knowledge and skills in the field of law enforcement administration, crime detection and investigation, correctional administration, criminal sociology and forensic science.')) ?></p>
                     </div>
                 </a>
 
                 <!-- Goals -->
-                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card" style="color:inherit;">
+                <a href="<?= base_url('about.php#pillars') ?>" class="pillar-card pillar-goals" style="color:inherit;">
+                    <i class="fa-solid fa-chart-line pillar-watermark"></i>
                     <div class="pillar-icon-badge"><i class="fa-solid fa-chart-line"></i></div>
                     <div class="pillar-text">
-                        <h3><?= e($siteContent['goals']['title'] ?? 'GOALS') ?></h3>
-                        <p><?= nl2br(e($siteContent['goals']['content'] ?? 'To produce competent, ethical, and service-oriented criminology professionals.')) ?></p>
+                        <h3><i class="fa-solid fa-crosshairs" style="color:#0284C7; font-size:0.95rem;"></i> <?= e($siteContent['goals']['title'] ?? 'GOALS') ?></h3>
+                        <p><?= nl2br(e($siteContent['goals']['content'] ?? "• Foster the value of god-fearing, social responsibility, self-sacrifice and discipline;\n• Provide students with theoretical, technical, practical and actual knowledge relative to criminology profession; and\n• Prepare students for careers in any agencies under the Philippine Criminal Justice System")) ?></p>
                     </div>
                 </a>
             </div>
@@ -145,11 +183,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
     <!-- ========================================================= -->
     <!-- SECTION 1 SUMMARY: CRIMINOLOGICAL RESEARCH TITLES         -->
     <!-- ========================================================= -->
-    <section class="section-wrapper" style="background:#FFFFFF;">
+    <section class="section-wrapper">
         <div class="container">
             <div class="section-header-banner">
                 <h2><i class="fa-solid fa-magnifying-glass"></i> Criminological Research Titles</h2>
-                <a href="<?= base_url('research.php') ?>" class="btn-primary" style="background:rgba(255,255,255,0.2); font-size:0.8rem; padding:6px 14px;">
+                <a href="<?= base_url('research.php') ?>" class="btn-primary" style="font-size:0.8rem; padding:8px 18px; border-radius:var(--radius-xs);">
                     View Complete Research Catalog <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -189,10 +227,10 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
             <!-- Recent Research Highlights Table Preview -->
             <div class="table-card">
                 <div class="table-toolbar">
-                    <h3 style="font-size:1.05rem; font-weight:800; color:var(--color-primary-dark);">
-                        <i class="fa-solid fa-clock-rotate-left"></i> Latest Published Research Highlights
+                    <h3 class="table-toolbar-title">
+                        <i class="fa-solid fa-clock-rotate-left" style="color:var(--color-gold);"></i> Latest Published Research Highlights
                     </h3>
-                    <a href="<?= base_url('research.php') ?>" style="font-weight:700; font-size:0.85rem; color:var(--color-primary-light);">
+                    <a href="<?= base_url('research.php') ?>" class="table-toolbar-link">
                         Open Searchable Repository Table &rarr;
                     </a>
                 </div>
@@ -210,17 +248,17 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                         <tbody>
                             <?php foreach ($recentResearches as $r): ?>
                                 <tr>
-                                    <td style="font-weight:700; color:var(--color-primary-dark);">
-                                        <i class="fa-solid fa-user-pen" style="color:var(--color-primary-light); margin-right:6px;"></i>
+                                    <td class="research-author-cell">
+                                        <i class="fa-solid fa-user-pen"></i>
                                         <?= e($r['author_name']) ?>
                                     </td>
                                     <td>
-                                        <span style="font-weight:600; color:#1E293B;"><?= e($r['research_title']) ?></span>
-                                        <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:2px;">
+                                        <span class="research-title-text"><?= e($r['research_title']) ?></span>
+                                        <div style="font-size:0.75rem; color:var(--color-text-muted); margin-top:3px;">
                                             <span class="badge badge-info"><?= e($r['category']) ?></span>
                                         </div>
                                     </td>
-                                    <td style="font-weight:600; color:#475569;"><?= e($r['month_year']) ?></td>
+                                    <td class="research-date-cell"><?= e($r['month_year']) ?></td>
                                     <td style="text-align:center;">
                                         <a href="<?= base_url('research.php') ?>" class="btn-primary" style="padding:5px 12px; font-size:0.75rem;">
                                             <i class="fa-solid fa-arrow-up-right-from-square"></i> Details
@@ -238,11 +276,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
     <!-- ========================================================= -->
     <!-- SECTION 2 SUMMARY: CRIMINOLOGY LABORATORIES               -->
     <!-- ========================================================= -->
-    <section class="section-wrapper" style="background:#F1F5F9;">
+    <section class="section-wrapper section-alt">
         <div class="container">
             <div class="section-header-banner">
                 <h2><i class="fa-solid fa-flask"></i> Criminology Laboratories</h2>
-                <a href="<?= base_url('laboratories.php') ?>" class="btn-primary" style="background:rgba(255,255,255,0.2); font-size:0.8rem; padding:6px 14px;">
+                <a href="<?= base_url('laboratories.php') ?>" class="btn-primary" style="font-size:0.8rem; padding:8px 18px; border-radius:var(--radius-xs);">
                     View Complete Laboratory Inventory <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -333,11 +371,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
     <!-- ========================================================= -->
     <!-- SECTION 3 SUMMARY: FACULTY & STAFF LEADERSHIP             -->
     <!-- ========================================================= -->
-    <section class="section-wrapper" style="background:#FFFFFF;">
+    <section class="section-wrapper">
         <div class="container">
             <div class="section-header-banner">
                 <h2><i class="fa-solid fa-users"></i> Faculty &amp; Staff Leadership</h2>
-                <a href="<?= base_url('faculty.php') ?>" class="btn-primary" style="background:rgba(255,255,255,0.2); font-size:0.8rem; padding:6px 14px;">
+                <a href="<?= base_url('faculty.php') ?>" class="btn-primary" style="font-size:0.8rem; padding:8px 18px; border-radius:var(--radius-xs);">
                     View Complete Organizational Chart <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </div>
@@ -355,7 +393,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                             <?php if (!empty($dean['specialization'])): ?>
                                 <p><strong>Specialization:</strong> <?= e($dean['specialization']) ?></p>
                             <?php endif; ?>
-                            <p style="margin-top:6px; font-size:0.75rem; color:#94A3B8;">
+                            <p style="margin-top:6px; font-size:0.75rem; color:var(--color-text-muted);">
                                 <i class="fa-solid fa-envelope"></i> <?= e($dean['email']) ?>
                             </p>
                         </div>
@@ -382,7 +420,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                                 <div class="faculty-sub-spec"><strong>Specialization:</strong> <?= e($ff['specialization']) ?></div>
                             <?php endif; ?>
                             <div style="margin-top:8px;">
-                                <a href="<?= base_url('faculty.php') ?>" style="font-size:0.75rem; font-weight:700; color:var(--color-primary-light);">
+                                <a href="<?= base_url('faculty.php') ?>" class="table-toolbar-link" style="font-size:0.75rem;">
                                     View Faculty Profile &rarr;
                                 </a>
                             </div>
@@ -396,22 +434,22 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
     <!-- ========================================================= -->
     <!-- SECTION 4 SUMMARY: CONTACT & INQUIRIES BANNER             -->
     <!-- ========================================================= -->
-    <section class="section-wrapper" style="background: linear-gradient(135deg, #071324 0%, #0F254B 100%); color:#FFFFFF; border-top:3.5px solid var(--color-gold);">
+    <section class="section-wrapper section-alt" style="border-top: 1px solid var(--color-border);">
         <div class="container">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; padding:10px 0;">
+            <div class="cta-banner-card">
                 <div style="max-width:680px;">
-                    <span class="hero-badge" style="background:rgba(245, 158, 11, 0.15); border-color:var(--color-gold); color:var(--color-gold-light);">
-                        Connect with SCJE
+                    <span class="hero-badge">
+                        <i class="fa-solid fa-comments"></i> Connect with SCJE
                     </span>
-                    <h3 style="font-family:var(--font-heading); font-size:1.65rem; font-weight:900; margin:10px 0 8px; color:#FFFFFF;">
+                    <h3 class="cta-banner-title">
                         Have Questions or Inquiries for the Dean's Office?
                     </h3>
-                    <p style="font-size:0.92rem; color:#CBD5E1; line-height:1.6;">
+                    <p class="cta-banner-desc">
                         Reach out directly to the Office of the Dean, Criminology Department Chairperson, or Laboratory Supervisors for enrollment, academic advising, and laboratory facility schedules.
                     </p>
                 </div>
                 <div>
-                    <a href="<?= base_url('contact.php') ?>" class="btn-primary" style="background:linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color:#071324; font-weight:800; padding:14px 28px; font-size:0.95rem; box-shadow:var(--shadow-gold);">
+                    <a href="<?= base_url('contact.php') ?>" class="btn-primary" style="padding:14px 28px; font-size:0.95rem;">
                         <i class="fa-solid fa-paper-plane"></i> Contact Us Now &rarr;
                     </a>
                 </div>

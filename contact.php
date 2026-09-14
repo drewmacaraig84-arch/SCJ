@@ -10,22 +10,20 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
     <!-- Page Banner -->
-    <div style="background: linear-gradient(135deg, #0A192F 0%, #0F254B 50%, #1E3A8A 100%); color: #FFFFFF; padding: 40px 0; border-bottom: 3px solid var(--color-primary-accent);">
-        <div class="container">
-            <div style="display:flex; align-items:center; gap:16px;">
-                <div style="width:60px; height:60px; border-radius:var(--radius-sm); background:rgba(56,189,248,0.2); border:1px solid var(--color-primary-accent); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--color-primary-accent);">
-                    <i class="fa-solid fa-envelope"></i>
-                </div>
-                <div>
-                    <h2 style="font-size:1.85rem; font-weight:900; letter-spacing:1px; text-transform:uppercase;">Contact SCJE</h2>
-                    <p style="color:#94A3B8; font-size:0.9rem;">Dean's Office &bull; Department Directory &bull; Public Inquiries</p>
-                </div>
+    <div class="page-banner">
+        <div class="container page-banner-inner">
+            <div class="page-banner-icon">
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="page-banner-content">
+                <h2>Contact SCJE</h2>
+                <p>Dean's Office &bull; Department Directory &bull; Public Inquiries</p>
             </div>
         </div>
     </div>
 
     <!-- Contact Section -->
-    <section class="section-wrapper" style="background:#FFFFFF;">
+    <section class="section-wrapper">
         <div class="container">
             <div class="resources-contact-grid">
                 <!-- Left: Contact Details & Office Information -->
@@ -34,43 +32,43 @@ require_once __DIR__ . '/includes/header.php';
                         <h2><i class="fa-solid fa-building-columns"></i> Office of the Dean</h2>
                     </div>
 
-                    <div style="background:#F8FAFC; border:1px solid #E2E8F0; border-radius:var(--radius-md); padding:26px; margin-bottom:20px;">
-                        <h3 style="color:var(--color-primary-dark); font-size:1.2rem; font-weight:800; margin-bottom:12px;">
+                    <div class="contact-details-box">
+                        <h3>
                             School of Criminal Justice Education
                         </h3>
-                        <p style="font-size:0.9rem; color:#475569; line-height:1.6; margin-bottom:20px;">
+                        <p>
                             Divine Word College of Calapan (DWCC)<br>
                             Gov. Infantado St., Calapan City, 5200 Oriental Mindoro, Philippines
                         </p>
 
                         <div style="display:flex; flex-direction:column; gap:14px; font-size:0.9rem;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:36px; height:36px; border-radius:50%; background:#EFF6FF; color:var(--color-primary); display:flex; align-items:center; justify-content:center; font-size:1rem;">
+                                <div class="contact-icon-circle">
                                     <i class="fa-solid fa-envelope"></i>
                                 </div>
                                 <div>
-                                    <strong style="color:var(--color-text-dark);">Email Address:</strong><br>
-                                    <a href="mailto:dean.scje@dwcc-scje.edu.ph" style="color:var(--color-primary-light);">dean.scje@dwcc-scje.edu.ph</a>
+                                    <strong class="contact-item-label">Email Address:</strong><br>
+                                    <a href="mailto:dean.scje@dwcc-scje.edu.ph" class="contact-item-link">dean.scje@dwcc-scje.edu.ph</a>
                                 </div>
                             </div>
 
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:36px; height:36px; border-radius:50%; background:#EFF6FF; color:var(--color-primary); display:flex; align-items:center; justify-content:center; font-size:1rem;">
+                                <div class="contact-icon-circle">
                                     <i class="fa-solid fa-phone"></i>
                                 </div>
                                 <div>
-                                    <strong style="color:var(--color-text-dark);">Telephone / Hotlines:</strong><br>
-                                    <span style="color:#475569;">+63 (043) 288-4001 local 214</span>
+                                    <strong class="contact-item-label">Telephone / Hotlines:</strong><br>
+                                    <span class="contact-item-val">+63 (043) 288-4001 local 214</span>
                                 </div>
                             </div>
 
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:36px; height:36px; border-radius:50%; background:#EFF6FF; color:var(--color-primary); display:flex; align-items:center; justify-content:center; font-size:1rem;">
+                                <div class="contact-icon-circle">
                                     <i class="fa-solid fa-clock"></i>
                                 </div>
                                 <div>
-                                    <strong style="color:var(--color-text-dark);">Office Hours:</strong><br>
-                                    <span style="color:#475569;">Monday – Friday: 8:00 AM – 5:00 PM | Saturday: 8:00 AM – 12:00 PM</span>
+                                    <strong class="contact-item-label">Office Hours:</strong><br>
+                                    <span class="contact-item-val">Monday – Friday: 8:00 AM – 5:00 PM | Saturday: 8:00 AM – 12:00 PM</span>
                                 </div>
                             </div>
                         </div>

@@ -23,16 +23,14 @@ $facultyList = Cache::remember('faculty_list', 3600, function() use ($pdo) {
 ?>
 
     <!-- Page Banner -->
-    <div style="background: linear-gradient(135deg, #0A192F 0%, #0F254B 50%, #1E3A8A 100%); color: #FFFFFF; padding: 40px 0; border-bottom: 3px solid var(--color-primary-accent);">
-        <div class="container">
-            <div style="display:flex; align-items:center; gap:16px;">
-                <div style="width:60px; height:60px; border-radius:var(--radius-sm); background:rgba(56,189,248,0.2); border:1px solid var(--color-primary-accent); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--color-primary-accent);">
-                    <i class="fa-solid fa-sitemap"></i>
-                </div>
-                <div>
-                    <h2 style="font-size:1.85rem; font-weight:900; letter-spacing:1px; text-transform:uppercase;">Faculty &amp; Staff</h2>
-                    <p style="color:#94A3B8; font-size:0.9rem;">Organizational Hierarchy &bull; Department Leadership &bull; Instructional Faculty</p>
-                </div>
+    <div class="page-banner">
+        <div class="container page-banner-inner">
+            <div class="page-banner-icon">
+                <i class="fa-solid fa-sitemap"></i>
+            </div>
+            <div class="page-banner-content">
+                <h2>Faculty &amp; Staff</h2>
+                <p>Organizational Hierarchy &bull; Department Leadership &bull; Instructional Faculty</p>
             </div>
         </div>
     </div>
@@ -44,7 +42,7 @@ $facultyList = Cache::remember('faculty_list', 3600, function() use ($pdo) {
         <div class="container">
             <div class="section-header-banner">
                 <h2><i class="fa-solid fa-sitemap"></i> Organizational Chart</h2>
-                <span style="font-size:0.85rem; color:#FEF08A; font-weight:700;">DWCC School of Criminal Justice Education</span>
+                <span class="badge badge-primary">DWCC School of Criminal Justice Education</span>
             </div>
 
             <div class="faculty-org-chart">
@@ -62,11 +60,11 @@ $facultyList = Cache::remember('faculty_list', 3600, function() use ($pdo) {
                                     <p><strong>Specialization:</strong> <?= e($dean['specialization']) ?></p>
                                 <?php endif; ?>
                                 <?php if (!empty($dean['research_interests'])): ?>
-                                    <p style="margin-top:6px; font-size:0.78rem; color:#CBD5E1;">
+                                    <p style="margin-top:6px; font-size:0.78rem; color:var(--color-text-secondary);">
                                         <strong>Research Interests:</strong> <?= e($dean['research_interests']) ?>
                                     </p>
                                 <?php endif; ?>
-                                <p style="margin-top:6px; font-size:0.75rem; color:#94A3B8;">
+                                <p style="margin-top:6px; font-size:0.75rem; color:var(--color-text-muted);">
                                     <i class="fa-solid fa-envelope"></i> <?= e($dean['email']) ?> &bull; <?= e($dean['office_location']) ?>
                                 </p>
                             </div>
@@ -93,11 +91,11 @@ $facultyList = Cache::remember('faculty_list', 3600, function() use ($pdo) {
                                     </div>
                                 <?php endif; ?>
                                 <?php if (!empty($fac['research_interests'])): ?>
-                                    <div class="faculty-sub-spec" style="margin-top:4px; color:#475569;">
+                                    <div class="faculty-sub-spec" style="margin-top:4px; color:var(--color-text-secondary);">
                                         <strong>Interests:</strong> <?= e($fac['research_interests']) ?>
                                     </div>
                                 <?php endif; ?>
-                                <div style="margin-top:6px; font-size:0.72rem; color:#64748B;">
+                                <div style="margin-top:6px; font-size:0.72rem; color:var(--color-text-muted);">
                                     <i class="fa-solid fa-envelope"></i> <?= e($fac['email']) ?>
                                 </div>
                             </div>

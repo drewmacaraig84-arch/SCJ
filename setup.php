@@ -49,7 +49,21 @@ function init_database(PDO $pdo, string $driver): array {
             status VARCHAR(50) NOT NULL DEFAULT 'Available',
             serial_number VARCHAR(100) NULL,
             description TEXT NULL,
+            person_accountable VARCHAR(150) NULL DEFAULT 'Sir Jom',
             date_acquired DATE NULL,
+            created_at {$nowDefault}
+        );",
+
+        "materials_chemicals" => "CREATE TABLE IF NOT EXISTS materials_chemicals (
+            id {$autoInc},
+            item_code VARCHAR(50) NOT NULL UNIQUE,
+            qty VARCHAR(50) NULL,
+            unit VARCHAR(50) NULL,
+            item_name VARCHAR(200) NOT NULL,
+            person_accountable VARCHAR(150) NULL DEFAULT 'Sir Jom',
+            brand VARCHAR(100) NULL,
+            status VARCHAR(50) NOT NULL DEFAULT 'Good Condition',
+            location VARCHAR(150) NOT NULL DEFAULT 'Crime Laboratory',
             created_at {$nowDefault}
         );",
 
@@ -234,172 +248,888 @@ function init_database(PDO $pdo, string $driver): array {
         $results[] = "Seeded " . count($researches) . " Criminological Research papers.";
     }
 
-    // 4. Seed Laboratory Equipment (Matching 5 Lab Areas + Sketch Columns)
+    // 4. Seed Laboratory Equipment (Official AY 2025-2026 Inventory: 18 Items)
     $checkEquip = $pdo->query("SELECT COUNT(*) FROM equipment")->fetchColumn();
     if ($checkEquip == 0) {
-        $stmt = $pdo->prepare("INSERT INTO equipment (equipment_code, equipment_name, brand, model, current_location, laboratory_category, status, serial_number, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO equipment (equipment_code, equipment_name, brand, model, current_location, laboratory_category, status, serial_number, description, person_accountable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $equipment = [
             [
-                'EQ-BAL-001',
-                'Comparison Microscope with Digital Imaging',
-                'Leica',
-                'FS4000 M',
-                'Forensic Ballistics Laboratory',
-                'Forensic Ballistics',
-                'Available',
-                'LCA-FS-98421',
-                'High-precision motorized bridge comparison microscope with dual split-field optical system for matching fired bullets and cartridge cases.'
+                'CLE-001',
+                'Chainomatic Analytical Balance',
+                'Keroy',
+                'N/A',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ],
             [
-                'EQ-BAL-002',
-                'Bullet Recovery Water Tank System',
+                'CLE-002',
+                'Chainomatic Analytical Balance',
+                'Keroy',
+                'N/A',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'CLE-003',
+                'Chainomatic Analytical Balance',
+                'Keroy',
+                'N/A',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'CLE-004',
+                'Digital Analytical Balance',
+                'Kern',
+                'N/A',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'CLE-005',
+                'Triple Beam Balance',
+                'Lark',
+                'Mb-2610',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'CLE-006',
+                'Triple Beam Balance',
+                'Lark',
+                'Mb-2610',
+                'Crime Lab',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'CLE-007',
+                'Questioned Document Kit',
                 'Sirchie',
-                'BRT-500',
-                'Forensic Ballistics Laboratory',
-                'Forensic Ballistics',
-                'Available',
-                'SRC-WT-2041',
-                'Heavy-duty stainless steel water recovery tank with deceleration baffles for collecting non-deformed test-fired test bullets.'
-            ],
-            [
-                'EQ-CRIM-001',
-                'Automated Cyanoacrylate Fuming Chamber',
-                'Air Science',
-                'Safefume 36',
+                'N/A',
+                'Crime Lab',
                 'Criminalistics Laboratory',
-                'Criminalistics Laboratory',
-                'Available',
-                'ASC-SF-1104',
-                'Controlled humidity and temperature chamber for developing latent fingerprint ridge details on non-porous physical evidence.'
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ],
             [
-                'EQ-CRIM-002',
-                'Forensic Optical Comparator / Video Spectral Comparator',
-                'Foster+Freeman',
-                'VSC40',
-                'Questioned Documents Room',
-                'Criminalistics Laboratory',
-                'Available',
-                'FF-VSC-3921',
-                'Multi-spectral illumination unit with UV, infrared, and coaxial light sources for examining questioned signatures, paper fiber, and ink differentiations.'
-            ],
-            [
-                'EQ-CRIM-003',
-                'Stereomicroscope with Polarized Light Stage',
-                'Olympus',
-                'SZ61',
-                'Criminalistics Laboratory',
-                'Criminalistics Laboratory',
-                'Available',
-                'OLY-SZ-5509',
-                'Used for macroscopic inspection of hair, fiber, soil samples, toolmarks, and microscopic physical trace items.'
-            ],
-            [
-                'EQ-CSI-001',
-                'Alternate Light Source (ALS) Crime Scene Forensic Kit',
-                'Sirchie',
-                'MegaMAXX MK-II',
-                'Crime Scene Investigation Laboratory',
-                'Crime Scene Investigation Laboratory',
-                'Available',
-                'SRC-MM-4421',
-                'Multi-wavelength LED forensic torch kit (UV, Blue, Green, Cyan) for identifying biological fluids, latent prints, and gunshot residue.'
-            ],
-            [
-                'EQ-CSI-002',
-                'Crime Scene Forensic Photography Kit with Macro Ring Flash',
-                'Nikon',
-                'D7500 Forensic FX',
-                'Crime Scene Investigation Laboratory',
-                'Crime Scene Investigation Laboratory',
-                'Available',
-                'NK-FX-8812',
-                'DSLR camera kit outfitted with 60mm micro-lens, polarized filters, scale calibrations, and forensic photographic scales.'
-            ],
-            [
-                'EQ-CSI-003',
-                'Electrostatic Dust Print Lifter (EDPL)',
-                'Sirchie',
-                'ESP900',
-                'Crime Scene Investigation Laboratory',
-                'Crime Scene Investigation Laboratory',
-                'Available',
-                'SRC-ED-7712',
-                'High-voltage electrostatic charge generator for lifting latent dust impressions from floors, carpets, paper, and upholstery.'
-            ],
-            [
-                'EQ-FS-001',
-                'UV-Vis Double Beam Spectrophotometer',
-                'Shimadzu',
-                'UV-1900i',
+                'FPE-001',
+                'Profile Projector',
+                'Radical',
+                'Rpp-250',
+                'Forensic Photography Room',
                 'Forensic Science Laboratory',
-                'Forensic Science Laboratory',
-                'Available',
-                'SHM-UV-6632',
-                'Analytical spectrophotometer for quantitative measurement of drug analytes, toxicology blood-alcohol concentration, and forensic chemical reagents.'
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ],
             [
-                'EQ-FS-002',
-                'Ductless Forensic Chemical Fume Hood',
-                'Labconco',
-                'Purifier 32',
+                'FPE-002',
+                'Comparison Microscope',
+                'Radical',
+                'N/A',
+                'Forensic Photography Room',
                 'Forensic Science Laboratory',
-                'Forensic Science Laboratory',
-                'Available',
-                'LBC-FH-1290',
-                'Equipped with carbon-activated filters for safely preparing caustic chemical reagents, Kastle-Meyer, and luminol solutions.'
+                'Out Of Service',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ],
             [
-                'EQ-SPEC-001',
-                'Computerized 6-Channel Polygraph System',
-                'Lafayette',
-                'LX6-00',
-                'Polygraph Examination Suite',
+                'FPE-003',
+                'Binocular Microscope',
+                'Radical',
+                'N/A',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Out Of Service',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FPE-004',
+                'Tripod',
+                'Davis And Standford',
+                'Provista',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Good Condition',
+                '751813',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FPE-005',
+                'Tripod',
+                'Vivitar',
+                'Vtr',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Good Condition',
+                '003005',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FPE-006',
+                'Color Enlarger',
+                'Lpl',
+                'C 7700 Pro',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FPE-007',
+                'Photo Enlarger',
+                'Kaiser',
+                'Vc 60',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Out Of Service',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FPE-008',
+                'Photo Cutter',
+                'N/A',
+                'N/A',
+                'Forensic Photography Room',
+                'Forensic Science Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'FE-001',
+                'Fingerprint Kit',
+                'Samsonite',
+                'N/A',
+                'Fingerprint Room',
+                'Criminalistics Laboratory',
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Fingerprint Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
+            ],
+            [
+                'PE-001',
+                'Polygraph Machine (Analog Type)',
+                'N/A',
+                'N/A',
+                'Polygraphy Room',
                 'Other Specialized Areas',
-                'Available',
-                'LFY-LX-88301',
-                'State-of-the-art computerized polygraph with thoracic and abdominal pneumographs, skin resistance EDA sensors, blood pressure cuff, and plethysmograph.'
+                'Good Condition',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Polygraphy Room. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ],
             [
-                'EQ-SPEC-002',
-                'Forensic Digital Extraction & Triage Hardware Workstation',
-                'Cellebrite',
-                'UFED Touch2',
-                'Digital Forensics Center',
+                'PE-002',
+                'Digital Polygraph Machine',
+                'Stoelting',
+                'N/A',
+                'Dean’s Office',
                 'Other Specialized Areas',
-                'Available',
-                'CLB-UF-4009',
-                'Dedicated hardware device for forensically acquiring logical and physical mobile extractions from suspect cellular devices with integrity hashing.'
-            ],
-            [
-                'EQ-BAL-003',
-                'Electronic Trigger Pull Gauge',
-                'Lyman',
-                'Digital Trigger Spec',
-                'Forensic Ballistics Laboratory',
-                'Forensic Ballistics',
-                'In Use',
-                'LYM-TP-552',
-                'Precision sensor for measuring the trigger release resistance and pull force of suspect firearms in kilograms and pounds.'
-            ],
-            [
-                'EQ-CRIM-004',
-                'Direct Inking Dactyloscopic Fingerprint Station',
-                'Sirchie',
-                'Master Print-60',
-                'Dactyloscopy Laboratory',
-                'Criminalistics Laboratory',
-                'Available',
-                'SRC-MP-9003',
-                'Stainless steel fingerprint table with porelon ceramic roller, glass ink plate, and tenprint cardholder clamps.'
+                'Brandnew',
+                'N/A',
+                'Official SCJE laboratory equipment assigned to Dean’s Office. Accountable officer: Sir Jom.',
+                'Sir Jom'
             ]
         ];
 
         foreach ($equipment as $eq) {
             $stmt->execute($eq);
         }
-        $results[] = "Seeded " . count($equipment) . " Laboratory Equipment records.";
+        $results[] = "Seeded " . count($equipment) . " Laboratory Equipment records (AY 2025-2026).";
+    }
+
+    // 4b. Seed Materials & Chemicals Inventory (Official AY 2025-2026: 64 Items)
+    $checkMat = $pdo->query("SELECT COUNT(*) FROM materials_chemicals")->fetchColumn();
+    if ($checkMat == 0) {
+        $stmt = $pdo->prepare("INSERT INTO materials_chemicals (item_code, qty, unit, item_name, person_accountable, brand, status, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+        $materials = [
+            [
+                'MC-001',
+                '4',
+                '500 Ml',
+                'Erlenmeyer Flask',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-002',
+                '6',
+                '300 Ml',
+                'Erlenmeyer Flask',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-003',
+                '4',
+                '250 Ml',
+                'Erlenmeyer Flask',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-004',
+                '4',
+                '125 Ml',
+                'Erlenmeyer Flask',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-005',
+                '2',
+                '600 Ml',
+                'Beaker',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-006',
+                '10',
+                '500 Ml',
+                'Beaker',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-007',
+                '9',
+                '250 Ml',
+                'Beaker',
+                'Sir Jom',
+                'Pyrex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-008',
+                '4',
+                '75 Ml',
+                'Funnel',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-009',
+                '32',
+                'N/A',
+                'Test Tube',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-010',
+                '4',
+                'N/A',
+                'Test Tube Rack',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-011',
+                '5',
+                '100 Ml',
+                'Graduated Cylinder',
+                'Sir Jom',
+                'Bonex',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-012',
+                '3',
+                '25 Ml',
+                'Graduated Cylinder',
+                'Sir Jom',
+                'Tek',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-013',
+                '72',
+                'N/A',
+                'Microscope Slides',
+                'Sir Jom',
+                'Top Care',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-014',
+                '7',
+                '250 Ml',
+                'Glass Alcohol Lamp',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-015',
+                '13',
+                'N/A',
+                'Eye Protector',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-016',
+                '4',
+                'N/A',
+                'Steering Rod',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-017',
+                '2',
+                'N/A',
+                'Pipette',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-018',
+                '13',
+                '50 Ml',
+                'Glass Burette',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-019',
+                '10',
+                'N/A',
+                'Dropper',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-020',
+                '1',
+                'N/A',
+                'Reagent Glass Bottle',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-021',
+                '10',
+                'N/A',
+                'Scalpel',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-022',
+                '5',
+                'N/A',
+                'Watch Glass',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-023',
+                '2',
+                'N/A',
+                'Mortar And Pestle',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-024',
+                '4',
+                'N/A',
+                'Evaporating Dish',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-025',
+                '5',
+                'N/A',
+                'Porcelain',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-026',
+                '7',
+                'N/A',
+                'Bunsen Burner',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-027',
+                '6',
+                'N/A',
+                'Crucible Tongs',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-028',
+                '3',
+                'N/A',
+                'Magnifying Glass',
+                'Sir Jom',
+                'N/A',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-029',
+                '45',
+                'N/A',
+                'Magnifying Glass',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-030',
+                '2',
+                'N/A',
+                'Forceps',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-031',
+                '27',
+                'N/A',
+                'Fingerprint Brush',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-032',
+                '6',
+                'N/A',
+                'Ink Roller',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-033',
+                '6',
+                'N/A',
+                'Horshoe Fingerprint Lense',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-034',
+                '5',
+                'N/A',
+                'Ink Slab',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-035',
+                '4',
+                'N/A',
+                'Ink Slab',
+                'Sir Jom',
+                'N/A',
+                'Brand New',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-036',
+                '7',
+                'N/A',
+                'Fingerprint Card Holder',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-037',
+                '4',
+                'N/A',
+                'Fingerprint Card Holder',
+                'Sir Jom',
+                'Sirchie',
+                'Brand New',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-038',
+                '2',
+                '59 Ml',
+                'Latent Fingerprint Powder (Silk Black)',
+                'Sir Jom',
+                'Sirchie',
+                'Brandnew',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-039',
+                '4',
+                '59 Ml',
+                'Latent Fingerprint Powder (Silk Black)',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-040',
+                '4',
+                '59 Ml',
+                'Latent Fingerprint Powder (White)',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-041',
+                '1',
+                '30 Ml',
+                'Latent Fingerprint Powder (Silk Black)',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-042',
+                '1',
+                '30 Ml',
+                'Latent Fingerprint Powder (White)',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-043',
+                '8',
+                '1.5',
+                'Fingerprint Lifting Tape (Transparent)',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-044',
+                '3',
+                'N/A',
+                'Ballpen',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-045',
+                '4',
+                'N/A',
+                'Forceps',
+                'Sir Jom',
+                'N/A',
+                'Brand New',
+                'Fingerprint Room'
+            ],
+            [
+                'MC-046',
+                '2',
+                '15 Cm',
+                'Caliper',
+                'Sir Jom',
+                'Vernie',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-047',
+                '2',
+                '15 Cm',
+                'Caliper',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-048',
+                '1',
+                '15 Cm',
+                'Caliper',
+                'Sir Jom',
+                'Mitutoyo',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-049',
+                '12',
+                'M-Xl',
+                'Laboratory Gown',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-050',
+                '1',
+                'N/A',
+                'Typewriting Protractor',
+                'Sir Jom',
+                'Sirchie',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-051',
+                '3',
+                'N/A',
+                'Typewriting Protractor',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-052',
+                '2',
+                'N/A',
+                'Space Test Plate',
+                'Sir Jom',
+                'Sirchie',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-053',
+                '1',
+                'N/A',
+                'Space Test Plate',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-054',
+                '4',
+                'N/A',
+                'Handwriting Comparison Test Plate',
+                'Sir Jom',
+                'Sirchie',
+                'Brand New',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-055',
+                '5',
+                'N/A',
+                'Handwriting Comparision Test Plate',
+                'Sir Jom',
+                'Sirchie',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-056',
+                '7',
+                'N/A',
+                'Magnifying Comparator',
+                'Sir Jom',
+                'Finescale',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-057',
+                '1',
+                'N/A',
+                'Comparator Stock Pocket Model',
+                'Sir Jom',
+                'Finescale',
+                'Good Condition',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-058',
+                '4',
+                'N/A',
+                'Paraffin Wax',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Consultation Room'
+            ],
+            [
+                'MC-059',
+                '1',
+                'N/A',
+                'Plaster Of Paris',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Consultation Room'
+            ],
+            [
+                'MC-060',
+                '4',
+                'N/A',
+                'Uv Mini Light',
+                'Sir Jom',
+                'Sirchie',
+                'Out Of Service',
+                'Crime Laboratory'
+            ],
+            [
+                'MC-061',
+                '4',
+                'N/A',
+                'Black & White Negative Film',
+                'Sir Jom',
+                'Kodak',
+                'Good Condition',
+                'Forensic Photography'
+            ],
+            [
+                'MC-062',
+                '1',
+                'N/A',
+                'Funnel',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Forensic Photography'
+            ],
+            [
+                'MC-063',
+                '1',
+                'N/A',
+                'Reagent Bottle',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Forensic Photography'
+            ],
+            [
+                'MC-064',
+                '1',
+                'N/A',
+                'Timer',
+                'Sir Jom',
+                'N/A',
+                'Good Condition',
+                'Forensic Photography'
+            ]
+        ];
+
+        foreach ($materials as $m) {
+            $stmt->execute($m);
+        }
+        $results[] = "Seeded " . count($materials) . " Materials & Chemicals records (AY 2025-2026).";
     }
 
     // 5. Seed Faculty Directory (Matching Sketch Org Chart with OIC Dean at Top)
@@ -516,26 +1246,22 @@ function init_database(PDO $pdo, string $driver): array {
             [
                 'vision',
                 'VISION',
-                'A leading center of excellence in criminology and criminal justice education, recognized for academic rigor, ethical public safety leadership, and advanced forensic innovation in the region and beyond.'
+                'To become the center and primer in the pursuit of quality instruction in the field of Criminal Justice in the entire Mindoro Region.'
             ],
             [
                 'mission',
                 'MISSION',
-                'To provide quality education, cutting-edge empirical research, and rigorous professional training for a safer, peaceful, and just society through competent, disciplined, and morally upright graduates.'
+                'To produce professionally competent and morally upright graduates equipped with contemporary and functional knowledge and skills in the field of law enforcement administration, crime detection and investigation, correctional administration, criminal sociology and forensic science.'
             ],
             [
                 'goals',
                 'GOALS',
-                'To produce highly competent, ethical, and service-oriented criminology professionals equipped with scientific investigative skills, respect for human rights, and readiness for national and international law enforcement agencies.'
+                "• Foster the value of god-fearing, social responsibility, self-sacrifice and discipline;\n• Provide students with theoretical, technical, practical and actual knowledge relative to criminology profession; and\n• Prepare students for careers in any agencies under the Philippine Criminal Justice System"
             ],
             [
                 'history',
                 'HISTORY OF SCJ',
-                'The School of Criminal Justice Education (SCJE) at Divine Word College of Calapan (DWCC) was established in response to the growing national imperative for professionally trained, scientifically grounded, and value-laden criminologists. 
-
-Founded with a commitment to academic excellence and moral formation, the School has grown from a humble department into a recognized premier institution in Oriental Mindoro and the MIMAROPA region. Over decades of dedicated service, SCJE has produced top-ranking licensed criminologists who now lead prominent positions in the Philippine National Police (PNP), Bureau of Jail Management and Penology (BJMP), Bureau of Fire Protection (BFP), National Bureau of Investigation (NBI), Philippine Drug Enforcement Agency (PDEA), Armed Forces of the Philippines (AFP), and corporate security domains.
-
-Today, the School boasts state-of-the-art specialized laboratories—including the Forensic Ballistics Laboratory, Criminalistics and Dactyloscopy Suite, Crime Scene Investigation Simulation Facility, and Computerized Polygraph Examination Suite—advancing the boundaries of scientific crime investigation and criminal justice research.'
+                "The Criminology academic program at Divine Word College of Calapan (DWCC) was first offered in 2009 under the Liberal Arts Department, headed by Mr. Dennis S. Alcaraz.\n\nIn 2012, recognizing the rapid growth and distinct professional identity of the discipline, it was separated and placed under an independent department called the Criminology Department, headed by Ms. Janenovelle A. Cuenca.\n\nThe year 2013 marked a series of historic milestones: Ms. Janenovelle A. Cuenca was appointed as one of the members of the Regional Selection and Screening Committee for applicants of the PNP in MIMAROPA. In that same year, the DWCC Criminology Department offered its own in-house and formal review for the licensure board examination. When the first batch of graduates took the Criminology Board Examination, they set an extraordinary precedent with a 100% passing rate. Ever since, the department has maintained a yearly board examination passing rate far exceeding the national average, on various occasions becoming the number one school of criminology in the province and one among the best in the entire region, while actively hosting and participating in international and local criminology seminars.\n\nIn 2019, the department was formally renamed the School of Criminal Justice (SCJ) in compliance with the mandate of the Commission on Higher Education (CHED), opening opportunities for the future offering of allied courses. Today, more than 90% of SCJ graduates are employed in stable jobs across law enforcement agencies, primarily the Philippine National Police (PNP), and the School continues to expand with a dramatic increase in student population every school year."
             ]
         ];
 

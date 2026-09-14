@@ -33,10 +33,24 @@ CREATE TABLE IF NOT EXISTS `equipment` (
     `model` VARCHAR(100) NOT NULL,
     `current_location` VARCHAR(150) NOT NULL,
     `laboratory_category` VARCHAR(100) NOT NULL,
-    `status` VARCHAR(50) NOT NULL DEFAULT 'Available',
+    `status` VARCHAR(50) NOT NULL DEFAULT 'Good Condition',
     `serial_number` VARCHAR(100) NULL,
     `description` TEXT NULL,
+    `person_accountable` VARCHAR(150) NULL DEFAULT 'Sir Jom',
     `date_acquired` DATE NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `materials_chemicals` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `item_code` VARCHAR(50) NOT NULL UNIQUE,
+    `qty` VARCHAR(50) NULL,
+    `unit` VARCHAR(50) NULL,
+    `item_name` VARCHAR(200) NOT NULL,
+    `person_accountable` VARCHAR(150) NULL DEFAULT 'Sir Jom',
+    `brand` VARCHAR(100) NULL,
+    `status` VARCHAR(50) NOT NULL DEFAULT 'Good Condition',
+    `location` VARCHAR(150) NOT NULL DEFAULT 'Crime Laboratory',
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

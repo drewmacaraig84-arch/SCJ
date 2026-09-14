@@ -23,22 +23,22 @@
         modal.style.transition = 'opacity 0.2s ease, visibility 0.2s ease';
 
         modal.innerHTML = `
-            <div class="modal-card" style="max-width: 450px; width: 90%; background: #FFFFFF; border-radius: 14px; padding: 28px 24px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4); border: 1px solid rgba(239, 68, 68, 0.25); transform: scale(0.92); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+            <div class="modal-card" style="max-width: 450px; width: 90%; background: var(--color-bg-surface); border-radius: 14px; padding: 28px 24px; text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); border: 1px solid rgba(239, 68, 68, 0.35); transform: scale(0.92); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
                 <!-- Warning Icon Pulse -->
-                <div style="width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: #FEE2E2; border: 3px solid #FECACA; display: flex; align-items: center; justify-content: center; color: #DC2626; font-size: 1.75rem;">
+                <div style="width: 64px; height: 64px; margin: 0 auto 16px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.3); display: flex; align-items: center; justify-content: center; color: #EF4444; font-size: 1.75rem;">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 
-                <h3 id="scjeConfirmTitle" style="font-size: 1.3rem; font-weight: 800; color: #0F172A; margin: 0 0 8px;">
+                <h3 id="scjeConfirmTitle" style="font-size: 1.3rem; font-weight: 800; color: var(--color-text-primary); margin: 0 0 8px;">
                     Confirm Deletion
                 </h3>
                 
-                <p id="scjeConfirmMessage" style="color: #64748B; font-size: 0.95rem; line-height: 1.55; margin: 0 0 24px;">
+                <p id="scjeConfirmMessage" style="color: var(--color-text-secondary); font-size: 0.95rem; line-height: 1.55; margin: 0 0 24px;">
                     Are you sure you want to delete this record? This action cannot be undone.
                 </p>
                 
                 <div style="display: flex; gap: 12px; justify-content: center;">
-                    <button type="button" id="scjeConfirmCancel" class="btn-primary" style="background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; font-weight: 700; padding: 10px 22px; border-radius: 8px; cursor: pointer;">
+                    <button type="button" id="scjeConfirmCancel" class="btn-primary" style="background: var(--color-bg-subtle); color: var(--color-text-secondary); border: 1px solid var(--color-border); font-weight: 700; padding: 10px 22px; border-radius: 8px; cursor: pointer;">
                         Cancel
                     </button>
                     <a id="scjeConfirmAction" href="#" class="btn-primary" style="background: #EF4444; border: 1px solid #DC2626; color: #FFFFFF; font-weight: 700; padding: 10px 22px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer;">
