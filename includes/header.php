@@ -166,7 +166,7 @@ $csrfToken = CsrfMiddleware::getToken();
 
                         <div class="form-group">
                             <label for="modalIdNumber"><i class="fa-solid fa-id-card"></i> USERNAME: ID NUMBER</label>
-                            <input type="text" id="modalIdNumber" name="id_number" class="form-control" placeholder="e.g. Drew or Student ID" required autofocus>
+                            <input type="text" id="modalIdNumber" name="id_number" class="form-control" required autofocus>
                         </div>
 
                         <div class="form-group">
@@ -174,9 +174,8 @@ $csrfToken = CsrfMiddleware::getToken();
                             <input type="password" id="modalPassword" name="password" class="form-control" placeholder="••••••••" required>
                         </div>
 
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:16px;">
-                            <span style="font-size:0.75rem; color:var(--color-text-muted);">Default: <code>Drew</code> / <code>admin</code></span>
-                            <button type="submit" class="btn-primary">
+                        <div style="margin-top:16px;">
+                            <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:11px;">
                                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
                             </button>
                         </div>
