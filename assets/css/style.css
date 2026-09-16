@@ -3743,4 +3743,560 @@ button, input, select, textarea {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(212, 175, 55, 0.65) !important;
 }
 
+/* ==============================================================
+   UNIVERSAL MODERN ANIMATION & MICRO-INTERACTION SUITE
+   School of Criminal Justice Education (SCJE) Information System
+   Applies across ALL Public Pages, Modals, Tables, and Admin Portal
+   ============================================================== */
 
+/* Core Keyframe Library */
+@keyframes scjeFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scjeFadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scjeFadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scjeSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scjeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale3d(0.92, 0.92, 1);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes scjePulseAura {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0);
+  }
+}
+
+@keyframes scjePulseLive {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes scjeShimmerSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes scjeFloatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 1. Global Page Transitions */
+#appContent {
+  animation: scjeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-banner {
+  animation: scjeFadeInDown 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-banner::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: scjeShimmerSweep 6s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.page-banner-icon {
+  animation: scjeScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.page-banner-content h2 {
+  animation: scjeFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+.page-banner-content p {
+  animation: scjeFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+}
+
+/* 2. Scroll-Reveal Framework */
+.scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.scje-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Stagger Delays for Grids */
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.10s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.20s; }
+.stagger-5 { transition-delay: 0.25s; }
+.stagger-6 { transition-delay: 0.30s; }
+.stagger-7 { transition-delay: 0.35s; }
+.stagger-8 { transition-delay: 0.40s; }
+
+/* 3. Research & Discipline Category Cards */
+.research-categories-grid .category-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.research-categories-grid .category-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12), 0 0 0 1.5px rgba(212, 175, 55, 0.45);
+}
+
+[data-theme="dark"] .research-categories-grid .category-card:hover {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55), 0 0 0 1.5px rgba(56, 189, 248, 0.45);
+}
+
+.category-card .category-icon {
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+}
+
+.category-card:hover .category-icon {
+  transform: scale(1.18) rotate(5deg);
+  color: var(--color-gold);
+}
+
+.category-card .category-link {
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.category-card:hover .category-link {
+  transform: translateX(4px);
+  color: var(--color-gold);
+}
+
+/* Active Category Card State */
+.category-card.active {
+  border-color: var(--color-gold) !important;
+  box-shadow: 0 0 0 2px var(--color-gold), 0 8px 24px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* 4. Interactive Data Tables (Public & Research Repository) */
+.table-card {
+  animation: scjeFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-table tbody tr {
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+  background: rgba(30, 58, 138, 0.04);
+  transform: translateX(3px);
+}
+
+[data-theme="dark"] .custom-table tbody tr:hover {
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.custom-table tbody tr:hover .research-author-cell i {
+  transform: scale(1.25) rotate(-6deg);
+  color: var(--color-gold);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.25s ease;
+}
+
+.research-author-cell i {
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* 5. Buttons, Search Inputs & Micro-interactions */
+.btn-primary,
+.btn-secondary,
+.btn-action,
+.btn-view-research,
+.btn-view-equip,
+.btn-view-material {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, filter 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover,
+.btn-action:hover,
+.btn-view-research:hover,
+.btn-view-equip:hover,
+.btn-view-material:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(30, 58, 138, 0.28);
+}
+
+.btn-primary:active,
+.btn-action:active,
+.btn-view-research:active {
+  transform: translateY(1px) scale(0.97);
+}
+
+.sketch-search-input,
+.filter-select,
+.form-control {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.sketch-search-input:focus,
+.filter-select:focus,
+.form-control:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2), 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+/* 6. Universal Modal Animations (Details / Login / Confirmations) */
+.modal-overlay {
+  transition: opacity 0.26s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.26s ease;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+}
+
+.modal-overlay.active {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-overlay .modal-card,
+.modal-overlay .modal-box {
+  transform: scale3d(0.93, 0.93, 1) translateY(16px);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+}
+
+.modal-overlay.active .modal-card,
+.modal-overlay.active .modal-box {
+  transform: scale3d(1, 1, 1) translateY(0);
+  opacity: 1;
+}
+
+.modal-close {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: rotate(90deg) scale(1.15);
+}
+
+/* 7. Faculty & Laboratory Facility Cards */
+.faculty-card,
+.lab-card,
+.feature-card,
+.academic-program-card,
+.academic-pathway-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.faculty-card:hover,
+.lab-card:hover,
+.feature-card:hover,
+.academic-program-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(212, 175, 55, 0.35);
+}
+
+[data-theme="dark"] .faculty-card:hover,
+[data-theme="dark"] .lab-card:hover,
+[data-theme="dark"] .feature-card:hover {
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(56, 189, 248, 0.4);
+}
+
+.faculty-photo img,
+.lab-card-img img {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faculty-card:hover .faculty-photo img,
+.lab-card:hover .lab-card-img img {
+  transform: scale(1.06);
+}
+
+/* ==============================================================
+   8. ADMIN PORTAL COMPREHENSIVE ANIMATIONS
+   ============================================================== */
+.admin-layout {
+  animation: scjeFadeIn 0.4s ease both;
+}
+
+.admin-sidebar {
+  animation: scjeSlideInLeft 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.admin-nav li a {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.admin-nav li a:hover {
+  transform: translateX(5px);
+  background: rgba(30, 58, 138, 0.55);
+}
+
+.admin-nav li a i {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+}
+
+.admin-nav li a:hover i {
+  transform: scale(1.22) rotate(4deg);
+  color: #F59E0B;
+}
+
+.admin-nav li a.active {
+  box-shadow: inset 4px 0 0 var(--color-primary-accent);
+}
+
+.admin-main {
+  animation: scjeFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Admin Stat Cards with Staggered Entrance */
+.stat-card,
+.health-card,
+.analytics-card,
+.widget-card,
+.metric-box {
+  animation: scjeFadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.stat-card:hover,
+.health-card:hover,
+.analytics-card:hover,
+.widget-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(56, 189, 248, 0.35);
+}
+
+.stat-card:hover .stat-icon,
+.health-card:hover .metric-icon {
+  transform: scale(1.16) rotate(6deg);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stat-icon, .metric-icon {
+  transition: transform 0.3s ease;
+}
+
+/* Admin Table Interactions */
+.admin-table tbody tr {
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(30, 58, 138, 0.08);
+  transform: translateX(3px);
+}
+
+/* Live Status Dot Pulse */
+.live-dot {
+  animation: scjePulseLive 2.2s infinite ease-in-out !important;
+}
+
+/* Badges Hover Haptic Effect */
+.badge,
+.badge-info,
+.badge-success,
+.badge-warning,
+.badge-danger {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.badge:hover {
+  transform: scale(1.08);
+}
+
+/* Admin Flash Alerts */
+.alert,
+.alert-success,
+.alert-danger {
+  animation: scjeFadeInDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* 9. Respect User Accessibility Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==============================================================
+   10. GLOBAL STATIONARY SIDEBAR ARCHITECTURE (PAGE SCROLLING NEVER AFFECTS SIDEBAR)
+   ============================================================== */
+@media (min-width: 768px) {
+  body:has(.admin-layout) {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .admin-layout {
+    display: grid !important;
+    grid-template-columns: 260px minmax(0, 1fr) !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+  .admin-sidebar {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    align-self: start !important;
+    flex-shrink: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 100 !important;
+    background: #071324 !important;
+    border-right: 1px solid rgba(56, 189, 248, 0.18) !important;
+    box-sizing: border-box !important;
+  }
+  .admin-main {
+    height: 100vh !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==============================================================
+   11. GLOBAL RESPONSIVE INPUT & TEXTAREA CONTROLS
+   ============================================================== */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="url"],
+textarea,
+select,
+.form-control {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: clamp(0.92rem, 0.86rem + 0.3vw, 1.05rem);
+  line-height: 1.7;
+  letter-spacing: 0.15px;
+  color: var(--color-text-primary, #F8FAFC);
+  background: var(--color-bg-page, #08111D);
+  border: 1.5px solid var(--color-border, #1E375A);
+  border-radius: var(--radius-sm, 10px);
+  padding: clamp(12px, 1.3vw, 18px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+textarea {
+  min-height: 90px;
+  line-height: 1.75;
+  resize: vertical;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus,
+select:focus,
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary, #D4AF37);
+  box-shadow: 0 0 0 3.5px rgba(212, 175, 55, 0.22);
+  background: var(--color-bg-surface, #0E1B2E);
+}
+
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="email"],
+[data-theme="light"] input[type="password"],
+[data-theme="light"] input[type="search"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] input[type="url"],
+[data-theme="light"] textarea,
+[data-theme="light"] select,
+[data-theme="light"] .form-control {
+  background: #FFFFFF;
+  color: #0F172A;
+  border: 1.5px solid #CBD5E1;
+}
+
+[data-theme="light"] input[type="text"]:focus,
+[data-theme="light"] input[type="email"]:focus,
+[data-theme="light"] input[type="password"]:focus,
+[data-theme="light"] input[type="search"]:focus,
+[data-theme="light"] input[type="number"]:focus,
+[data-theme="light"] input[type="url"]:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus,
+[data-theme="light"] .form-control:focus {
+  border-color: #1E3A8A;
+  box-shadow: 0 0 0 3.5px rgba(30, 58, 138, 0.15);
+  background: #FFFFFF;
+}

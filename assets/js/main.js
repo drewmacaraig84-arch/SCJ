@@ -508,6 +508,50 @@ window.initSCJEApp = function () {
         });
     }
 
+    // -------------------------------------------------------------
+    // 5. High-Performance Scroll-Reveal & Stagger Animation Engine
+    // -------------------------------------------------------------
+    function initScrollReveal() {
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scje-revealed');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.08,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            const targets = document.querySelectorAll(`
+                .section-header-banner,
+                .category-card,
+                .table-card,
+                .faculty-card,
+                .lab-card,
+                .feature-card,
+                .academic-program-card,
+                .academic-pathway-card,
+                .pillar-card,
+                .contact-card,
+                .hero-tile
+            `);
+
+            targets.forEach((el, index) => {
+                el.classList.add('scroll-reveal');
+                const staggerIndex = (index % 8) + 1;
+                el.classList.add(`stagger-${staggerIndex}`);
+                observer.observe(el);
+            });
+        } else {
+            document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('scje-revealed'));
+        }
+    }
+
+    initScrollReveal();
+
     // Helper to sanitize text inside injected HTML
     function escapeHtml(text) {
         if (!text) return '';
@@ -523,3 +567,4 @@ window.initSCJEApp = function () {
 };
 
 document.addEventListener('DOMContentLoaded', window.initSCJEApp);
+

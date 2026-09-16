@@ -19,6 +19,13 @@ class CsrfMiddleware {
     }
 
     /**
+     * Generate or retrieve the current CSRF token (alias for getToken)
+     */
+    public static function generate(): string {
+        return self::getToken();
+    }
+
+    /**
      * Render an HTML hidden input containing the token
      */
     public static function field(): string {

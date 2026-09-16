@@ -116,7 +116,7 @@ $materials = $pdo->query("SELECT * FROM materials_chemicals ORDER BY id ASC")->f
                 <i class="fa-solid fa-plus-circle" style="color:var(--color-primary-accent);"></i> Add Material / Reagent
             </h3>
             <form method="POST" action="">
-                <input type="hidden" name="_csrf_token" value="<?= CsrfMiddleware::generate() ?>">
+                <?= CsrfMiddleware::field() ?>
                 <input type="hidden" name="action" value="add">
                 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;">
                     <div>

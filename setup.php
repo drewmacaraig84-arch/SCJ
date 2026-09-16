@@ -196,114 +196,35 @@ function init_database(PDO $pdo, string $driver): array {
     }
 
 
-    // 3. Seed Research Papers (Matching 16 Categories + Sketch Columns)
+    // 3. Seed Research Papers (230 True Theses 2014-2026)
     $checkResearch = $pdo->query("SELECT COUNT(*) FROM research")->fetchColumn();
-    if ($checkResearch == 0) {
-        $stmt = $pdo->prepare("INSERT INTO research (author_name, research_title, month_year, category, abstract, keywords) VALUES (?, ?, ?, ?, ?, ?)");
-        
-        $researches = [
-            [
-                'Joan Mae A. Gayacan, RCrim.',
-                'Comparative Analysis of Altered Signatures and Handwriting Characteristics Among Selected Criminology Students',
-                'March 2025',
-                'Questioned Document Examination',
-                'This empirical study investigates the distinct microscopic traits and stroke cadence identifiable in simulated questioned handwriting specimens, establishing automated baseline criteria for forensic document examiners.',
-                'Questioned Documents, Handwriting Analysis, Forensics, Signatures'
-            ],
-            [
-                'Dr. Anthony S. Morales, RCrim., CSP',
-                'Ballistic Striation Patterns on Fired Cartridge Cases Using High-Resolution Comparison Microscopy',
-                'January 2025',
-                'Forensic Ballistics',
-                'An investigation into firing pin impressions and breech face markings produced by standard issue 9mm semi-automatic pistols in humid maritime tropical environments.',
-                'Ballistics, Comparison Microscope, Firearms Identification, Striations'
-            ],
-            [
-                'Carlos D. Mendoza, RCrim.',
-                'Efficacy of Cyanoacrylate Fuming versus Ninhydrin on Latent Fingerprints on Non-Porous Surfaces',
-                'December 2024',
-                'Criminalistics',
-                'A rigorous comparative assessment of latent ridge development methodologies on metallic, glass, and varnished wooden crime scene exhibits.',
-                'Fingerprints, Dactyloscopy, Criminalistics, Latent Prints'
-            ],
-            [
-                'Atty. Clarissa T. Mendoza & J. Delos Santos',
-                'Procedural Integrity and Admissibility of Digital Evidence in Cybercrime Prosecutions in Calapan City',
-                'November 2024',
-                'Cybercrime',
-                'Examines the chain of custody protocols followed by local law enforcement officers when seizing and extracting forensic digital data from mobile smartphones and computing terminals.',
-                'Cybercrime, Digital Forensics, Chain of Custody, Rules on Electronic Evidence'
-            ],
-            [
-                'Capt. Eduardo P. Ramos, PN (Ret.)',
-                'Community-Oriented Policing Strategies (COPS) and Crime Rate Reduction in Oriental Mindoro',
-                'October 2024',
-                'Police Administration',
-                'Evaluates patrol response time, police visibility, and citizen trust indexes across urban and rural barangays following the deployment of community assistance desks.',
-                'Police Administration, Community Policing, Crime Prevention, PNP'
-            ],
-            [
-                'Dr. Roberto M. Dela Cruz & F. Gutierrez',
-                'Socio-Economic Determinants and Intervention Outcomes Among Children in Conflict with the Law (CICL)',
-                'September 2024',
-                'Juvenile Delinquency',
-                'A longitudinal case evaluation of restorative justice diversions and rehabilitation frameworks implemented by local juvenile custodial facilities.',
-                'Juvenile Delinquency, Restorative Justice, CICL, Youth Rehabilitation'
-            ],
-            [
-                'Engr. Mark Daniel Bautista & K. Villanueva',
-                'Spectrophotometric Analysis of Gunshot Residue (GSR) on Textile Fabrics at Varying Distances',
-                'August 2024',
-                'Forensic Science',
-                'Establishes muzzle-to-target distance estimation thresholds by quantifying lead, barium, and antimony particulates through atomic absorption spectrophotometry.',
-                'GSR, Forensic Chemistry, Gunshot Residue, Distance Estimation'
-            ],
-            [
-                'Prof. Veronica L. Santos, RCrim.',
-                'Standardization of Forensic Crime Scene Photography Under Extreme Low-Light Conditions',
-                'June 2024',
-                'Forensic Photography',
-                'Guidelines and optical camera configurations for evidentiary photographic documentation during nighttime crime scene operations.',
-                'Forensic Photography, Crime Scene, Lighting, Evidentiary Value'
-            ],
-            [
-                'Gerald N. Navarro, RCrim.',
-                'Physiological Baseline Deviations During Computerized Polygraph Examinations of Traumatized Victims',
-                'May 2024',
-                'Victimology',
-                'Assesses autonomic nervous system responses, galvanic skin resistance, and cardio-sphygmograph spikes in traumatized interviewees.',
-                'Polygraph, Victimology, Lie Detection, Autonomic Response'
-            ],
-            [
-                'Prof. Arnold T. Castillo, RCrim.',
-                'Modern Custodial Management and Congestion Mitigation in Provincial Jail Facilities',
-                'April 2024',
-                'Corrections',
-                'Structural assessment of inmate classification, healthcare delivery, and rehabilitation programs within provincial correctional institutes.',
-                'Corrections, Penology, Jail Management, Inmate Welfare'
-            ],
-            [
-                'Kristine Mae Solis, RCrim.',
-                'Barangay Peacekeeping Action Teams (BPATs) and Localized Conflict Resolution Frameworks',
-                'February 2024',
-                'Community-Based Studies',
-                'Measures the effectiveness of community-based frontline responders in de-escalating domestic conflicts and reporting criminal incidents.',
-                'Community Safety, BPATs, Barangay Justice, Conflict Resolution'
-            ],
-            [
-                'Mark Justin S. Reyes & B. Tan',
-                'Perceived Safety and Victimization Fears Among Nighttime Commuters in Commercial Centers',
-                'January 2024',
-                'Public Safety',
-                'Survey-based assessment analyzing urban lighting, CCTV surveillance coverage, and pedestrian security perceptions.',
-                'Public Safety, Urban Planning, Crime Prevention, Fear of Crime'
-            ]
-        ];
-
-        foreach ($researches as $r) {
-            $stmt->execute($r);
+    if ($checkResearch < 200) {
+        // Clear out any old dummy data if upgrading
+        $pdo->exec("DELETE FROM research");
+        if ($driver === 'sqlite') {
+            $pdo->exec("DELETE FROM sqlite_sequence WHERE name = 'research'");
         }
-        $results[] = "Seeded " . count($researches) . " Criminological Research papers.";
+
+        $jsonThesesPath = __DIR__ . '/database/theses_data.json';
+        if (file_exists($jsonThesesPath)) {
+            $thesesData = json_decode(file_get_contents($jsonThesesPath), true);
+            if (!empty($thesesData)) {
+                $stmt = $pdo->prepare("INSERT INTO research (id, author_name, research_title, month_year, category, abstract, keywords, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                foreach ($thesesData as $r) {
+                    $stmt->execute([
+                        $r['id'],
+                        $r['author_name'],
+                        $r['research_title'],
+                        $r['month_year'],
+                        $r['category'],
+                        $r['abstract'],
+                        $r['keywords'],
+                        $r['status'] ?? 'Published'
+                    ]);
+                }
+                $results[] = "Seeded " . count($thesesData) . " True Criminological Research theses (2014-2026).";
+            }
+        }
     }
 
     // 4. Seed Laboratory Equipment (Official AY 2025-2026 Inventory: 18 Items)
