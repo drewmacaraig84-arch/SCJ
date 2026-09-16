@@ -18,8 +18,15 @@ $redirect = $_GET['redirect'] ?? '';
 
 // If already logged in, redirect immediately
 if (AuthMiddleware::check()) {
-    $role = AuthMiddleware::user()['role'] ?? 'student';
-    $target = ($role === 'admin') ? base_url('admin/') : base_url();
+    $role = strtolower(AuthMiddleware::user()['role'] ?? 'student');
+    $isSuper = in_array($role, ['super_admin', 'superadmin']);
+    if ($isSuper) {
+        $target = base_url('admin/');
+    } elseif ($role === 'admin') {
+        $target = base_url('admin/researches.php');
+    } else {
+        $target = base_url();
+    }
     header("Location: {$target}");
     exit;
 }
@@ -51,7 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     RateLimitMiddleware::clear('login');
                     AuthMiddleware::login($user);
 
-                    $returnUrl = !empty($redirect) ? urldecode($redirect) : (($user['role'] === 'admin') ? base_url('admin/') : base_url());
+                    $userRole = strtolower($user['role'] ?? 'student');
+                    $isSuper = in_array($userRole, ['super_admin', 'superadmin']);
+                    if (!empty($redirect)) {
+                        $returnUrl = urldecode($redirect);
+                    } elseif ($isSuper) {
+                        $returnUrl = base_url('admin/');
+                    } elseif ($userRole === 'admin') {
+                        $returnUrl = base_url('admin/researches.php');
+                    } else {
+                        $returnUrl = base_url();
+                    }
                     header("Location: {$returnUrl}");
                     exit;
                 } else {

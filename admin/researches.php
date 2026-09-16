@@ -90,28 +90,10 @@ $researches = $pdo->query("SELECT * FROM research ORDER BY id DESC")->fetchAll()
 <body>
 
 <div class="admin-layout">
-    <aside class="admin-sidebar">
-        <div class="admin-brand">
-            <div class="logo-circle-holder" style="width:44px; height:44px; padding:2px; margin-right:12px;">
-                <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="SCJ Logo">
-            </div>
-            <div>
-                <h4 style="color:#FFFFFF; font-size:0.95rem; font-weight:800;">SCJE Admin</h4>
-                <span style="font-size:0.75rem; color:var(--color-primary-accent);">Information System</span>
-            </div>
-        </div>
-        <ul class="admin-nav">
-            <li><a href="<?= base_url('admin/index.php') ?>"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-            <li><a href="<?= base_url('admin/researches.php') ?>" class="active"><i class="fa-solid fa-book-open"></i> Manage Research</a></li>
-            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-microscope"></i> Manage Equipment</a></li>
-            <li><a href="<?= base_url('admin/materials.php') ?>"><i class="fa-solid fa-flask-vial"></i> Manage Materials</a></li>
-            <li><a href="<?= base_url('admin/faculty.php') ?>"><i class="fa-solid fa-users"></i> Manage Faculty</a></li>
-            <li><a href="<?= base_url('admin/content.php') ?>"><i class="fa-solid fa-compass"></i> Site Content</a></li>
-            <li><a href="<?= base_url('admin/messages.php') ?>"><i class="fa-solid fa-envelope"></i> Inquiries</a></li>
-            <li style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1);"><a href="<?= base_url() ?>"><i class="fa-solid fa-globe"></i> View Public Site</a></li>
-            <li><a href="<?= base_url('logout.php') ?>" style="color:#F87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-        </ul>
-    </aside>
+    <?php 
+    $activePage = 'researches';
+    include __DIR__ . '/includes/sidebar.php'; 
+    ?>
 
     <main class="admin-main">
         <h2 style="font-size:1.6rem; font-weight:900; color:#0A192F; margin-bottom:20px;">Manage Criminological Research</h2>

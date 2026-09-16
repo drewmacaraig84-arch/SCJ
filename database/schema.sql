@@ -85,3 +85,29 @@ CREATE TABLE IF NOT EXISTS `site_content` (
     `content` TEXT NOT NULL,
     `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `roles` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `role_key` VARCHAR(50) NOT NULL UNIQUE,
+    `role_name` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(255) NULL,
+    `is_system` TINYINT DEFAULT 0,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `crash_logs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `level` VARCHAR(20) NOT NULL DEFAULT 'ERROR',
+    `message` TEXT NOT NULL,
+    `file` VARCHAR(255) NULL,
+    `line` INT NULL,
+    `trace` MEDIUMTEXT NULL,
+    `url` VARCHAR(500) NULL,
+    `method` VARCHAR(10) NULL,
+    `ip_address` VARCHAR(45) NULL,
+    `user_id` VARCHAR(50) NULL,
+    `user_role` VARCHAR(50) NULL,
+    `resolved` TINYINT DEFAULT 0,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

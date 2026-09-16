@@ -97,6 +97,31 @@ function init_database(PDO $pdo, string $driver): array {
             title VARCHAR(200) NOT NULL,
             content TEXT NOT NULL,
             updated_at {$nowDefault}
+        );",
+
+        "roles" => "CREATE TABLE IF NOT EXISTS roles (
+            id {$autoInc},
+            role_key VARCHAR(50) NOT NULL UNIQUE,
+            role_name VARCHAR(100) NOT NULL,
+            description VARCHAR(255) NULL,
+            is_system TINYINT DEFAULT 0,
+            created_at {$nowDefault}
+        );",
+
+        "crash_logs" => "CREATE TABLE IF NOT EXISTS crash_logs (
+            id {$autoInc},
+            level VARCHAR(20) NOT NULL DEFAULT 'ERROR',
+            message TEXT NOT NULL,
+            file VARCHAR(255) NULL,
+            line INT NULL,
+            trace TEXT NULL,
+            url VARCHAR(500) NULL,
+            method VARCHAR(10) NULL,
+            ip_address VARCHAR(45) NULL,
+            user_id VARCHAR(50) NULL,
+            user_role VARCHAR(50) NULL,
+            resolved TINYINT DEFAULT 0,
+            created_at {$nowDefault}
         );"
     ];
 
@@ -105,19 +130,35 @@ function init_database(PDO $pdo, string $driver): array {
         $results[] = "Table `{$name}` verified/created.";
     }
 
-    // 2. Seed Default Users
+    // 2. Seed Default Roles
+    $checkRoles = $pdo->query("SELECT COUNT(*) FROM roles")->fetchColumn();
+    if ($checkRoles == 0) {
+        $roleStmt = $pdo->prepare("INSERT INTO roles (role_key, role_name, description, is_system) VALUES (?, ?, ?, 1)");
+        $defaultRoles = [
+            ['super_admin', 'Super Administrator', 'Complete system authority, health diagnostics, crash logs, and role management.'],
+            ['admin', 'Administrator', 'Full access to researches, equipment, chemicals, faculty, messages, and site content.'],
+            ['faculty', 'Faculty / Instructor', 'Academic research submission, faculty portal access, and curriculum records.'],
+            ['student', 'Student Member', 'Student research portal, laboratory guidelines, and public criminology records.']
+        ];
+        foreach ($defaultRoles as $r) {
+            $roleStmt->execute($r);
+        }
+        $results[] = "Seeded default system roles (Super Admin, Admin, Faculty, Student).";
+    }
+
+    // 3. Seed Default Users & Super Admin (Drew / 49543)
     $checkUsers = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
     if ($checkUsers == 0) {
-        $adminPassword = password_hash(env('DEFAULT_ADMIN_PASSWORD', 'admin'), PASSWORD_BCRYPT);
+        $superAdminPassword = password_hash('49543', PASSWORD_BCRYPT);
         $userPassword = password_hash('password123', PASSWORD_BCRYPT);
         $stmt = $pdo->prepare("INSERT INTO users (id_number, name, email, password, role) VALUES (?, ?, ?, ?, ?)");
         
         $stmt->execute([
-            env('DEFAULT_ADMIN_ID', 'Drew'),
-            env('DEFAULT_ADMIN_NAME', 'Drew'),
-            env('DEFAULT_ADMIN_EMAIL', 'drew@dwcc-scje.edu.ph'),
-            $adminPassword,
-            'admin'
+            'Drew',
+            'Drew',
+            'drew@dwcc-scje.edu.ph',
+            $superAdminPassword,
+            'super_admin'
         ]);
 
         $stmt->execute([
@@ -136,8 +177,24 @@ function init_database(PDO $pdo, string $driver): array {
             'student'
         ]);
 
-        $results[] = "Seeded 3 user accounts (Admin: Drew, Faculty: FAC-2024-001, Student: 2024-10045).";
+        $results[] = "Seeded 3 user accounts (Super Admin: Drew, Faculty: FAC-2024-001, Student: 2024-10045).";
+    } else {
+        // Ensure Drew exists and is Super Admin with password 49543
+        $drewCheck = $pdo->prepare("SELECT id FROM users WHERE LOWER(id_number) = 'drew' OR LOWER(name) = 'drew'");
+        $drewCheck->execute();
+        $drewUser = $drewCheck->fetch();
+        $drewPassHash = password_hash('49543', PASSWORD_BCRYPT);
+        if ($drewUser) {
+            $updateDrew = $pdo->prepare("UPDATE users SET role = 'super_admin', password = ? WHERE id = ?");
+            $updateDrew->execute([$drewPassHash, $drewUser['id']]);
+            $results[] = "Updated Drew to Super Admin with updated credentials.";
+        } else {
+            $insertDrew = $pdo->prepare("INSERT INTO users (id_number, name, email, password, role) VALUES (?, ?, ?, ?, ?)");
+            $insertDrew->execute(['Drew', 'Drew', 'drew@dwcc-scje.edu.ph', $drewPassHash, 'super_admin']);
+            $results[] = "Created Super Admin Drew with credentials.";
+        }
     }
+
 
     // 3. Seed Research Papers (Matching 16 Categories + Sketch Columns)
     $checkResearch = $pdo->query("SELECT COUNT(*) FROM research")->fetchColumn();

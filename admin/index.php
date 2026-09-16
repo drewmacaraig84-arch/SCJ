@@ -9,12 +9,19 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/middleware/SecurityHeadersMiddleware.php';
 require_once __DIR__ . '/../includes/middleware/CsrfMiddleware.php';
 require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
+require_once __DIR__ . '/../includes/CrashLogger.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['super_admin']);
 
 $user = AuthMiddleware::user();
 $pdo = get_db();
+$isSuperAdmin = RoleMiddleware::isSuperAdmin();
+
+// Super admin telemetry counts
+$crashStats = CrashLogger::getStats();
+$totalUsersCount = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$totalRolesCount = $pdo->query("SELECT COUNT(*) FROM roles")->fetchColumn();
 
 // Counts
 $totalResearch = $pdo->query("SELECT COUNT(*) FROM research")->fetchColumn();
@@ -28,13 +35,14 @@ $recentMessages = $pdo->query("SELECT * FROM contact_messages ORDER BY id DESC L
 
 // Active Driver
 $activeDriver = DB::getDriver();
+$activePage = 'dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | SCJE Information System</title>
+    <title>System Dashboard | SCJE Super Admin</title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?= asset_url('assets/images/scj_logo.png') ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,46 +155,82 @@ $activeDriver = DB::getDriver();
 <body>
 
 <div class="admin-layout">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-        <div class="admin-brand">
-            <div class="logo-circle-holder" style="width:44px; height:44px; padding:2px; margin-right:12px;">
-                <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="SCJ Logo">
-            </div>
-            <div>
-                <h4 style="color:#FFFFFF; font-size:0.95rem; font-weight:800;">SCJE Admin</h4>
-                <span style="font-size:0.75rem; color:var(--color-primary-accent);">Information System</span>
-            </div>
-        </div>
-
-        <ul class="admin-nav">
-            <li><a href="<?= base_url('admin/index.php') ?>" class="active"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-            <li><a href="<?= base_url('admin/researches.php') ?>"><i class="fa-solid fa-book-open"></i> Manage Research</a></li>
-            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-microscope"></i> Manage Equipment</a></li>
-            <li><a href="<?= base_url('admin/materials.php') ?>"><i class="fa-solid fa-flask-vial"></i> Manage Materials</a></li>
-            <li><a href="<?= base_url('admin/faculty.php') ?>"><i class="fa-solid fa-users"></i> Manage Faculty</a></li>
-            <li><a href="<?= base_url('admin/content.php') ?>"><i class="fa-solid fa-compass"></i> Site Content</a></li>
-            <li><a href="<?= base_url('admin/messages.php') ?>"><i class="fa-solid fa-envelope"></i> Inquiries</a></li>
-            <li style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1);"><a href="<?= base_url() ?>"><i class="fa-solid fa-globe"></i> View Public Site</a></li>
-            <li><a href="<?= base_url('logout.php') ?>" style="color:#F87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-        </ul>
-
-        <div style="padding: 16px 20px; font-size:0.75rem; color:#64748B; border-top:1px solid rgba(255,255,255,0.05);">
-            Engine: <strong><?= strtoupper($activeDriver) ?></strong>
-        </div>
-    </aside>
+    <!-- Unified Sidebar -->
+    <?php include __DIR__ . '/includes/sidebar.php'; ?>
 
     <!-- Main Content -->
     <main class="admin-main">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px;">
             <div>
-                <h2 style="font-size:1.6rem; font-weight:900; color:var(--color-text-primary);">System Administration</h2>
-                <p style="color:var(--color-text-muted); font-size:0.9rem;">Welcome back, <strong><?= e($user['name']) ?></strong> (<?= e($user['id_number']) ?>)</p>
+                <h2 style="font-size:1.6rem; font-weight:900; color:var(--color-text-primary); margin:0; display:flex; align-items:center; gap:10px;">
+                    <i class="fa-solid fa-gauge" style="color:#F59E0B;"></i> System Dashboard
+                </h2>
+                <p style="color:var(--color-text-muted); font-size:0.9rem; margin-top:4px;">Welcome back, <strong><?= e($user['name']) ?></strong> (<?= e($user['id_number']) ?>) &bull; <span style="color:#F59E0B; font-weight:700;"><i class="fa-solid fa-crown"></i> Super Administrator Clearance</span></p>
             </div>
             <a href="<?= base_url() ?>" class="btn-primary" target="_blank">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Website
             </a>
         </div>
+
+        <?php if ($isSuperAdmin): ?>
+            <!-- SUPER ADMIN CONTROL CENTER BANNER -->
+            <div style="background:linear-gradient(135deg, rgba(15, 37, 75, 0.95), rgba(7, 19, 36, 0.98)); border:1px solid rgba(245, 158, 11, 0.35); border-radius:var(--radius-md); padding:24px; margin-bottom:25px; box-shadow:0 10px 30px rgba(0,0,0,0.4); position:relative; overflow:hidden;">
+                <div style="position:absolute; top:0; right:0; width:300px; height:100%; background:radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%); pointer-events:none;"></div>
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:40px; height:40px; border-radius:10px; background:linear-gradient(135deg, #7C3AED, #F59E0B); display:flex; align-items:center; justify-content:center; color:#FFFFFF; font-size:1.2rem; box-shadow:0 0 15px rgba(245,158,11,0.4);">
+                            <i class="fa-solid fa-crown"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin:0; font-size:1.15rem; font-weight:900; color:#FFFFFF; letter-spacing:0.3px;">Super Administrator Command Center</h3>
+                            <p style="margin:2px 0 0; font-size:0.8rem; color:#94A3B8;">Real-time system health, automated crash telemetry, and role authorization.</p>
+                        </div>
+                    </div>
+                    <span class="badge" style="background:rgba(245,158,11,0.15); color:#F59E0B; border:1px solid rgba(245,158,11,0.3); font-weight:800; font-size:0.75rem; padding:4px 10px;">
+                        <i class="fa-solid fa-shield-halved" style="margin-right:4px;"></i> ELEVATED CLEARANCE
+                    </span>
+                </div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px;">
+                    <!-- Health Widget -->
+                    <a href="<?= base_url('admin/health.php') ?>" style="background:rgba(255,255,255,0.04); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:14px 16px; text-decoration:none; color:inherit; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s;" onmouseover="this.style.background='rgba(16,185,129,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:800; color:#10B981; text-transform:uppercase;">System Health</div>
+                            <div style="font-size:1.15rem; font-weight:900; color:#FFFFFF; margin-top:3px;">
+                                <i class="fa-solid fa-circle-check" style="color:#10B981; font-size:0.95rem; margin-right:4px;"></i> Operational
+                            </div>
+                            <div style="font-size:0.72rem; color:#64748B; margin-top:2px;">PHP <?= PHP_VERSION ?> &bull; <?= strtoupper($activeDriver) ?></div>
+                        </div>
+                        <i class="fa-solid fa-heart-pulse" style="font-size:1.5rem; color:#10B981;"></i>
+                    </a>
+
+                    <!-- Crash Telemetry Widget -->
+                    <a href="<?= base_url('admin/crash_logs.php') ?>" style="background:rgba(255,255,255,0.04); border:1px solid <?= ($crashStats['unresolved'] ?? 0) > 0 ? 'rgba(239,68,68,0.4)' : 'rgba(56,189,248,0.3)' ?>; border-radius:10px; padding:14px 16px; text-decoration:none; color:inherit; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:800; color:<?= ($crashStats['unresolved'] ?? 0) > 0 ? '#EF4444' : '#38BDF8' ?>; text-transform:uppercase;">Crash Telemetry</div>
+                            <div style="font-size:1.15rem; font-weight:900; color:#FFFFFF; margin-top:3px;">
+                                <?= $crashStats['unresolved'] ?? 0 ?> Unresolved
+                            </div>
+                            <div style="font-size:0.72rem; color:#64748B; margin-top:2px;"><?= $crashStats['total'] ?? 0 ?> Total Incident(s)</div>
+                        </div>
+                        <i class="fa-solid fa-bug" style="font-size:1.5rem; color:<?= ($crashStats['unresolved'] ?? 0) > 0 ? '#EF4444' : '#38BDF8' ?>;"></i>
+                    </a>
+
+                    <!-- Accounts & Roles Widget -->
+                    <a href="<?= base_url('admin/users.php') ?>" style="background:rgba(255,255,255,0.04); border:1px solid rgba(168,85,247,0.3); border-radius:10px; padding:14px 16px; text-decoration:none; color:inherit; display:flex; align-items:center; justify-content:space-between; transition:all 0.2s;" onmouseover="this.style.background='rgba(168,85,247,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:800; color:#A855F7; text-transform:uppercase;">Accounts &amp; Roles</div>
+                            <div style="font-size:1.15rem; font-weight:900; color:#FFFFFF; margin-top:3px;">
+                                <?= $totalUsersCount ?> Users
+                            </div>
+                            <div style="font-size:0.72rem; color:#64748B; margin-top:2px;"><?= $totalRolesCount ?> Defined Roles</div>
+                        </div>
+                        <i class="fa-solid fa-user-shield" style="font-size:1.5rem; color:#A855F7;"></i>
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
+
 
         <!-- Metric Cards -->
         <div class="stat-cards-grid">

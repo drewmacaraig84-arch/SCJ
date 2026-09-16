@@ -12,7 +12,7 @@
   --color-primary: #D4AF37; /* Radiant Warm Champagne Gold */
   --color-primary-navy: #1B365D;
   --color-primary-accent: #E5C158;
-  --color-primary-light: #162842;
+  --color-primary-light: #38BDF8; /* Radiant Sky Blue / Cyan (High-Contrast Text) */
   --color-primary-dark: #0A1626;
   
   --color-blue-royal: #25497C;
@@ -88,7 +88,7 @@
   --color-primary: #1B365D;
   --color-primary-navy: #1B365D;
   --color-primary-accent: #23497C;
-  --color-primary-light: #F0F4F8;
+  --color-primary-light: #1D4ED8; /* Deep Royal Navy (High-Contrast Text) */
   --color-primary-dark: #10223B;
   
   --color-blue-royal: #1B365D;

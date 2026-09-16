@@ -74,6 +74,10 @@ define('APP_ROOT', dirname(__DIR__));
 
 define('APP_VERSION', '1.3.' . (@filemtime(dirname(__DIR__) . '/assets/css/style.css') ?: time()));
 
+// Initialize Real-Time Crash Logger & Telemetry Engine
+require_once __DIR__ . '/CrashLogger.php';
+CrashLogger::register();
+
 /**
  * Helper to generate relative or absolute URLs compatible with localhost, LAN IPs, and tunnels
  */

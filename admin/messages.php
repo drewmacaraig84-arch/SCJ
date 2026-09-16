@@ -73,28 +73,10 @@ $inquiries = $pdo->query("SELECT * FROM contact_messages ORDER BY id DESC")->fet
 <body>
 
 <div class="admin-layout">
-    <aside class="admin-sidebar">
-        <div class="admin-brand">
-            <div class="logo-circle-holder" style="width:44px; height:44px; padding:2px; margin-right:12px;">
-                <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="SCJ Logo">
-            </div>
-            <div>
-                <h4 style="color:#FFFFFF; font-size:0.95rem; font-weight:800;">SCJE Admin</h4>
-                <span style="font-size:0.75rem; color:var(--color-primary-accent);">Information System</span>
-            </div>
-        </div>
-        <ul class="admin-nav">
-            <li><a href="<?= base_url('admin/index.php') ?>"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-            <li><a href="<?= base_url('admin/researches.php') ?>"><i class="fa-solid fa-book-open"></i> Manage Research</a></li>
-            <li><a href="<?= base_url('admin/equipment.php') ?>"><i class="fa-solid fa-microscope"></i> Manage Equipment</a></li>
-            <li><a href="<?= base_url('admin/materials.php') ?>"><i class="fa-solid fa-flask-vial"></i> Manage Materials</a></li>
-            <li><a href="<?= base_url('admin/faculty.php') ?>"><i class="fa-solid fa-users"></i> Manage Faculty</a></li>
-            <li><a href="<?= base_url('admin/content.php') ?>"><i class="fa-solid fa-compass"></i> Site Content</a></li>
-            <li><a href="<?= base_url('admin/messages.php') ?>" class="active"><i class="fa-solid fa-envelope"></i> Inquiries</a></li>
-            <li style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.1);"><a href="<?= base_url() ?>"><i class="fa-solid fa-globe"></i> View Public Site</a></li>
-            <li><a href="<?= base_url('logout.php') ?>" style="color:#F87171;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
-        </ul>
-    </aside>
+    <?php 
+    $activePage = 'messages';
+    include __DIR__ . '/includes/sidebar.php'; 
+    ?>
 
     <main class="admin-main">
         <h2 style="font-size:1.6rem; font-weight:900; color:#0A192F; margin-bottom:20px;">Contact Inquiries</h2>
@@ -128,17 +110,17 @@ $inquiries = $pdo->query("SELECT * FROM contact_messages ORDER BY id DESC")->fet
                             <?php foreach ($inquiries as $inq): 
                                 $isUnread = $inq['status'] === 'unread';
                             ?>
-                                <tr style="<?= $isUnread ? 'background:#EFF6FF; font-weight:600;' : '' ?>">
+                                <tr style="<?= $isUnread ? 'background:rgba(59, 130, 246, 0.08); font-weight:600;' : '' ?>">
                                     <td>
                                         <span class="badge <?= $isUnread ? 'badge-danger' : 'badge-success' ?>"><?= strtoupper(e($inq['status'])) ?></span>
                                     </td>
                                     <td>
-                                        <strong><?= e($inq['name']) ?></strong>
-                                        <div style="font-size:0.75rem; color:#64748B;"><?= e($inq['email']) ?></div>
+                                        <strong style="color:var(--color-text-primary);"><?= e($inq['name']) ?></strong>
+                                        <div style="font-size:0.75rem; color:var(--color-text-muted);"><?= e($inq['email']) ?></div>
                                     </td>
-                                    <td><?= e($inq['subject']) ?></td>
-                                    <td style="max-width:300px; font-size:0.85rem; color:#334155;"><?= nl2br(e($inq['message'])) ?></td>
-                                    <td style="font-size:0.8rem; color:#64748B;"><?= e($inq['created_at']) ?></td>
+                                    <td style="color:var(--color-text-primary);"><?= e($inq['subject']) ?></td>
+                                    <td style="max-width:300px; font-size:0.85rem; color:var(--color-text-secondary);"><?= nl2br(e($inq['message'])) ?></td>
+                                    <td style="font-size:0.8rem; color:var(--color-text-muted);"><?= e($inq['created_at']) ?></td>
                                     <td style="text-align:center; white-space:nowrap;">
                                         <?php if ($isUnread): ?>
                                             <a href="<?= base_url('admin/messages.php?mark_read=' . $inq['id']) ?>" 

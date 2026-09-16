@@ -126,12 +126,31 @@ $csrfToken = CsrfMiddleware::getToken();
                     </span>
                     <span class="theme-toggle-text">Dark</span>
                 </button>
-                <?php if ($isLoggedIn): ?>
+                <?php if ($isLoggedIn): 
+                    $userRole = strtolower($currentUser['role'] ?? '');
+                    $isSuper = in_array($userRole, ['super_admin', 'superadmin']);
+                    $portalBg = $isSuper ? 'linear-gradient(135deg, #7C3AED, #F59E0B)' : ($userRole === 'admin' ? '#1E3A8A' : ($userRole === 'faculty' ? '#0D9488' : '#334155'));
+                    $portalBorder = $isSuper ? '#F59E0B' : ($userRole === 'admin' ? '#3B82F6' : ($userRole === 'faculty' ? '#14B8A6' : '#64748B'));
+                    $portalLabel = $isSuper ? 'SUPER ADMIN' : strtoupper(e($currentUser['role']));
+
+                    // Only super_admin has access to the System Dashboard
+                    $portalTarget = $isSuper 
+                        ? base_url('admin/') 
+                        : ($userRole === 'admin' ? base_url('admin/researches.php') : ($userRole === 'faculty' ? base_url('admin/researches.php') : null));
+                    $portalIcon = $isSuper ? 'fa-crown' : ($userRole === 'admin' ? 'fa-screwdriver-wrench' : ($userRole === 'faculty' ? 'fa-book-open' : 'fa-user-graduate'));
+                    $portalTooltip = $isSuper ? 'System Dashboard' : ($userRole === 'admin' ? 'Management Portal' : ($userRole === 'faculty' ? 'Research Management' : 'Student Account'));
+                ?>
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <a href="<?= base_url('admin/') ?>" class="nav-portal-btn" style="background:#10B981; border-color:#34D399;">
-                            <i class="fa-solid fa-gauge"></i> <?= e($currentUser['name']) ?> (<?= strtoupper(e($currentUser['role'])) ?>)
-                        </a>
-                        <a href="<?= base_url('logout.php') ?>" class="nav-portal-btn" style="background:#EF4444; border-color:#F87171;">
+                        <?php if ($portalTarget): ?>
+                            <a href="<?= $portalTarget ?>" class="nav-portal-btn" style="background:<?= $portalBg ?>; border-color:<?= $portalBorder ?>; box-shadow:<?= $isSuper ? '0 0 12px rgba(245,158,11,0.4)' : 'none' ?>;" title="<?= $portalTooltip ?>">
+                                <i class="fa-solid <?= $portalIcon ?>"></i> <?= e($currentUser['name']) ?> (<?= $portalLabel ?>)
+                            </a>
+                        <?php else: ?>
+                            <span class="nav-portal-btn" style="background:<?= $portalBg ?>; border-color:<?= $portalBorder ?>; cursor:default;" title="<?= $portalTooltip ?>">
+                                <i class="fa-solid <?= $portalIcon ?>"></i> <?= e($currentUser['name']) ?> (<?= $portalLabel ?>)
+                            </span>
+                        <?php endif; ?>
+                        <a href="<?= base_url('logout.php') ?>" class="nav-portal-btn" style="background:#EF4444; border-color:#F87171;" title="Log Out">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </a>
                     </div>
@@ -158,7 +177,7 @@ $csrfToken = CsrfMiddleware::getToken();
                 <div class="sketch-login-box">
                     <div class="sketch-login-header">
                         School of Criminal Justice<br>
-                        <span style="font-size:0.85rem; color:var(--color-primary-light);">Information System Authentication</span>
+                        <span style="font-size:0.85rem; color:var(--color-primary-light, #38BDF8);">Information System Authentication</span>
                     </div>
 
                     <form action="<?= base_url('login.php') ?>" method="POST">
