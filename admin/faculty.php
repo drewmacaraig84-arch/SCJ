@@ -30,11 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $specialization = trim($_POST['specialization'] ?? '');
         $interests = trim($_POST['research_interests'] ?? '');
         $office = trim($_POST['office_location'] ?? '');
+        $photoUrl = trim($_POST['photo_url'] ?? '');
         $order = intval($_POST['order_index'] ?? 10);
 
         if ($name && $position) {
-            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, specialization, research_interests, office_location, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $position, $roleLevel, $email, $specialization, $interests, $office, $order]);
+            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, specialization, research_interests, office_location, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $position, $roleLevel, $email, $specialization, $interests, $office, $photoUrl, $order]);
             Cache::flush();
             $message = 'Faculty member added.';
         } else {
@@ -136,7 +137,7 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:16px;">
                     <div class="form-group">
                         <label>Email Address</label>
                         <input type="email" name="email" class="form-control" placeholder="faculty@dwcc-scje.edu.ph">
@@ -146,11 +147,25 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                         <input type="text" name="office_location" class="form-control" placeholder="e.g. Faculty Hall Room 204">
                     </div>
                     <div class="form-group">
+                        <label>Photo URL / Asset Path</label>
+                        <input type="text" name="photo_url" class="form-control" placeholder="assets/images/faculty_name.png">
+                    </div>
+                    <div class="form-group">
                         <label>Display Order Priority</label>
                         <input type="number" name="order_index" class="form-control" value="10">
                     </div>
                 </div>
 
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                    <div class="form-group">
+                        <label>Specialization</label>
+                        <input type="text" name="specialization" class="form-control" placeholder="e.g. Criminalistics, Forensic Ballistics">
+                    </div>
+                    <div class="form-group">
+                        <label>Research Interests / Key Roles</label>
+                        <input type="text" name="research_interests" class="form-control" placeholder="e.g. Program Coordinator, NSTP-ROTC Leadership">
+                    </div>
+                </div>
 
                 <button type="submit" class="btn-primary">
                     <i class="fa-solid fa-check"></i> Save Faculty Member
@@ -167,7 +182,8 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th>Order</th>
+                            <th style="width: 50px;">Photo</th>
+                            <th style="width: 60px;">Order</th>
                             <th>Name</th>
                             <th>Position</th>
                             <th>Role Level</th>
@@ -177,6 +193,14 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     <tbody>
                         <?php foreach ($faculty as $f): ?>
                             <tr>
+                                <td>
+                                    <?php 
+                                    $fPhoto = (!empty($f['photo_url']) && file_exists(__DIR__ . '/../' . $f['photo_url']))
+                                        ? base_url($f['photo_url']) . '?v=' . filemtime(__DIR__ . '/../' . $f['photo_url'])
+                                        : base_url('assets/images/avatar_placeholder.svg');
+                                    ?>
+                                    <img src="<?= $fPhoto ?>" alt="<?= e($f['name']) ?>" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--color-gold, #D97706); display:block;">
+                                </td>
                                 <td><?= e($f['order_index']) ?></td>
                                 <td style="font-weight:700;"><?= e($f['name']) ?></td>
                                 <td><?= e($f['position']) ?></td>

@@ -382,20 +382,32 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
 
             <!-- Dean Card Preview (Matching Sketch Top Center) -->
             <?php if ($dean): ?>
+                <?php 
+                $homeDeanPhoto = (!empty($dean['photo_url']) && file_exists(__DIR__ . '/' . $dean['photo_url']))
+                    ? base_url($dean['photo_url']) . '?v=' . filemtime(__DIR__ . '/' . $dean['photo_url'])
+                    : base_url('assets/images/avatar_placeholder.svg');
+                ?>
                 <div style="max-width:540px; margin: 0 auto 30px;">
                     <div class="dean-card">
                         <div class="faculty-avatar">
-                            <img src="<?= base_url('assets/images/avatar_placeholder.svg') ?>" alt="<?= e($dean['name']) ?>">
+                            <img src="<?= $homeDeanPhoto ?>" alt="<?= e($dean['name']) ?>">
                         </div>
                         <h3 class="faculty-name"><?= e($dean['name']) ?></h3>
-                        <div class="faculty-position">OIC - DEAN, SCHOOL OF CRIMINAL JUSTICE</div>
+                        <div class="faculty-position"><?= e($dean['position'] ?: 'OFFICER-IN-CHARGE') ?></div>
                         <div class="faculty-details">
                             <?php if (!empty($dean['specialization'])): ?>
                                 <p><strong>Specialization:</strong> <?= e($dean['specialization']) ?></p>
                             <?php endif; ?>
-                            <p style="margin-top:6px; font-size:0.75rem; color:var(--color-text-muted);">
-                                <i class="fa-solid fa-envelope"></i> <?= e($dean['email']) ?>
-                            </p>
+                            <?php if (!empty($dean['research_interests'])): ?>
+                                <p style="margin-top:4px; font-size:0.78rem; color:var(--color-text-secondary);">
+                                    <strong>Roles &amp; Experience:</strong> <?= e($dean['research_interests']) ?>
+                                </p>
+                            <?php endif; ?>
+                            <?php if (!empty($dean['office_location'])): ?>
+                                <p style="margin-top:6px; font-size:0.75rem; color:var(--color-text-muted);">
+                                    <i class="fa-solid fa-location-dot"></i> <?= e($dean['office_location']) ?>
+                                </p>
+                            <?php endif; ?>
                         </div>
                         <div style="margin-top:14px;">
                             <a href="<?= base_url('faculty.php') ?>" class="btn-primary" style="padding:6px 16px; font-size:0.78rem;">
@@ -409,9 +421,14 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
             <!-- Featured Faculty Cards -->
             <div class="featured-faculty-grid">
                 <?php foreach ($featuredFaculty as $ff): ?>
+                    <?php 
+                    $ffPhoto = (!empty($ff['photo_url']) && file_exists(__DIR__ . '/' . $ff['photo_url']))
+                        ? base_url($ff['photo_url']) . '?v=' . filemtime(__DIR__ . '/' . $ff['photo_url'])
+                        : base_url('assets/images/avatar_placeholder.svg');
+                    ?>
                     <div class="faculty-sub-card">
                         <div class="faculty-sub-avatar">
-                            <img src="<?= base_url('assets/images/avatar_placeholder.svg') ?>" alt="<?= e($ff['name']) ?>">
+                            <img src="<?= $ffPhoto ?>" alt="<?= e($ff['name']) ?>">
                         </div>
                         <div class="faculty-sub-info">
                             <h4><?= e($ff['name']) ?></h4>
