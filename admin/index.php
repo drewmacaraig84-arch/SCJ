@@ -12,6 +12,12 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/CrashLogger.php';
 
 SecurityHeadersMiddleware::handle();
+
+// The Super Administrator exclusively owns the System Dashboard
+if (!RoleMiddleware::isSuperAdmin()) {
+    header("Location: " . base_url('admin/researches.php'));
+    exit;
+}
 RoleMiddleware::handle(['super_admin']);
 
 $user = AuthMiddleware::user();
@@ -28,6 +34,7 @@ $totalResearch = $pdo->query("SELECT COUNT(*) FROM research")->fetchColumn();
 $totalEquipment = $pdo->query("SELECT COUNT(*) FROM equipment")->fetchColumn();
 $totalMaterials = $pdo->query("SELECT COUNT(*) FROM materials_chemicals")->fetchColumn();
 $totalFaculty = $pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
+$totalStudents = $pdo->query("SELECT COUNT(*) FROM users WHERE role = 'student'")->fetchColumn();
 $totalMessages = $pdo->query("SELECT COUNT(*) FROM contact_messages")->fetchColumn();
 
 // Recent messages
@@ -273,6 +280,14 @@ $activePage = 'dashboard';
                 </div>
                 <div class="stat-icon" style="color:#A855F7; background:rgba(168, 85, 247, 0.15);"><i class="fa-solid fa-envelope"></i></div>
             </div>
+
+            <a href="<?= base_url('admin/students.php') ?>" class="stat-card" style="text-decoration:none; color:inherit; cursor:pointer;">
+                <div>
+                    <div class="stat-val"><?= $totalStudents ?></div>
+                    <div class="stat-label">Student Accounts</div>
+                </div>
+                <div class="stat-icon" style="color:#06B6D4; background:rgba(6, 182, 212, 0.15);"><i class="fa-solid fa-user-graduate"></i></div>
+            </a>
         </div>
 
         <!-- Recent Contact Messages -->

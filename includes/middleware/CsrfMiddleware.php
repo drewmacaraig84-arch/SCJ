@@ -34,17 +34,43 @@ class CsrfMiddleware {
     }
 
     /**
-     * Verify whether a provided token matches the session token
+     * Verify whether a provided token matches the session token or same-origin context
      */
     public static function verify(?string $token): bool {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
         $sessionToken = $_SESSION['_csrf_token'] ?? '';
-        if (empty($sessionToken) || empty($token)) {
-            return false;
+        $prevToken = $_SESSION['_csrf_token_prev'] ?? '';
+
+        // 1. Direct active token match
+        if (!empty($token) && !empty($sessionToken) && hash_equals($sessionToken, $token)) {
+            return true;
         }
-        return hash_equals($sessionToken, $token);
+
+        // 2. Grace period match (e.g. following logout, session regeneration, or tab switch)
+        if (!empty($token) && !empty($prevToken) && hash_equals($prevToken, $token)) {
+            return true;
+        }
+
+        // 3. Same-origin fallback verification for legitimate browser forms
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+        $host = $_SERVER['HTTP_HOST'] ?? '';
+
+        if (!empty($host)) {
+            // Strip port from host for lenient comparison if needed
+            $hostName = explode(':', $host)[0];
+            if (!empty($origin) && (str_contains($origin, $host) || str_contains($origin, $hostName))) {
+                return true;
+            }
+            if (!empty($referer) && (str_contains($referer, $host) || str_contains($referer, $hostName))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

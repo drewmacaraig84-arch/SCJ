@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/cache.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['admin', 'super_admin']);
 
 $pdo = get_db();
 $message = '';
@@ -27,15 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $position = trim($_POST['position'] ?? '');
         $roleLevel = trim($_POST['role_level'] ?? 'faculty');
         $email = trim($_POST['email'] ?? '');
-        $specialization = trim($_POST['specialization'] ?? '');
-        $interests = trim($_POST['research_interests'] ?? '');
+        $description = trim($_POST['description'] ?? '');
         $office = trim($_POST['office_location'] ?? '');
         $photoUrl = trim($_POST['photo_url'] ?? '');
         $order = intval($_POST['order_index'] ?? 10);
 
         if ($name && $position) {
-            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, specialization, research_interests, office_location, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $position, $roleLevel, $email, $specialization, $interests, $office, $photoUrl, $order]);
+            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, description, office_location, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $position, $roleLevel, $email, $description, $office, $photoUrl, $order]);
             Cache::flush();
             $message = 'Faculty member added.';
         } else {
@@ -128,11 +127,12 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     <div class="form-group">
                         <label>Hierarchy Role</label>
                         <select name="role_level" class="form-control">
-                            <option value="faculty">Faculty</option>
+                            <option value="faculty">Full-Time Faculty</option>
                             <option value="dean">OIC Dean</option>
                             <option value="chair">Program Chair</option>
-                            <option value="coordinator">Coordinator</option>
+                            <option value="coordinator">Coordinator / Adviser</option>
                             <option value="custodian">Lab Custodian</option>
+                            <option value="part_time">Part-Time Faculty</option>
                         </select>
                     </div>
                 </div>
@@ -156,15 +156,9 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-                    <div class="form-group">
-                        <label>Specialization</label>
-                        <input type="text" name="specialization" class="form-control" placeholder="e.g. Criminalistics, Forensic Ballistics">
-                    </div>
-                    <div class="form-group">
-                        <label>Research Interests / Key Roles</label>
-                        <input type="text" name="research_interests" class="form-control" placeholder="e.g. Program Coordinator, NSTP-ROTC Leadership">
-                    </div>
+                <div class="form-group">
+                    <label>Credentials &amp; Description (Enter one credential or detail per line)</label>
+                    <textarea name="description" class="form-control" rows="4" placeholder="e.g.&#10;Program Coordinator (3 years)&#10;NSTP-ROTC Coordinator (4 years)"></textarea>
                 </div>
 
                 <button type="submit" class="btn-primary">

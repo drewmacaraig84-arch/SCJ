@@ -75,7 +75,7 @@ if ($method === 'POST') {
     $brand = trim($_POST['brand'] ?? 'N/A');
     $location = trim($_POST['location'] ?? 'Crime Laboratory');
     $status = trim($_POST['status'] ?? 'Good Condition');
-    $person = trim($_POST['person_accountable'] ?? 'Sir Jom');
+    $person = trim($_POST['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.');
 
     if (empty($code) || empty($name)) {
         http_response_code(422);

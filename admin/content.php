@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/cache.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['admin', 'super_admin']);
 
 $pdo = get_db();
 $message = '';
@@ -345,7 +345,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             <!-- Vision -->
             <div class="content-card">
                 <h3><i class="fa-solid fa-eye" style="color:var(--color-primary-accent);"></i> Institutional Vision</h3>
-                <p class="desc">The overarching institutional aspiration for the School of Criminal Justice Education.</p>
+                <p class="desc">The overarching institutional aspiration for the School of Criminal Justice.</p>
                 <div class="form-group">
                     <label for="vision">
                         <span>Vision Statement</span>

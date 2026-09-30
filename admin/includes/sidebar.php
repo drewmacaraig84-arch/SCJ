@@ -24,12 +24,14 @@ $activeDriver = DB::getDriver();
 
     <!-- Navigation List -->
     <ul class="admin-nav">
-        <li>
-            <a href="<?= base_url('admin/index.php') ?>" class="<?= ($activePage ?? '') === 'dashboard' ? 'active' : '' ?>">
-                <i class="fa-solid fa-gauge"></i> 
-                <span>Dashboard</span>
-            </a>
-        </li>
+        <?php if ($isSuperAdmin): ?>
+            <li>
+                <a href="<?= base_url('admin/index.php') ?>" class="<?= ($activePage ?? '') === 'dashboard' ? 'active' : '' ?>">
+                    <i class="fa-solid fa-gauge"></i> 
+                    <span>System Dashboard</span>
+                </a>
+            </li>
+        <?php endif; ?>
         <li>
             <a href="<?= base_url('admin/researches.php') ?>" class="<?= ($activePage ?? '') === 'researches' ? 'active' : '' ?>">
                 <i class="fa-solid fa-book-open"></i> 
@@ -52,6 +54,12 @@ $activeDriver = DB::getDriver();
             <a href="<?= base_url('admin/faculty.php') ?>" class="<?= ($activePage ?? '') === 'faculty' ? 'active' : '' ?>">
                 <i class="fa-solid fa-users"></i> 
                 <span>Manage Faculty</span>
+            </a>
+        </li>
+        <li>
+            <a href="<?= base_url('admin/students.php') ?>" class="<?= ($activePage ?? '') === 'students' ? 'active' : '' ?>">
+                <i class="fa-solid fa-user-graduate"></i> 
+                <span>Student Accounts</span>
             </a>
         </li>
         <li>

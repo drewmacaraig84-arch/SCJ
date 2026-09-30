@@ -1,11 +1,17 @@
 <?php
 /**
- * Research Repository & Criminological Studies Page
- * School of Criminal Justice Education (SCJE) Information System
+ * Research Repository & Studies Page
+ * School of Criminal Justice (SCJ) Information System
  */
 
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/middleware/AuthMiddleware.php';
+
+// Access requires student, faculty, or administrative authentication
+AuthMiddleware::handle();
+
 $activePage = 'research';
-$pageTitle = 'Criminological Research | SCJE Information System';
+$pageTitle = 'Research | SCJ Information System';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/cache.php';
 
@@ -41,7 +47,7 @@ $categories = [
                 <i class="fa-solid fa-book-open"></i>
             </div>
             <div class="page-banner-content">
-                <h2>Criminological Research</h2>
+                <h2>Research</h2>
                 <p>Empirical Studies, Theses, and Forensics Research Repository</p>
             </div>
         </div>
@@ -52,9 +58,9 @@ $categories = [
         <div class="container">
             <div class="section-header-banner">
                 <h2><i class="fa-solid fa-magnifying-glass"></i> Browse by Criminological Field</h2>
-                <div class="section-search-box">
-                    <i class="fa-solid fa-search search-icon"></i>
-                    <input type="text" id="topResearchSearch" placeholder="Search research titles...">
+                <div class="section-search-box" role="search">
+                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                    <input type="text" id="topResearchSearch" placeholder="Search research titles..." aria-label="Search research titles" autocomplete="off" spellcheck="false">
                 </div>
             </div>
 

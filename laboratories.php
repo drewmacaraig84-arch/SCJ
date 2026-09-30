@@ -1,11 +1,17 @@
 <?php
 /**
  * Criminology Laboratories & Equipment Inventory Page
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/middleware/AuthMiddleware.php';
+
+// Access requires student, faculty, or administrative authentication
+AuthMiddleware::handle();
+
 $activePage = 'laboratories';
-$pageTitle = 'Laboratories & Inventory Dashboard | SCJE Information System';
+$pageTitle = 'Laboratories & Inventory Dashboard | SCJ Information System';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/cache.php';
 
@@ -61,7 +67,7 @@ $readinessRate = $totalEquip > 0 ? round(($equipFunctional / $totalEquip) * 100,
                             <i class="fa-solid fa-clipboard-check"></i>
                         </div>
                         <div>
-                            <div style="font-size:0.8rem; font-weight:800; color:var(--color-gold); letter-spacing:1px; text-transform:uppercase;">School of Criminal Justice Education</div>
+                            <div style="font-size:0.8rem; font-weight:800; color:var(--color-gold); letter-spacing:1px; text-transform:uppercase;">School of Criminal Justice</div>
                             <h3 class="inventory-banner-title">Inventory Summary Dashboard — AY 2025-2026</h3>
                         </div>
                     </div>
@@ -98,7 +104,7 @@ $readinessRate = $totalEquip > 0 ? round(($equipFunctional / $totalEquip) * 100,
                     <!-- Metric 4: Accountability -->
                     <div class="lab-kpi-card" style="border-left:4px solid #4F46E5;">
                         <div class="lab-kpi-label">Accountable Officer</div>
-                        <div class="lab-kpi-val" style="font-size:1.35rem; color:#4F46E5; margin:6px 0;">Sir Jom</div>
+                        <div class="lab-kpi-val" style="font-size:1.05rem; font-weight:800; color:#4F46E5; margin:6px 0; line-height:1.2;">JOMARI R. VENCIO, RCrim.</div>
                         <div class="lab-kpi-sub"><i class="fa-solid fa-user-shield"></i> Laboratory Custodian &amp; Officer</div>
                     </div>
                 </div>
@@ -284,7 +290,7 @@ $readinessRate = $totalEquip > 0 ? round(($equipFunctional / $totalEquip) * 100,
                                                    data-location="<?= e($eq['current_location']) ?>"
                                                    data-status="<?= e($stat) ?>"
                                                    data-serial="<?= e($eq['serial_number'] ?? 'N/A') ?>"
-                                                   data-person="<?= e($eq['person_accountable'] ?? 'Sir Jom') ?>"
+                                                   data-person="<?= e($eq['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.') ?>"
                                                    data-desc="<?= e($eq['description']) ?>">
                                                     <?= e($eq['equipment_name']) ?>
                                                 </a>
@@ -378,7 +384,7 @@ $readinessRate = $totalEquip > 0 ? round(($equipFunctional / $totalEquip) * 100,
                                                    data-brand="<?= e($m['brand']) ?>"
                                                    data-status="<?= e($mStat) ?>"
                                                    data-location="<?= e($m['location']) ?>"
-                                                   data-person="<?= e($m['person_accountable'] ?? 'Sir Jom') ?>">
+                                                   data-person="<?= e($m['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.') ?>">
                                                     <?= e($m['item_name']) ?>
                                                 </a>
                                             </td>

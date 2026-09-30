@@ -1,7 +1,7 @@
 <?php
 /**
  * Database Setup & Realistic Criminological Seeder
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 
 require_once __DIR__ . '/includes/config.php';
@@ -49,7 +49,7 @@ function init_database(PDO $pdo, string $driver): array {
             status VARCHAR(50) NOT NULL DEFAULT 'Available',
             serial_number VARCHAR(100) NULL,
             description TEXT NULL,
-            person_accountable VARCHAR(150) NULL DEFAULT 'Sir Jom',
+            person_accountable VARCHAR(150) NULL DEFAULT 'JOMARI R. VENCIO, RCrim.',
             date_acquired DATE NULL,
             created_at {$nowDefault}
         );",
@@ -60,7 +60,7 @@ function init_database(PDO $pdo, string $driver): array {
             qty VARCHAR(50) NULL,
             unit VARCHAR(50) NULL,
             item_name VARCHAR(200) NOT NULL,
-            person_accountable VARCHAR(150) NULL DEFAULT 'Sir Jom',
+            person_accountable VARCHAR(150) NULL DEFAULT 'JOMARI R. VENCIO, RCrim.',
             brand VARCHAR(100) NULL,
             status VARCHAR(50) NOT NULL DEFAULT 'Good Condition',
             location VARCHAR(150) NOT NULL DEFAULT 'Crime Laboratory',
@@ -78,6 +78,7 @@ function init_database(PDO $pdo, string $driver): array {
             office_location VARCHAR(150) NULL,
             photo_url VARCHAR(255) NULL,
             order_index INT NOT NULL DEFAULT 0,
+            description TEXT NULL,
             created_at {$nowDefault}
         );",
 
@@ -242,8 +243,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-002',
@@ -254,8 +255,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-003',
@@ -266,8 +267,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-004',
@@ -278,8 +279,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-005',
@@ -290,8 +291,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-006',
@@ -302,8 +303,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'CLE-007',
@@ -314,8 +315,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Crime Lab. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-001',
@@ -326,8 +327,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-002',
@@ -338,8 +339,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Out Of Service',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-003',
@@ -350,8 +351,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Out Of Service',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-004',
@@ -362,8 +363,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Good Condition',
                 '751813',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-005',
@@ -374,8 +375,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Good Condition',
                 '003005',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-006',
@@ -386,8 +387,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-007',
@@ -398,8 +399,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Out Of Service',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FPE-008',
@@ -410,8 +411,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Forensic Science Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Forensic Photography Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'FE-001',
@@ -422,8 +423,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Criminalistics Laboratory',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Fingerprint Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Fingerprint Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'PE-001',
@@ -434,8 +435,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Other Specialized Areas',
                 'Good Condition',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Polygraphy Room. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Polygraphy Room. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ],
             [
                 'PE-002',
@@ -446,8 +447,8 @@ function init_database(PDO $pdo, string $driver): array {
                 'Other Specialized Areas',
                 'Brandnew',
                 'N/A',
-                'Official SCJE laboratory equipment assigned to Dean’s Office. Accountable officer: Sir Jom.',
-                'Sir Jom'
+                'Official SCJE laboratory equipment assigned to Dean’s Office. Accountable officer: JOMARI R. VENCIO, RCrim..',
+                'JOMARI R. VENCIO, RCrim.'
             ]
         ];
 
@@ -468,7 +469,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '500 Ml',
                 'Erlenmeyer Flask',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -478,7 +479,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '6',
                 '300 Ml',
                 'Erlenmeyer Flask',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -488,7 +489,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '250 Ml',
                 'Erlenmeyer Flask',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -498,7 +499,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '125 Ml',
                 'Erlenmeyer Flask',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -508,7 +509,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 '600 Ml',
                 'Beaker',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -518,7 +519,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '10',
                 '500 Ml',
                 'Beaker',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -528,7 +529,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '9',
                 '250 Ml',
                 'Beaker',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Pyrex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -538,7 +539,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '75 Ml',
                 'Funnel',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -548,7 +549,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '32',
                 'N/A',
                 'Test Tube',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -558,7 +559,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Test Tube Rack',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -568,7 +569,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '5',
                 '100 Ml',
                 'Graduated Cylinder',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Bonex',
                 'Good Condition',
                 'Crime Laboratory'
@@ -578,7 +579,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '3',
                 '25 Ml',
                 'Graduated Cylinder',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Tek',
                 'Good Condition',
                 'Crime Laboratory'
@@ -588,7 +589,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '72',
                 'N/A',
                 'Microscope Slides',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Top Care',
                 'Brand New',
                 'Crime Laboratory'
@@ -598,7 +599,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '7',
                 '250 Ml',
                 'Glass Alcohol Lamp',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -608,7 +609,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '13',
                 'N/A',
                 'Eye Protector',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -618,7 +619,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Steering Rod',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -628,7 +629,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 'N/A',
                 'Pipette',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -638,7 +639,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '13',
                 '50 Ml',
                 'Glass Burette',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -648,7 +649,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '10',
                 'N/A',
                 'Dropper',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -658,7 +659,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Reagent Glass Bottle',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -668,7 +669,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '10',
                 'N/A',
                 'Scalpel',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -678,7 +679,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '5',
                 'N/A',
                 'Watch Glass',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -688,7 +689,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 'N/A',
                 'Mortar And Pestle',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -698,7 +699,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Evaporating Dish',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -708,7 +709,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '5',
                 'N/A',
                 'Porcelain',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -718,7 +719,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '7',
                 'N/A',
                 'Bunsen Burner',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -728,7 +729,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '6',
                 'N/A',
                 'Crucible Tongs',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -738,7 +739,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '3',
                 'N/A',
                 'Magnifying Glass',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Brand New',
                 'Crime Laboratory'
@@ -748,7 +749,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '45',
                 'N/A',
                 'Magnifying Glass',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -758,7 +759,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 'N/A',
                 'Forceps',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -768,7 +769,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '27',
                 'N/A',
                 'Fingerprint Brush',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -778,7 +779,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '6',
                 'N/A',
                 'Ink Roller',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -788,7 +789,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '6',
                 'N/A',
                 'Horshoe Fingerprint Lense',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -798,7 +799,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '5',
                 'N/A',
                 'Ink Slab',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -808,7 +809,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Ink Slab',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Brand New',
                 'Fingerprint Room'
@@ -818,7 +819,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '7',
                 'N/A',
                 'Fingerprint Card Holder',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -828,7 +829,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Fingerprint Card Holder',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Brand New',
                 'Fingerprint Room'
@@ -838,7 +839,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 '59 Ml',
                 'Latent Fingerprint Powder (Silk Black)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Brandnew',
                 'Fingerprint Room'
@@ -848,7 +849,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '59 Ml',
                 'Latent Fingerprint Powder (Silk Black)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -858,7 +859,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 '59 Ml',
                 'Latent Fingerprint Powder (White)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -868,7 +869,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 '30 Ml',
                 'Latent Fingerprint Powder (Silk Black)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -878,7 +879,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 '30 Ml',
                 'Latent Fingerprint Powder (White)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -888,7 +889,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '8',
                 '1.5',
                 'Fingerprint Lifting Tape (Transparent)',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Fingerprint Room'
@@ -898,7 +899,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '3',
                 'N/A',
                 'Ballpen',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Fingerprint Room'
@@ -908,7 +909,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Forceps',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Brand New',
                 'Fingerprint Room'
@@ -918,7 +919,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 '15 Cm',
                 'Caliper',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Vernie',
                 'Brand New',
                 'Crime Laboratory'
@@ -928,7 +929,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 '15 Cm',
                 'Caliper',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -938,7 +939,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 '15 Cm',
                 'Caliper',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Mitutoyo',
                 'Good Condition',
                 'Crime Laboratory'
@@ -948,7 +949,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '12',
                 'M-Xl',
                 'Laboratory Gown',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Crime Laboratory'
@@ -958,7 +959,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Typewriting Protractor',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Brand New',
                 'Crime Laboratory'
@@ -968,7 +969,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '3',
                 'N/A',
                 'Typewriting Protractor',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Crime Laboratory'
@@ -978,7 +979,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '2',
                 'N/A',
                 'Space Test Plate',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Brand New',
                 'Crime Laboratory'
@@ -988,7 +989,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Space Test Plate',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Crime Laboratory'
@@ -998,7 +999,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Handwriting Comparison Test Plate',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Brand New',
                 'Crime Laboratory'
@@ -1008,7 +1009,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '5',
                 'N/A',
                 'Handwriting Comparision Test Plate',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Good Condition',
                 'Crime Laboratory'
@@ -1018,7 +1019,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '7',
                 'N/A',
                 'Magnifying Comparator',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Finescale',
                 'Good Condition',
                 'Crime Laboratory'
@@ -1028,7 +1029,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Comparator Stock Pocket Model',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Finescale',
                 'Good Condition',
                 'Crime Laboratory'
@@ -1038,7 +1039,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Paraffin Wax',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Consultation Room'
@@ -1048,7 +1049,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Plaster Of Paris',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Consultation Room'
@@ -1058,7 +1059,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Uv Mini Light',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Sirchie',
                 'Out Of Service',
                 'Crime Laboratory'
@@ -1068,7 +1069,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '4',
                 'N/A',
                 'Black & White Negative Film',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'Kodak',
                 'Good Condition',
                 'Forensic Photography'
@@ -1078,7 +1079,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Funnel',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Forensic Photography'
@@ -1088,7 +1089,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Reagent Bottle',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Forensic Photography'
@@ -1098,7 +1099,7 @@ function init_database(PDO $pdo, string $driver): array {
                 '1',
                 'N/A',
                 'Timer',
-                'Sir Jom',
+                'JOMARI R. VENCIO, RCrim.',
                 'N/A',
                 'Good Condition',
                 'Forensic Photography'
@@ -1114,173 +1115,122 @@ function init_database(PDO $pdo, string $driver): array {
     // 5. Seed Faculty Directory (Matching Sketch Org Chart with OIC Dean at Top)
     $checkFaculty = $pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
     if ($checkFaculty == 0) {
-        $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, specialization, research_interests, office_location, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, office_location, photo_url, order_index, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
         $faculty = [
             // Top Level: OIC - DEAN, SCJ
             [
-                'Sacha Pollyne M. Austria, RCrim., MSCJ',
-                'Officer-In-Charge, School of Criminal Justice Education',
+                'SACHA POLLYNE M. AUSTRIA, RCrim., MSCJ',
+                'OFFICER-IN-CHARGE',
                 'dean',
                 's.austria@dwcc-scje.edu.ph',
-                'Criminological Education & Program Coordination',
-                'Program Coordinator (3 years) • NSTP-ROTC Coordinator (4 years)',
-                'Office of the Dean, 2nd Floor SCJE Building',
+                'Office of the Dean, 2nd Floor SCJ Building',
                 'assets/images/faculty_dean.png',
-                1
+                1,
+                "Program Coordinator (3 years)\nNSTP-ROTC Coordinator (4 years)"
             ],
-            // Second Level: Chairs and Coordinators
+            // Program Chairperson
             [
-                'Joan Mae A. Gayacan, RCrim.',
-                'Program Chairperson, Department of Criminology',
+                'JOAN MAE A. GAYACAN, RCrim.',
+                'PROGRAM CHAIRPERSON',
                 'chair',
                 'j.gayacan@dwcc-scje.edu.ph',
-                'Questioned Document Examination (QDE), Forensic Photography',
-                'Department Adviser • Certified Criminalistic Specialist (QDE)',
                 'Criminology Faculty Office, Room 204',
                 'assets/images/faculty_gayacan.png',
-                2
+                2,
+                "Department Adviser\nCertified Criminalistic Specialist (QDE)"
             ],
+            // Internship Adviser & Graduate Faculty
             [
-                'Dr. Janenovelle A. Cuenca, RCrim., Ph.D.',
+                'JANENOVELLE A. CUENCA, RCrim., Ph.D.',
                 'Criminology Internship Adviser & Graduate Faculty',
                 'coordinator',
                 'j.cuenca@dwcc-scje.edu.ph',
-                'Criminal Justice Administration, Internship Supervision, Criminological Research',
-                'Provincial Chancellor (PCAP Reg. IV) • PNP MIMAROPA RSSC Member • Internship Adviser',
                 'Criminology Faculty Hall, Room 203',
                 'assets/images/faculty_cuenca.png',
-                3
+                3,
+                "Bachelor of Science in Criminology at Lyceum of the Philippines University-Batangas\nRegistered Criminologist\nMaster of Science in Criminal Justice w/ Specialization in Criminology at Emilio Aguinaldo College Manila\nDoctor of Philosophy in Criminal Justice with specialization in Criminology at Lyceum of the Philippines University-Batangas\nRecruitment, Screening and Selection Committee Member, PNP MIMAROPA Region\nProvincial Chancellor - PCAP Region IV Oriental Mindoro Chapter\nCriminology Internship Adviser"
             ],
+            // Faculty - Lyra Caoli
             [
-                'Jomari R. Vencio, RCrim.',
-                'Laboratory Custodian',
-                'custodian',
-                'j.vencio@dwcc-scje.edu.ph',
-                'Forensic Instrumentation, Chemical Safety, Evidence Custody',
-                'Certified Criminalistic Specialist (Laboratory Custodian) • Research Area Committee Member',
-                'Central Criminology Laboratory Office, Room 101',
-                'assets/images/faculty_vencio.png',
-                4
-            ],
-            // Instructional Faculty (Full-Time)
-            [
-                'Quennie F. Lovendino, RCrim.',
-                'Full-Time Faculty - Criminology',
-                'faculty',
-                'q.lovendino@dwcc-scje.edu.ph',
-                'Criminological Theories, Law Enforcement Administration',
-                'Region 4 Achiever (LEC) • Full-Time Faculty',
-                'Faculty Hall, 2nd Floor SCJE Building',
-                'assets/images/faculty_lovendino.png',
-                5
-            ],
-            [
-                'Lyra B. Caoli, RCrim.',
+                'LYRA B. CAOLI, RCrim.',
                 'Instructor - Polygraphy & Deception Detection',
                 'faculty',
                 'l.caoli@dwcc-scje.edu.ph',
-                'Digital Polygraphy, Lie Detection Technique, Deception Detection',
-                'Mastering Digital Polygraph Technique • Advanced Training for Accurate Deception Detection',
-                'Polygraph Suite & Examination Room, SCJE Bldg',
+                'Polygraph Suite & Examination Room, SCJ Bldg',
                 'assets/images/faculty_caoli.png',
-                6
+                4,
+                "Mastering Digital Polygraph Technique: Advanced Training for Accurate Deception Detection"
             ],
-            // Part-Time Faculty & Professional Lecturers
+            // Laboratory Custodian
             [
-                'Atty. Zyreen B. Cataquis, J.D.',
+                'JOMARI R. VENCIO, RCrim.',
+                'LABORATORY CUSTODIAN',
+                'custodian',
+                'j.vencio@dwcc-scje.edu.ph',
+                'Central Criminology Laboratory Office, Room 101',
+                'assets/images/faculty_vencio.png',
+                5,
+                "Certified Criminalistic Specialist (Laboratory Custodian)\nResearch Area Committee Member"
+            ],
+            // Full-Time Faculty - Quennie Lovendino
+            [
+                'QUENNIE F. LOVENDINO, RCrim.',
+                'Full-Time Faculty - Criminology',
+                'faculty',
+                'q.lovendino@dwcc-scje.edu.ph',
+                'Faculty Hall, 2nd Floor SCJ Building',
+                'assets/images/faculty_lovendino.png',
+                6,
+                "Region 4- Achiever (LEC)"
+            ],
+            // Part-Time Faculty
+            [
+                'ATTY. ZYREEN B. CATAQUIS',
                 'Part-Time Faculty - Administrative & Public Law',
-                'faculty',
+                'part_time',
                 'z.cataquis@dwcc-scje.edu.ph',
-                'Local Governance, Administrative Law, Civil Service, Government Procurement, Performance Management',
-                'Juris Doctor (BatStateU) • MPA Units (DWCC) • Administrative Officer IV (PGOM)',
-                'Faculty Hall, 2nd Floor SCJE Building',
+                'Faculty Hall, 2nd Floor SCJ Building',
                 'assets/images/faculty_cataquis.png',
-                7
+                7,
+                "Bachelor of Arts in Political Science - Divine Word College of Calapan\nEducational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) - Batangas State University Main Campus\nMaster in Public Administration (Units earned) - Divine Word College of Calapan\n2014-2016 - College Instructor, Divine Word College of Calapan\n2014-2016 - Human Resource Assistant I, Divine Word College of Calapan\nAreas of Specialization: Local Governance, Administrative Law, Civil Service, Government Procurement, Performance Management\nProfessional Experiences: 2016 - present - Administrative Officer IV, Provincial Government of Oriental Mindoro"
             ],
             [
-                'Atty. Jake Magsisi, J.D.',
+                'ATTY. JAKE MAGSISI',
                 'Part-Time Faculty - Criminal Law & Legal Procedure',
-                'faculty',
+                'part_time',
                 'j.magsisi@dwcc-scje.edu.ph',
-                'Criminal Law, Civil & Administrative Cases, Special Civil Actions, Election and Labor Law',
-                'Juris Doctor (BatStateU) • BS Information Technology (DWCC) • Attorney III (Provincial Legal Office)',
-                'Faculty Hall, 2nd Floor SCJE Building',
+                'Faculty Hall, 2nd Floor SCJ Building',
                 'assets/images/faculty_magsisi.png',
-                8
+                8,
+                "Bachelor of Science in Information Technology (DWCC)\nEducational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) - Batangas State University Main Campus\nProvincial Government of Oriental Mindoro- Attorney III (Provincial Legal Office)\nHandling cases (Criminal, Civil, Administrative, Special Civil Action, Election and Labor)"
             ],
             [
-                'Atty. Marc Paolo C. Cusi, J.D.',
+                'ATTY. MARC PAOLO C. CUSI',
                 'Part-Time Faculty - Criminal Justice & Legal Studies',
-                'faculty',
+                'part_time',
                 'm.cusi@dwcc-scje.edu.ph',
-                'Criminal Procedure, Legal Counseling, Provincial Legal Services',
-                'Juris Doctor (Non-Thesis) • Provincial Legal Office (PGOM)',
-                'Faculty Hall, 2nd Floor SCJE Building',
+                'Faculty Hall, 2nd Floor SCJ Building',
                 'assets/images/faculty_cusi.png',
-                9
+                9,
+                "Educational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) Provincial Government of Oriental Mindoro (Provincial Legal Office)"
             ],
             [
-                'Jasmin M. Bagon, LPT',
+                'JASMIN M. BAGON, LPT',
                 'Part-Time Faculty - Technical Report Writing',
-                'faculty',
+                'part_time',
                 'j.bagon@dwcc-scje.edu.ph',
-                'Technical Report Writing, Language and Literacy Education, Corporate Training',
-                'BA English Studies (UP Diliman) • MA Language Literacy (UP Open University) • Client Acquisition and Training Manager',
-                'Faculty Hall, 2nd Floor SCJE Building',
+                'Faculty Hall, 2nd Floor SCJ Building',
                 'assets/images/faculty_bagon.png',
-                10
-            ],
-            [
-                'Hazel Joys B. Jamilla, LPT',
-                'Part-Time Faculty - General Science',
-                'faculty',
-                'h.jamilla@dwcc-scje.edu.ph',
-                'General Science, Science Education, Environmental Science',
-                'MaEd Science Education (30 units) • Learning Area Coordinator • YES-O Adviser • SHS Faculty',
-                'Faculty Hall, 2nd Floor SCJE Building',
-                'assets/images/faculty_jamilla.png',
-                11
-            ],
-            [
-                'Rommel M. Casiple, Ret. PNP',
-                'Part-Time Faculty - Marksmanship & Defensive Tactics',
-                'faculty',
-                'r.casiple@dwcc-scje.edu.ph',
-                'Fundamentals of Martial Arts, Fundamentals of Marksmanship, Gun Safety, Pekiti Tirsia Kali',
-                'Ret. PNP (Training Service / Maritime Group) • Security Agent II / Deputy CSU (PGSO) • Pekiti Tirsia Kali Instructor',
-                'Tactical Defense Room & Range, SCJE Bldg',
-                'assets/images/faculty_casiple.png',
-                12
-            ],
-            [
-                'Annie A. Amuguis, LPT',
-                'Part-Time Faculty - First Aid & Water Safety',
-                'faculty',
-                'a.amuguis@dwcc-scje.edu.ph',
-                'First Aid and Water Safety Course, Emergency Response, Sports Coordination',
-                'Faculty, School of Arts and Sciences • DWCC Sports Coordinator',
-                'Faculty Hall / Gymnasium Office, SCJE',
-                'assets/images/faculty_amuguis.png',
-                13
-            ],
-            [
-                'Jessica Mae T. Decillo, LPT, MPA',
-                'Part-Time Faculty - Criminological Research 1',
-                'faculty',
-                'j.decillo@dwcc-scje.edu.ph',
-                'Criminological Research 1 Course, Thesis Advisory, Public Administration',
-                'Master in Public Administration (MPA) • Faculty, School of Arts and Sciences',
-                'Faculty Hall, 2nd Floor SCJE Building',
-                'assets/images/faculty_decillo.png',
-                14
+                10,
+                "UP Diliman - BA English Studies\nUP Open Universtiy - MA Language Literacy\nHandling Technical Report Writing Course\nClient Acquisition and Training Manager"
             ]
         ];
 
         foreach ($faculty as $f) {
             $stmt->execute($f);
         }
-        $results[] = "Seeded " . count($faculty) . " Faculty Members (Dean, Chairs, Coordinators, Professors).";
+        $results[] = "Seeded " . count($faculty) . " Faculty Members.";
     }
 
     // 6. Seed Site Content (Vision, Mission, Goals, History)
@@ -1329,7 +1279,7 @@ if (php_sapi_name() === 'cli' || basename($_SERVER['SCRIPT_NAME'] ?? '') === 'se
 
         if (php_sapi_name() === 'cli') {
             echo "=====================================================\n";
-            echo "  DWCC - School of Criminal Justice Education (SCJE) \n";
+            echo "  DWCC - School of Criminal Justice (SCJ)            \n";
             echo "  Database Setup Completed Successfully!             \n";
             echo "  Active Engine: " . strtoupper($driver) . "\n";
             echo "=====================================================\n";

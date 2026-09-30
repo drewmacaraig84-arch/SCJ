@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/cache.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['admin', 'super_admin']);
 
 $pdo = get_db();
 $message = '';
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $brand = trim($_POST['brand'] ?? 'N/A');
         $location = trim($_POST['location'] ?? 'Crime Laboratory');
         $status = trim($_POST['status'] ?? 'Good Condition');
-        $person = trim($_POST['person_accountable'] ?? 'Sir Jom');
+        $person = trim($_POST['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.');
 
         if ($code && $name) {
             try {
@@ -158,7 +158,7 @@ $materials = $pdo->query("SELECT * FROM materials_chemicals ORDER BY id ASC")->f
                     </div>
                     <div>
                         <label style="font-size:0.8rem; font-weight:700; color:#475569;">Accountable Officer</label>
-                        <input type="text" name="person_accountable" value="Sir Jom" class="sketch-search-input" style="width:100%; border:1px solid #CBD5E1; padding:8px 12px;">
+                        <input type="text" name="person_accountable" value="JOMARI R. VENCIO, RCrim." class="sketch-search-input" style="width:100%; border:1px solid #CBD5E1; padding:8px 12px;">
                     </div>
                 </div>
                 <button type="submit" class="btn-primary" style="padding:8px 20px;">Save Material Record</button>
@@ -194,7 +194,7 @@ $materials = $pdo->query("SELECT * FROM materials_chemicals ORDER BY id ASC")->f
                                 <td><?= e($m['brand']) ?></td>
                                 <td><?= e($m['location']) ?></td>
                                 <td><span class="badge badge-info"><?= e($m['status']) ?></span></td>
-                                <td><?= e($m['person_accountable'] ?? 'Sir Jom') ?></td>
+                                <td><?= e($m['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.') ?></td>
                                 <td>
                                     <a href="?delete=<?= $m['id'] ?>" onclick="return confirm('Delete this material record?');" style="color:#EF4444; font-size:0.85rem; font-weight:700;">
                                         <i class="fa-solid fa-trash"></i> Delete

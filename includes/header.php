@@ -1,7 +1,7 @@
 <?php
 /**
  * Common Header & Top Navigation
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 
 require_once __DIR__ . '/config.php';
@@ -22,7 +22,7 @@ $csrfToken = CsrfMiddleware::getToken();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= e($pageTitle ?? 'School of Criminal Justice Education | Information System') ?></title>
+    <title><?= e($pageTitle ?? 'School of Criminal Justice | Information System') ?></title>
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="<?= asset_url('assets/images/scj_logo.png') ?>">
     <link rel="apple-touch-icon" href="<?= asset_url('assets/images/scj_logo.png') ?>">
@@ -129,28 +129,86 @@ $csrfToken = CsrfMiddleware::getToken();
                 <?php if ($isLoggedIn): 
                     $userRole = strtolower($currentUser['role'] ?? '');
                     $isSuper = in_array($userRole, ['super_admin', 'superadmin']);
-                    $portalBg = $isSuper ? 'linear-gradient(135deg, #7C3AED, #F59E0B)' : ($userRole === 'admin' ? '#1E3A8A' : ($userRole === 'faculty' ? '#0D9488' : '#334155'));
-                    $portalBorder = $isSuper ? '#F59E0B' : ($userRole === 'admin' ? '#3B82F6' : ($userRole === 'faculty' ? '#14B8A6' : '#64748B'));
-                    $portalLabel = $isSuper ? 'SUPER ADMIN' : strtoupper(e($currentUser['role']));
+                    $rawName = trim($currentUser['name'] ?? 'User');
 
-                    // Only super_admin has access to the System Dashboard
-                    $portalTarget = $isSuper 
-                        ? base_url('admin/') 
-                        : ($userRole === 'admin' ? base_url('admin/researches.php') : ($userRole === 'faculty' ? base_url('admin/researches.php') : null));
-                    $portalIcon = $isSuper ? 'fa-crown' : ($userRole === 'admin' ? 'fa-screwdriver-wrench' : ($userRole === 'faculty' ? 'fa-book-open' : 'fa-user-graduate'));
-                    $portalTooltip = $isSuper ? 'System Dashboard' : ($userRole === 'admin' ? 'Management Portal' : ($userRole === 'faculty' ? 'Research Management' : 'Student Account'));
+                    // Format name nicely: convert student uppercase "LASTNAME, FIRSTNAME MIDDLENAME" -> "Firstname Lastname"
+                    if ($userRole === 'student' && str_contains($rawName, ',')) {
+                        $parts = explode(',', $rawName);
+                        $lastName = trim($parts[0]);
+                        $rest = trim($parts[1] ?? '');
+                        $restWords = preg_split('/\s+/', $rest);
+                        $firstName = $restWords[0] ?? '';
+                        if (isset($restWords[1]) && strlen($restWords[1]) > 0) {
+                            $firstName .= ' ' . $restWords[1];
+                        }
+                        $formattedName = ucwords(strtolower(trim($firstName . ' ' . $lastName)));
+                    } else {
+                        if (str_contains($rawName, ',')) {
+                            $parts = explode(',', $rawName);
+                            $formattedName = trim($parts[0]);
+                        } else {
+                            $formattedName = $rawName;
+                        }
+                    }
+
+                    // Avatar styling & icons
+                    if ($isSuper) {
+                        $avatarBg = 'linear-gradient(135deg, #7C3AED, #F59E0B)';
+                        $avatarColor = '#FFFFFF';
+                        $portalIcon = 'fa-crown';
+                        $portalLabel = 'SUPER ADMIN';
+                        $roleBadgeBg = 'rgba(245, 158, 11, 0.2)';
+                        $roleBadgeColor = '#FBBF24';
+                        $roleBadgeBorder = 'rgba(245, 158, 11, 0.4)';
+                        $portalTarget = base_url('admin/');
+                        $portalTooltip = 'System Dashboard';
+                    } elseif ($userRole === 'admin' || $userRole === 'faculty') {
+                        $avatarBg = 'linear-gradient(135deg, #0F766E, #14B8A6)';
+                        $avatarColor = '#FFFFFF';
+                        $portalIcon = 'fa-chalkboard-user';
+                        $portalLabel = strtoupper($userRole);
+                        $roleBadgeBg = 'rgba(20, 184, 166, 0.2)';
+                        $roleBadgeColor = '#2DD4BF';
+                        $roleBadgeBorder = 'rgba(20, 184, 166, 0.4)';
+                        $portalTarget = base_url('admin/researches.php');
+                        $portalTooltip = 'Management Portal';
+                    } else {
+                        // Student
+                        $avatarBg = 'linear-gradient(135deg, #0369A1, #0284C7)';
+                        $avatarColor = '#FFFFFF';
+                        $portalIcon = 'fa-user-graduate';
+                        $portalLabel = 'STUDENT';
+                        $roleBadgeBg = 'rgba(56, 189, 248, 0.15)';
+                        $roleBadgeColor = '#38BDF8';
+                        $roleBadgeBorder = 'rgba(56, 189, 248, 0.35)';
+                        $portalTarget = null;
+                        $portalTooltip = 'Enrolled Criminology Student';
+                    }
                 ?>
-                    <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="nav-user-profile-badge">
                         <?php if ($portalTarget): ?>
-                            <a href="<?= $portalTarget ?>" class="nav-portal-btn" style="background:<?= $portalBg ?>; border-color:<?= $portalBorder ?>; box-shadow:<?= $isSuper ? '0 0 12px rgba(245,158,11,0.4)' : 'none' ?>;" title="<?= $portalTooltip ?>">
-                                <i class="fa-solid <?= $portalIcon ?>"></i> <?= e($currentUser['name']) ?> (<?= $portalLabel ?>)
+                            <a href="<?= $portalTarget ?>" class="nav-user-chip" title="<?= $portalTooltip ?> &bull; <?= e($currentUser['name']) ?> (ID: <?= e($currentUser['id_number'] ?? '') ?>)">
+                                <span class="user-chip-avatar" style="background:<?= $avatarBg ?>; color:<?= $avatarColor ?>;">
+                                    <i class="fa-solid <?= $portalIcon ?>"></i>
+                                </span>
+                                <span class="user-chip-text">
+                                    <span class="user-chip-name"><?= e($formattedName) ?></span>
+                                    <span class="user-chip-role" style="background:<?= $roleBadgeBg ?>; color:<?= $roleBadgeColor ?>; border-color:<?= $roleBadgeBorder ?>;"><?= $portalLabel ?></span>
+                                </span>
                             </a>
                         <?php else: ?>
-                            <span class="nav-portal-btn" style="background:<?= $portalBg ?>; border-color:<?= $portalBorder ?>; cursor:default;" title="<?= $portalTooltip ?>">
-                                <i class="fa-solid <?= $portalIcon ?>"></i> <?= e($currentUser['name']) ?> (<?= $portalLabel ?>)
-                            </span>
+                            <div class="nav-user-chip no-hover" title="Enrolled Student &bull; <?= e($currentUser['name']) ?> (ID: <?= e($currentUser['id_number'] ?? '') ?>)">
+                                <span class="user-chip-avatar" style="background:<?= $avatarBg ?>; color:<?= $avatarColor ?>;">
+                                    <i class="fa-solid <?= $portalIcon ?>"></i>
+                                </span>
+                                <span class="user-chip-text">
+                                    <span class="user-chip-name"><?= e($formattedName) ?></span>
+                                    <span class="user-chip-role" style="background:<?= $roleBadgeBg ?>; color:<?= $roleBadgeColor ?>; border-color:<?= $roleBadgeBorder ?>;"><?= $portalLabel ?></span>
+                                </span>
+                            </div>
                         <?php endif; ?>
-                        <a href="<?= base_url('logout.php') ?>" class="nav-portal-btn" style="background:#EF4444; border-color:#F87171;" title="Log Out">
+
+                        <a href="<?= base_url('logout.php') ?>" class="nav-logout-icon-btn" title="Sign Out">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </a>
                     </div>
@@ -182,10 +240,11 @@ $csrfToken = CsrfMiddleware::getToken();
 
                     <form action="<?= base_url('login.php') ?>" method="POST">
                         <?= CsrfMiddleware::field() ?>
+                        <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
                         <div class="form-group">
                             <label for="modalIdNumber"><i class="fa-solid fa-id-card"></i> USERNAME: ID NUMBER</label>
-                            <input type="text" id="modalIdNumber" name="id_number" class="form-control" required autofocus>
+                            <input type="text" id="modalIdNumber" name="id_number" class="form-control" placeholder="e.g. 51955" required autofocus>
                         </div>
 
                         <div class="form-group">
@@ -193,7 +252,12 @@ $csrfToken = CsrfMiddleware::getToken();
                             <input type="password" id="modalPassword" name="password" class="form-control" placeholder="••••••••" required>
                         </div>
 
-                        <div style="margin-top:16px;">
+                        <div style="margin:10px 0; padding:8px 12px; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:6px; font-size:0.75rem; color:#94A3B8; line-height:1.4;">
+                            <i class="fa-solid fa-circle-info" style="color:var(--color-primary-light,#38BDF8);"></i>
+                            <strong>Students:</strong> Default password is your <strong>Last Name + ID Number</strong> (e.g. <code>ABAG51955</code>).
+                        </div>
+
+                        <div style="margin-top:14px;">
                             <button type="submit" class="btn-primary" style="width:100%; justify-content:center; padding:11px;">
                                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
                             </button>

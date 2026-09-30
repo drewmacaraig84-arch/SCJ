@@ -5,7 +5,7 @@
  */
 
 $activePage = 'about';
-$pageTitle = 'About Us | School of Criminal Justice Education - DWCC';
+$pageTitle = 'About Us | School of Criminal Justice - DWCC';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/cache.php';
 
@@ -93,12 +93,12 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                     <div class="academic-pathway-card">
                         <h4><i class="fa-solid fa-shield-halved"></i> Major Discipline Areas</h4>
                         <ul>
-                            <li>Criminal Law, Jurisprudence &amp; Procedure</li>
-                            <li>Law Enforcement Administration (LEA) &amp; Police Patrol</li>
-                            <li>Criminalistics &amp; Forensic Science Technologies</li>
-                            <li>Crime Detection &amp; Criminal Investigation (CDI)</li>
-                            <li>Correctional Administration &amp; Penology</li>
-                            <li>Criminological Theories &amp; Victimology</li>
+                            <li>Criminal Law and Jurisprudence</li>
+                            <li>Law Enforcement Administration</li>
+                            <li>Crime Detection and Investigation</li>
+                            <li>Criminalistics</li>
+                            <li>Correctional Administration</li>
+                            <li>Criminology</li>
                         </ul>
                     </div>
 

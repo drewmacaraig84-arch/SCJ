@@ -1,7 +1,7 @@
 <?php
 /**
  * Common Footer Component
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 ?>
     </main><!-- /#appContent -->
@@ -32,7 +32,7 @@
                             <img src="<?= asset_url('assets/images/scj_logo.png') ?>" alt="SCJ Department Seal">
                         </div>
                     </div>
-                    <h4>School of Criminal Justice Education</h4>
+                    <h4>School of Criminal Justice</h4>
                     <p style="margin-bottom: 12px;">
                         Divine Word College of Calapan (DWCC)<br>
                         Gov. Infantado St., Calapan City, 5200 Oriental Mindoro, Philippines
@@ -46,7 +46,7 @@
                     <ul class="footer-links">
                         <li><a href="<?= base_url('index.php') ?>">Home Page</a></li>
                         <li><a href="<?= base_url('about.php') ?>">History of SCJ</a></li>
-                        <li><a href="<?= base_url('research.php') ?>">Criminological Research</a></li>
+                        <li><a href="<?= base_url('research.php') ?>">Research</a></li>
                         <li><a href="<?= base_url('laboratories.php') ?>">Laboratory Facilities</a></li>
                         <li><a href="<?= base_url('faculty.php') ?>">Faculty &amp; Staff Directory</a></li>
                         <li><a href="<?= base_url('contact.php') ?>">Contact &amp; Inquiries</a></li>
@@ -65,7 +65,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; <?= date('Y') ?> Divine Word College of Calapan - School of Criminal Justice Education. All Rights Reserved. Information System v2.4.</p>
+                <p>&copy; <?= date('Y') ?> Divine Word College of Calapan - School of Criminal Justice. All Rights Reserved. Information System v2.4.</p>
             </div>
         </div>
     </footer>

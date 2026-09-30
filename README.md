@@ -1,6 +1,6 @@
-# School of Criminal Justice Education (SCJE) Information System
+# School of Criminal Justice (SCJ) Information System
 
-A full-stack, blue-themed institutional website and information system for the **Divine Word College of Calapan – School of Criminal Justice Education (DWCC-SCJE)**.
+A full-stack, blue-themed institutional website and information system for the **Divine Word College of Calapan – School of Criminal Justice (DWCC-SCJ)**.
 
 Built with PHP 8.3, dual MySQL/SQLite engine, modular Middleware pipeline, and responsive modern frontend with zero build steps.
 
@@ -8,9 +8,9 @@ Built with PHP 8.3, dual MySQL/SQLite engine, modular Middleware pipeline, and r
 
 ## Features & Structure
 
-1. **Top Institutional Header**: Official DWCC SCJE emblem, Criminology scales & laurel badge, and clear institutional title.
+1. **Top Institutional Header**: Official DWCC SCJ emblem, Criminology scales & laurel badge, and clear institutional title.
 2. **Sticky Navigation Bar**: Smooth navigation with dropdowns for Home, About, Research, Laboratories, Faculty, Resources, Contact, and Portal Login.
-3. **Hero Section**: Tactical law enforcement backdrop, introductory text, and 4 quick access tiles (Criminological Research, Laboratory Equipment, Faculty, Research Resources).
+3. **Hero Section**: Tactical law enforcement backdrop, introductory text, and 4 quick access tiles (Research, Laboratory Equipment, Faculty, Research Resources).
 4. **Institutional Pillars**: 3 cards for **VISION**, **MISSION**, and **GOALS**.
 5. **About Section**: Comprehensive narrative of the **HISTORY OF SCJ**.
 6. **16 Criminological Research Field Cards**: Interactive discipline cards with live filtering matching the reference sample.
@@ -96,7 +96,7 @@ DB_SQLITE_PATH=database/scj.sqlite
 
 # Default Administrator Credentials
 DEFAULT_ADMIN_ID=Drew
-DEFAULT_ADMIN_PASSWORD=admin
+DEFAULT_ADMIN_PASSWORD=49543
 ```
 
 ---
@@ -105,6 +105,6 @@ DEFAULT_ADMIN_PASSWORD=admin
 
 | Role | Username / ID Number | Password | Portal Access |
 | :--- | :--- | :--- | :--- |
-| **Administrator** | `Drew` | `admin` | Full CRUD Admin Dashboard (`/admin`) |
+| **Super Admin** | `Drew` | `49543` *(or `admin`)* | Full CRUD Admin Dashboard (`/admin`) |
 | **Faculty Member** | `FAC-2024-001` | `password123` | Can Add Research Papers |
 | **Student** | `2024-10045` | `password123` | Portal Student Account |

@@ -1,11 +1,11 @@
 <?php
 /**
  * Main Portal Homepage & Executive Summary
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 
 $activePage = 'home';
-$pageTitle = 'School of Criminal Justice Education | DWCC Information System';
+$pageTitle = 'School of Criminal Justice | DWCC Information System';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/cache.php';
 
@@ -45,7 +45,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
             <!-- Left Headline & Description -->
             <div class="hero-content">
                 <span class="hero-badge">
-                    <i class="fa-solid fa-shield-halved"></i> Divine Word College of Calapan &bull; SCJE
+                    <i class="fa-solid fa-shield-halved"></i> Divine Word College of Calapan &bull; SCJ
                 </span>
                 <div class="hero-kicker">
                     <i class="fa-solid fa-scale-balanced"></i> Center of Excellence in Criminological Education
@@ -77,26 +77,26 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
 
                 <div style="display:flex; gap:12px; flex-wrap:wrap;">
                     <a href="<?= base_url('research.php') ?>" class="btn-primary" style="box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);">
-                        <i class="fa-solid fa-magnifying-glass"></i> Criminological Research
+                        <i class="fa-solid fa-magnifying-glass"></i> Research
                     </a>
                     <a href="<?= base_url('laboratories.php') ?>" class="btn-secondary">
                         <i class="fa-solid fa-flask"></i> Laboratory Facilities
                     </a>
                     <a href="<?= base_url('about.php') ?>" class="btn-outline">
-                        <i class="fa-solid fa-circle-info"></i> About SCJE
+                        <i class="fa-solid fa-circle-info"></i> About SCJ
                     </a>
                 </div>
             </div>
 
             <!-- Right: 4 Quick Access Tiles -->
             <div class="hero-tiles-grid">
-                <!-- Tile 1: Criminological Research -->
+                <!-- Tile 1: Research -->
                 <a href="<?= base_url('research.php') ?>" class="hero-tile">
                     <div class="hero-tile-left">
                         <div class="hero-tile-icon icon-research"><i class="fa-solid fa-book-bookmark"></i></div>
                         <div class="hero-tile-text">
                             <span class="hero-tile-meta">Forensics &bull; Theses</span>
-                            <div class="hero-tile-title">Criminological Research</div>
+                            <div class="hero-tile-title">Research</div>
                         </div>
                     </div>
                     <div class="hero-tile-arrow"><i class="fa-solid fa-chevron-right"></i></div>
@@ -186,7 +186,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
     <section class="section-wrapper">
         <div class="container">
             <div class="section-header-banner">
-                <h2><i class="fa-solid fa-magnifying-glass"></i> Criminological Research Titles</h2>
+                <h2><i class="fa-solid fa-magnifying-glass"></i> Research Titles</h2>
                 <a href="<?= base_url('research.php') ?>" class="btn-primary" style="font-size:0.8rem; padding:8px 18px; border-radius:var(--radius-xs);">
                     View Complete Research Catalog <i class="fa-solid fa-arrow-right"></i>
                 </a>
@@ -386,6 +386,8 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                 $homeDeanPhoto = (!empty($dean['photo_url']) && file_exists(__DIR__ . '/' . $dean['photo_url']))
                     ? base_url($dean['photo_url']) . '?v=' . filemtime(__DIR__ . '/' . $dean['photo_url'])
                     : base_url('assets/images/avatar_placeholder.svg');
+                
+                $homeDeanLines = array_filter(array_map('trim', explode("\n", $dean['description'] ?? '')));
                 ?>
                 <div style="max-width:540px; margin: 0 auto 30px;">
                     <div class="dean-card">
@@ -393,24 +395,27 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                             <img src="<?= $homeDeanPhoto ?>" alt="<?= e($dean['name']) ?>">
                         </div>
                         <h3 class="faculty-name"><?= e($dean['name']) ?></h3>
-                        <div class="faculty-position"><?= e($dean['position'] ?: 'OFFICER-IN-CHARGE') ?></div>
-                        <div class="faculty-details">
-                            <?php if (!empty($dean['specialization'])): ?>
-                                <p><strong>Specialization:</strong> <?= e($dean['specialization']) ?></p>
-                            <?php endif; ?>
-                            <?php if (!empty($dean['research_interests'])): ?>
-                                <p style="margin-top:4px; font-size:0.78rem; color:var(--color-text-secondary);">
-                                    <strong>Roles &amp; Experience:</strong> <?= e($dean['research_interests']) ?>
-                                </p>
-                            <?php endif; ?>
-                            <?php if (!empty($dean['office_location'])): ?>
-                                <p style="margin-top:6px; font-size:0.75rem; color:var(--color-text-muted);">
-                                    <i class="fa-solid fa-location-dot"></i> <?= e($dean['office_location']) ?>
-                                </p>
-                            <?php endif; ?>
-                        </div>
-                        <div style="margin-top:14px;">
-                            <a href="<?= base_url('faculty.php') ?>" class="btn-primary" style="padding:6px 16px; font-size:0.78rem;">
+                        <div class="faculty-position-badge"><?= e($dean['position'] ?: 'OFFICER-IN-CHARGE') ?></div>
+                        
+                        <?php if (!empty($homeDeanLines)): ?>
+                            <ul class="dean-desc-list">
+                                <?php foreach ($homeDeanLines as $line): ?>
+                                    <li>
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <span><?= e($line) ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        <?php if (!empty($dean['office_location'])): ?>
+                            <div class="faculty-office-meta">
+                                <i class="fa-solid fa-location-dot"></i> <?= e($dean['office_location']) ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <div style="margin-top:16px;">
+                            <a href="<?= base_url('faculty.php') ?>" class="btn-primary" style="padding:7px 18px; font-size:0.78rem;">
                                 View Full Faculty Hierarchy &rarr;
                             </a>
                         </div>
@@ -425,18 +430,32 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                     $ffPhoto = (!empty($ff['photo_url']) && file_exists(__DIR__ . '/' . $ff['photo_url']))
                         ? base_url($ff['photo_url']) . '?v=' . filemtime(__DIR__ . '/' . $ff['photo_url'])
                         : base_url('assets/images/avatar_placeholder.svg');
+                    
+                    $ffLines = array_filter(array_map('trim', explode("\n", $ff['description'] ?? '')));
                     ?>
-                    <div class="faculty-sub-card">
-                        <div class="faculty-sub-avatar">
-                            <img src="<?= $ffPhoto ?>" alt="<?= e($ff['name']) ?>">
+                    <div class="faculty-modern-card">
+                        <div class="faculty-card-header">
+                            <div class="faculty-avatar-wrap">
+                                <img src="<?= $ffPhoto ?>" alt="<?= e($ff['name']) ?>">
+                            </div>
+                            <div class="faculty-header-info">
+                                <h4 class="faculty-card-name"><?= e($ff['name']) ?></h4>
+                                <div class="faculty-role-badge badge-<?= e($ff['role_level']) ?>"><?= e($ff['position']) ?></div>
+                            </div>
                         </div>
-                        <div class="faculty-sub-info">
-                            <h4><?= e($ff['name']) ?></h4>
-                            <div class="faculty-sub-position"><?= e($ff['position']) ?></div>
-                            <?php if (!empty($ff['specialization'])): ?>
-                                <div class="faculty-sub-spec"><strong>Specialization:</strong> <?= e($ff['specialization']) ?></div>
+                        <div class="faculty-card-divider"></div>
+                        <div class="faculty-card-body">
+                            <?php if (!empty($ffLines)): ?>
+                                <ul class="faculty-desc-list">
+                                    <?php foreach ($ffLines as $line): ?>
+                                        <li>
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span><?= e($line) ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
                             <?php endif; ?>
-                            <div style="margin-top:8px;">
+                            <div style="margin-top:12px;">
                                 <a href="<?= base_url('faculty.php') ?>" class="table-toolbar-link" style="font-size:0.75rem;">
                                     View Faculty Profile &rarr;
                                 </a>
@@ -456,7 +475,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
             <div class="cta-banner-card">
                 <div style="max-width:680px;">
                     <span class="hero-badge">
-                        <i class="fa-solid fa-comments"></i> Connect with SCJE
+                        <i class="fa-solid fa-comments"></i> Connect with SCJ
                     </span>
                     <h3 class="cta-banner-title">
                         Have Questions or Inquiries for the Dean's Office?

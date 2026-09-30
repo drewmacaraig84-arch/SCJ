@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/cache.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['admin', 'super_admin']);
 
 $pdo = get_db();
 $message = '';
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $status = trim($_POST['status'] ?? 'Good Condition');
         $serial = trim($_POST['serial_number'] ?? '');
         $desc = trim($_POST['description'] ?? '');
-        $person = trim($_POST['person_accountable'] ?? 'Sir Jom');
+        $person = trim($_POST['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.');
 
         if ($code && $name && $brand && $model && $location) {
             try {
@@ -164,7 +164,7 @@ $equipments = $pdo->query("SELECT * FROM equipment ORDER BY id ASC")->fetchAll()
                     </div>
                     <div class="form-group">
                         <label>Accountable Officer</label>
-                        <input type="text" name="person_accountable" class="form-control" value="Sir Jom" required>
+                        <input type="text" name="person_accountable" class="form-control" value="JOMARI R. VENCIO, RCrim." required>
                     </div>
                 </div>
 
@@ -207,7 +207,7 @@ $equipments = $pdo->query("SELECT * FROM equipment ORDER BY id ASC")->fetchAll()
                                 <td><?= e($eq['model']) ?></td>
                                 <td><?= e($eq['current_location']) ?></td>
                                 <td><span class="badge <?= (str_contains(strtolower($eq['status']), 'out')) ? 'badge-danger' : 'badge-success' ?>"><?= e($eq['status']) ?></span></td>
-                                <td><?= e($eq['person_accountable'] ?? 'Sir Jom') ?></td>
+                                <td><?= e($eq['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.') ?></td>
                                 <td style="text-align:center;">
                                     <a href="<?= base_url('admin/equipment.php?delete=' . $eq['id']) ?>" 
                                        class="btn-primary" 

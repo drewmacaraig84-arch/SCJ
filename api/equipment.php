@@ -72,7 +72,7 @@ if ($method === 'POST') {
     $status = trim($_POST['status'] ?? 'Good Condition');
     $serial = trim($_POST['serial_number'] ?? '');
     $desc = trim($_POST['description'] ?? '');
-    $person = trim($_POST['person_accountable'] ?? 'Sir Jom');
+    $person = trim($_POST['person_accountable'] ?? 'JOMARI R. VENCIO, RCrim.');
 
     if (empty($code) || empty($name) || empty($brand) || empty($model) || empty($location)) {
         http_response_code(422);

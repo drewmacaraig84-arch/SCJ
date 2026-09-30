@@ -1,11 +1,11 @@
 <?php
 /**
  * Contact & Inquiry Page
- * School of Criminal Justice Education (SCJE) Information System
+ * School of Criminal Justice (SCJ) Information System
  */
 
 $activePage = 'contact';
-$pageTitle = 'Contact Us | SCJE Information System';
+$pageTitle = 'Contact Us | SCJ Information System';
 require_once __DIR__ . '/includes/header.php';
 ?>
 
@@ -16,7 +16,7 @@ require_once __DIR__ . '/includes/header.php';
                 <i class="fa-solid fa-envelope"></i>
             </div>
             <div class="page-banner-content">
-                <h2>Contact SCJE</h2>
+                <h2>Contact SCJ</h2>
                 <p>Dean's Office &bull; Department Directory &bull; Public Inquiries</p>
             </div>
         </div>
@@ -34,7 +34,7 @@ require_once __DIR__ . '/includes/header.php';
 
                     <div class="contact-details-box">
                         <h3>
-                            School of Criminal Justice Education
+                            School of Criminal Justice
                         </h3>
                         <p>
                             Divine Word College of Calapan (DWCC)<br>

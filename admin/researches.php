@@ -12,7 +12,7 @@ require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 require_once __DIR__ . '/../includes/cache.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin', 'faculty']);
+RoleMiddleware::handle(['admin', 'super_admin', 'faculty']);
 
 $pdo = get_db();
 $message = '';
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Handle Delete
 if (isset($_GET['delete'])) {
-    RoleMiddleware::handle(['admin']);
+    RoleMiddleware::handle(['admin', 'super_admin']);
     $delId = intval($_GET['delete']);
     if ($delId > 0) {
         $stmt = $pdo->prepare("DELETE FROM research WHERE id = ?");
@@ -96,7 +96,7 @@ $researches = $pdo->query("SELECT * FROM research ORDER BY id DESC")->fetchAll()
     ?>
 
     <main class="admin-main">
-        <h2 style="font-size:1.6rem; font-weight:900; color:#0A192F; margin-bottom:20px;">Manage Criminological Research</h2>
+        <h2 style="font-size:1.6rem; font-weight:900; color:#0A192F; margin-bottom:20px;">Manage Research</h2>
 
         <?php if ($message): ?>
             <div class="badge badge-success" style="padding:10px 16px; margin-bottom:16px; display:block;"><?= e($message) ?></div>

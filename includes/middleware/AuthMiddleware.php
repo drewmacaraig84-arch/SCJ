@@ -45,15 +45,24 @@ class AuthMiddleware {
     }
 
     /**
-     * Destroy user session
+     * Terminate authenticated session and preserve token grace period
      */
     public static function logout(): void {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+        $csrfToken = $_SESSION['_csrf_token'] ?? null;
         unset($_SESSION['scj_user']);
         unset($_SESSION['scj_logged_in_at']);
-        session_destroy();
+
+        // Preserve current token into grace period for subsequent login
+        if ($csrfToken) {
+            $_SESSION['_csrf_token_prev'] = $csrfToken;
+        }
+        if (!headers_sent()) {
+            session_regenerate_id(true);
+        }
+        $_SESSION['_csrf_token'] = bin2hex(random_bytes(32));
     }
 
     /**

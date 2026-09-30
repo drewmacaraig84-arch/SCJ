@@ -11,7 +11,7 @@ require_once __DIR__ . '/../includes/middleware/CsrfMiddleware.php';
 require_once __DIR__ . '/../includes/middleware/RoleMiddleware.php';
 
 SecurityHeadersMiddleware::handle();
-RoleMiddleware::handle(['admin']);
+RoleMiddleware::handle(['admin', 'super_admin']);
 
 $pdo = get_db();
 $message = '';
