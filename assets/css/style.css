@@ -3010,6 +3010,25 @@ button, input, select, textarea {
   font-size: 0.8rem;
 }
 
+.footer-developer {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted, rgba(255, 255, 255, 0.65));
+}
+
+.footer-developer a {
+  color: var(--color-gold, #D4AF37);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-developer a:hover {
+  color: var(--color-gold-hover, #E5C158);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 /* ==============================================================
    COMPREHENSIVE MOBILE & TABLET RESPONSIVE SYSTEM
    ============================================================== */

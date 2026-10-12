@@ -66,6 +66,9 @@
 
             <div class="footer-bottom">
                 <p>&copy; <?= date('Y') ?> Divine Word College of Calapan - School of Criminal Justice. All Rights Reserved. Information System v2.4.</p>
+                <p class="footer-developer" style="margin-top: 6px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.65);">
+                    Developed by: <a href="https://portfolio-drew-c5ac.vercel.app/#home" target="_blank" rel="noopener noreferrer" style="color: var(--color-gold, #D4AF37); font-weight: 600; text-decoration: none;">Drew Macaraig</a>
+                </p>
             </div>
         </div>
     </footer>

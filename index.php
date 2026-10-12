@@ -71,7 +71,7 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                     </div>
                     <div class="hero-chip">
                         <i class="fa-solid fa-award"></i>
-                        <span><strong>AY 2025-2026</strong> Accredited</span>
+                        <span><strong>Accredited</strong></span>
                     </div>
                 </div>
 
