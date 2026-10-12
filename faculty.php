@@ -67,6 +67,11 @@ $partTimeFaculty = Cache::remember('faculty_part_time', 3600, function() use ($p
                             </div>
                             <h3 class="faculty-name"><?= e($dean['name']) ?></h3>
                             <div class="faculty-position-badge"><?= e($dean['position'] ?: 'OFFICER-IN-CHARGE') ?></div>
+                            <?php if (!empty($dean['employment_status'])): ?>
+                                <div>
+                                    <span class="dean-status-pill"><i class="fa-solid fa-id-badge"></i> <?= e($dean['employment_status']) ?></span>
+                                </div>
+                            <?php endif; ?>
 
                             <?php if (!empty($deanLines)): ?>
                                 <ul class="dean-desc-list">
@@ -112,11 +117,18 @@ $partTimeFaculty = Cache::remember('faculty_part_time', 3600, function() use ($p
                                 </div>
                                 <div class="faculty-header-info">
                                     <h4 class="faculty-card-name"><?= e($fac['name']) ?></h4>
-                                    <?php if (!empty($fac['position'])): ?>
-                                        <div class="faculty-role-badge badge-<?= e($fac['role_level']) ?>">
-                                            <?= e($fac['position']) ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                                        <?php if (!empty($fac['position'])): ?>
+                                            <div class="faculty-role-badge badge-<?= e($fac['role_level']) ?>">
+                                                <?= e($fac['position']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if (!empty($fac['employment_status'])): ?>
+                                            <div class="faculty-status-pill">
+                                                <i class="fa-solid fa-id-badge"></i> <?= e($fac['employment_status']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
 
@@ -164,11 +176,18 @@ $partTimeFaculty = Cache::remember('faculty_part_time', 3600, function() use ($p
                                 </div>
                                 <div class="faculty-header-info">
                                     <h4 class="faculty-card-name"><?= e($pt['name']) ?></h4>
-                                    <?php if (!empty($pt['position'])): ?>
-                                        <div class="faculty-role-badge badge-part-time">
-                                            <?= e($pt['position']) ?>
-                                        </div>
-                                    <?php endif; ?>
+                                    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                                        <?php if (!empty($pt['position'])): ?>
+                                            <div class="faculty-role-badge badge-part-time">
+                                                <?= e($pt['position']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if (!empty($pt['employment_status'])): ?>
+                                            <div class="faculty-status-pill">
+                                                <i class="fa-solid fa-id-badge"></i> <?= e($pt['employment_status']) ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
 

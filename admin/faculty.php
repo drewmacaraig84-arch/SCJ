@@ -29,12 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $email = trim($_POST['email'] ?? '');
         $description = trim($_POST['description'] ?? '');
         $office = trim($_POST['office_location'] ?? '');
+        $employmentStatus = trim($_POST['employment_status'] ?? '');
         $photoUrl = trim($_POST['photo_url'] ?? '');
         $order = intval($_POST['order_index'] ?? 10);
 
         if ($name && $position) {
-            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, description, office_location, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->execute([$name, $position, $roleLevel, $email, $description, $office, $photoUrl, $order]);
+            $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, description, office_location, employment_status, photo_url, order_index) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$name, $position, $roleLevel, $email, $description, $office, $employmentStatus, $photoUrl, $order]);
             Cache::flush();
             $message = 'Faculty member added.';
         } else {
@@ -137,7 +138,7 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap:16px;">
+                <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap:16px;">
                     <div class="form-group">
                         <label>Email Address</label>
                         <input type="email" name="email" class="form-control" placeholder="faculty@dwcc-scje.edu.ph">
@@ -145,6 +146,15 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                     <div class="form-group">
                         <label>Office / Room</label>
                         <input type="text" name="office_location" class="form-control" placeholder="e.g. Faculty Hall Room 204">
+                    </div>
+                    <div class="form-group">
+                        <label>Employment Status</label>
+                        <select name="employment_status" class="form-control">
+                            <option value="Permanent/ Full-time">Permanent/ Full-time</option>
+                            <option value="Probationary/ Full-time">Probationary/ Full-time</option>
+                            <option value="Permanent/ Part-time">Permanent/ Part-time</option>
+                            <option value="Probationary/ Part-time">Probationary/ Part-time</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Photo URL / Asset Path</label>
@@ -181,6 +191,7 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                             <th>Name</th>
                             <th>Position</th>
                             <th>Role Level</th>
+                            <th>Employment Status</th>
                             <th style="text-align:center;">Action</th>
                         </tr>
                     </thead>
@@ -199,6 +210,7 @@ $faculty = $pdo->query("SELECT * FROM faculty ORDER BY order_index ASC, id ASC")
                                 <td style="font-weight:700;"><?= e($f['name']) ?></td>
                                 <td><?= e($f['position']) ?></td>
                                 <td><span class="badge badge-info"><?= strtoupper(e($f['role_level'])) ?></span></td>
+                                <td><span class="badge" style="background:rgba(56,189,248,0.15); color:var(--color-primary-accent, #38BDF8);"><?= e($f['employment_status'] ?: '—') ?></span></td>
                                 <td style="text-align:center;">
                                     <a href="<?= base_url('admin/faculty.php?delete=' . $f['id']) ?>" 
                                        class="btn-primary" 

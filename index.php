@@ -396,6 +396,11 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                         </div>
                         <h3 class="faculty-name"><?= e($dean['name']) ?></h3>
                         <div class="faculty-position-badge"><?= e($dean['position'] ?: 'OFFICER-IN-CHARGE') ?></div>
+                        <?php if (!empty($dean['employment_status'])): ?>
+                            <div>
+                                <span class="dean-status-pill"><i class="fa-solid fa-id-badge"></i> <?= e($dean['employment_status']) ?></span>
+                            </div>
+                        <?php endif; ?>
                         
                         <?php if (!empty($homeDeanLines)): ?>
                             <ul class="dean-desc-list">
@@ -440,7 +445,14 @@ $siteContent = Cache::remember('site_content', 3600, function() use ($pdo) {
                             </div>
                             <div class="faculty-header-info">
                                 <h4 class="faculty-card-name"><?= e($ff['name']) ?></h4>
-                                <div class="faculty-role-badge badge-<?= e($ff['role_level']) ?>"><?= e($ff['position']) ?></div>
+                                <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                                    <div class="faculty-role-badge badge-<?= e($ff['role_level']) ?>"><?= e($ff['position']) ?></div>
+                                    <?php if (!empty($ff['employment_status'])): ?>
+                                        <div class="faculty-status-pill">
+                                            <i class="fa-solid fa-id-badge"></i> <?= e($ff['employment_status']) ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                         <div class="faculty-card-divider"></div>

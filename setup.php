@@ -76,6 +76,7 @@ function init_database(PDO $pdo, string $driver): array {
             specialization VARCHAR(255) NULL,
             research_interests VARCHAR(255) NULL,
             office_location VARCHAR(150) NULL,
+            employment_status VARCHAR(100) NULL,
             photo_url VARCHAR(255) NULL,
             order_index INT NOT NULL DEFAULT 0,
             description TEXT NULL,
@@ -1115,7 +1116,7 @@ function init_database(PDO $pdo, string $driver): array {
     // 5. Seed Faculty Directory (Matching Sketch Org Chart with OIC Dean at Top)
     $checkFaculty = $pdo->query("SELECT COUNT(*) FROM faculty")->fetchColumn();
     if ($checkFaculty == 0) {
-        $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, office_location, photo_url, order_index, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO faculty (name, position, role_level, email, office_location, employment_status, photo_url, order_index, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         $faculty = [
             // Top Level: OIC - DEAN, SCJ
@@ -1123,11 +1124,24 @@ function init_database(PDO $pdo, string $driver): array {
                 'SACHA POLLYNE M. AUSTRIA, RCrim., MSCJ',
                 'OFFICER-IN-CHARGE',
                 'dean',
-                's.austria@dwcc-scje.edu.ph',
-                'Office of the Dean, 2nd Floor SCJ Building',
+                'schoolofcriminaljusticeeducation@dwcc.edu.ph',
+                'Office of the Dean, 1st Floor SCJ Building',
+                'Permanent/ Full-time',
                 'assets/images/faculty_dean.png',
                 1,
-                "Program Coordinator (3 years)\nNSTP-ROTC Coordinator (4 years)"
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nMaster of Science in Criminal Justice with Specialization in Criminology\nDoctor of Philosophy in Criminal Justice (on going)\nOIC- Dean, School of Criminal Justice\nSCJ Department Adviser\nNSTP-ROTC Coordinator\nVice Chancellor for Internal – PCAP Region IV Oriental Mindoro Chapter (former)"
+            ],
+            // Internship Adviser & Graduate Faculty
+            [
+                'JANENOVELLE A. CUENCA, RCrim., Ph.D.',
+                'Criminology Practicum Adviser & Graduate Faculty',
+                'coordinator',
+                'j.cuenca@dwcc-scje.edu.ph',
+                'Criminology Faculty Hall, Room 203',
+                'Permanent/ Full-time',
+                'assets/images/faculty_cuenca.png',
+                2,
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nMaster of Science in Criminal Justice with Specialization in Criminology\nDoctor of Philosophy in Criminal Justice\nCriminology Practicum Adviser\nRecruitment, Screening and Selection Committee Member, PNP MIMAROPA Region\nProvincial Chancellor – PCAP Region IV Oriental Mindoro Chapter"
             ],
             // Program Chairperson
             [
@@ -1136,31 +1150,10 @@ function init_database(PDO $pdo, string $driver): array {
                 'chair',
                 'j.gayacan@dwcc-scje.edu.ph',
                 'Criminology Faculty Office, Room 204',
+                'Probationary/ Full-time',
                 'assets/images/faculty_gayacan.png',
-                2,
-                "Department Adviser\nCertified Criminalistic Specialist (QDE)"
-            ],
-            // Internship Adviser & Graduate Faculty
-            [
-                'JANENOVELLE A. CUENCA, RCrim., Ph.D.',
-                'Criminology Internship Adviser & Graduate Faculty',
-                'coordinator',
-                'j.cuenca@dwcc-scje.edu.ph',
-                'Criminology Faculty Hall, Room 203',
-                'assets/images/faculty_cuenca.png',
                 3,
-                "Bachelor of Science in Criminology at Lyceum of the Philippines University-Batangas\nRegistered Criminologist\nMaster of Science in Criminal Justice w/ Specialization in Criminology at Emilio Aguinaldo College Manila\nDoctor of Philosophy in Criminal Justice with specialization in Criminology at Lyceum of the Philippines University-Batangas\nRecruitment, Screening and Selection Committee Member, PNP MIMAROPA Region\nProvincial Chancellor - PCAP Region IV Oriental Mindoro Chapter\nCriminology Internship Adviser"
-            ],
-            // Faculty - Lyra Caoli
-            [
-                'LYRA B. CAOLI, RCrim.',
-                'Instructor - Polygraphy & Deception Detection',
-                'faculty',
-                'l.caoli@dwcc-scje.edu.ph',
-                'Polygraph Suite & Examination Room, SCJ Bldg',
-                'assets/images/faculty_caoli.png',
-                4,
-                "Mastering Digital Polygraph Technique: Advanced Training for Accurate Deception Detection"
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nProgram Chairperson, School of Criminal Justice\nMaster of Science in Criminal Justice with Specialization in Criminology (27 units)\nCertified Criminalist Specialist (Forensic Questioned Document Examiner)\nSCJ Department Adviser\nAuditor, PCAP Region IV-Oriental Mindoro Chapter (former)"
             ],
             // Laboratory Custodian
             [
@@ -1169,9 +1162,22 @@ function init_database(PDO $pdo, string $driver): array {
                 'custodian',
                 'j.vencio@dwcc-scje.edu.ph',
                 'Central Criminology Laboratory Office, Room 101',
+                'Probationary/ Full-time',
                 'assets/images/faculty_vencio.png',
+                4,
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nMaster of Science in Criminal Justice with Specialization in Criminology (CAR)\nDoctor of Philosophy in Criminal Justice (on going)\nCertified Criminalist Specialist (Laboratory Custodian)\nFormer Legal Assistant, Provincial Legal Office – Provincial Government of Oriental Mindoro\nPress Relations Officer, PCAP Region IV-Oriental Mindoro Chapter (former)"
+            ],
+            // Faculty - Lyra Caoli
+            [
+                'LYRA B. CAOLI, RCrim.',
+                'Instructor - Polygraphy & Deception Detection',
+                'faculty',
+                'l.caoli@dwcc-scje.edu.ph',
+                'Polygraph Suite & Examination Room, SCJ Bldg',
+                'Probationary/ Full-time',
+                'assets/images/faculty_caoli.png',
                 5,
-                "Certified Criminalistic Specialist (Laboratory Custodian)\nResearch Area Committee Member"
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nTreasurer, PCAP Region IV- Oriental Mindoro Chapter (former)\nMastering Digital Polygraph Technique: Advanced Training for Accurate Deception Detection"
             ],
             // Full-Time Faculty - Quennie Lovendino
             [
@@ -1179,51 +1185,100 @@ function init_database(PDO $pdo, string $driver): array {
                 'Full-Time Faculty - Criminology',
                 'faculty',
                 'q.lovendino@dwcc-scje.edu.ph',
-                'Faculty Hall, 2nd Floor SCJ Building',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Full-time',
                 'assets/images/faculty_lovendino.png',
                 6,
-                "Region 4- Achiever (LEC)"
+                "Bachelor of Science in Criminology\nRegistered Criminologist\nRegion 4 Achiever (Licensure Examination for Criminologist)\nCertified Security Professional (CSP)\nCivil Service Professional\nNAPOLCOM Examination Passer"
             ],
             // Part-Time Faculty
             [
-                'ATTY. ZYREEN B. CATAQUIS',
+                'ATTY. ZYREEN KATE B. CATAQUIS',
                 'Part-Time Faculty - Administrative & Public Law',
                 'part_time',
                 'z.cataquis@dwcc-scje.edu.ph',
-                'Faculty Hall, 2nd Floor SCJ Building',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Part-time',
                 'assets/images/faculty_cataquis.png',
                 7,
-                "Bachelor of Arts in Political Science - Divine Word College of Calapan\nEducational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) - Batangas State University Main Campus\nMaster in Public Administration (Units earned) - Divine Word College of Calapan\n2014-2016 - College Instructor, Divine Word College of Calapan\n2014-2016 - Human Resource Assistant I, Divine Word College of Calapan\nAreas of Specialization: Local Governance, Administrative Law, Civil Service, Government Procurement, Performance Management\nProfessional Experiences: 2016 - present - Administrative Officer IV, Provincial Government of Oriental Mindoro"
+                "Bachelor of Arts in Political Science\nMaster of Public Administration (unit earner)\nJuris Doctor (Non- Thesis)\nFormer Human Resource Assistant I at Divine Word College of Calapan\nFormer Full-time College Instructor at Divine Word College of Calapan\nActing Division Chief, Provincial Administrator's Office, Provincial Government of Oriental Mindoro\nTeaching Criminal Law Subjects"
             ],
             [
                 'ATTY. JAKE MAGSISI',
                 'Part-Time Faculty - Criminal Law & Legal Procedure',
                 'part_time',
                 'j.magsisi@dwcc-scje.edu.ph',
-                'Faculty Hall, 2nd Floor SCJ Building',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Part-time',
                 'assets/images/faculty_magsisi.png',
                 8,
-                "Bachelor of Science in Information Technology (DWCC)\nEducational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) - Batangas State University Main Campus\nProvincial Government of Oriental Mindoro- Attorney III (Provincial Legal Office)\nHandling cases (Criminal, Civil, Administrative, Special Civil Action, Election and Labor)"
+                "Bachelor of Science in Information Technology\nJuris Doctor (Non-thesis)\nProvincial Government of Oriental Mindoro- Attorney III (Provincial Legal Office)\nHandling Cases (Criminal, Civil, Administrative, Special Civil Action, Election and Labor)\nTeaching Criminal Law Subjects"
             ],
             [
                 'ATTY. MARC PAOLO C. CUSI',
                 'Part-Time Faculty - Criminal Justice & Legal Studies',
                 'part_time',
                 'm.cusi@dwcc-scje.edu.ph',
-                'Faculty Hall, 2nd Floor SCJ Building',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Part-time',
                 'assets/images/faculty_cusi.png',
                 9,
-                "Educational Attainment/Degrees Earned: Juris Doctor (Non-Thesis) Provincial Government of Oriental Mindoro (Provincial Legal Office)"
+                "AB Philosophy\nJuris Doctor (Non-thesis)\nFormer Associate Professor- St. Augustine Seminary\nFormer Research Assistant- Paralegal Training Program, UP Law Center\nSpecial Assistant on Legal Affairs- Provincial Government of Oriental Mindoro\nTeaching Criminal Law Subjects"
             ],
             [
                 'JASMIN M. BAGON, LPT',
                 'Part-Time Faculty - Technical Report Writing',
                 'part_time',
                 'j.bagon@dwcc-scje.edu.ph',
-                'Faculty Hall, 2nd Floor SCJ Building',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Part-time',
                 'assets/images/faculty_bagon.png',
                 10,
-                "UP Diliman - BA English Studies\nUP Open Universtiy - MA Language Literacy\nHandling Technical Report Writing Course\nClient Acquisition and Training Manager"
+                "Bachelor of Arts in English Studies\nMaster of Arts in Language and Literature\nFormer Full-time College Instructor at Divine Word College of Calapan\nFormer Global Sales Manager\nFormer Sales\nClient Acquisition and Training Manager\nTeaching Technical English"
+            ],
+            [
+                'ROMMEL M. CASIPLE, Ret.Pnp',
+                'Part-Time Faculty - Defensive Tactics & Marksmanship',
+                'part_time',
+                'r.casiple@dwcc-scje.edu.ph',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Probationary/ Part-time',
+                'assets/images/faculty_casiple.png',
+                11,
+                "Bachelor of Arts major in English\nMaster of Science in Public Administration (unit earner)\nRetired PNP Personnel\nProvincial Government of Oriental Mindoro\nSecurity Agent II/ Deputy of the Civil Security Unit-PGSO, Provincial Government of Oriental Mindoro\nTeaching Defensive Tactics (Martial Arts and Marksmanship)"
+            ],
+            [
+                'ANNIE A. AMUGUIS, LPT',
+                'Part-Time Faculty - Physical Education & Defensive Tactics',
+                'part_time',
+                'a.amuguis@dwcc-scje.edu.ph',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Permanent/ Part-time',
+                'assets/images/faculty_amuguis.png',
+                12,
+                "Bachelor of Arts major in Physical Education\nLicensed Professional Teacher\nMaster of Arts in Curriculum Design, Development and Supervision (CAR)\nSchool of Arts and Sciences Faculty (PE and Art App Instructor)\nDWCC Sports Coordinator\nTeaching Defensive Tactics (First Aid and Water Safety)"
+            ],
+            [
+                'JESSICA MAE T. DECILLO, MPA',
+                'Part-Time Faculty - Criminological Research',
+                'part_time',
+                'j.decillo@dwcc-scje.edu.ph',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Permanent/ Part-time',
+                'assets/images/faculty_decillo.png',
+                13,
+                "Bachelor of Science in Office Administration\nMaster in Public Administration (Thesis Program)\nSchool of Art and Sciences Faculty\nEastern Mindoro College (unit earner)\nFormer Records Evaluator, Registrar Office, DWCC\nTeaching Criminological Research"
+            ],
+            [
+                'HAZEL JOYS B. JAMILLA, LPT',
+                'Part-Time Faculty - General Chemistry & Forensics',
+                'part_time',
+                'h.jamilla@dwcc-scje.edu.ph',
+                'Faculty Hall, 1st Floor SCJ Building',
+                'Permanent/ Part-time',
+                'assets/images/faculty_jamilla.png',
+                14,
+                "Bachelor of Secondary Education major in Science\nMaster of Education major in Science Education (unit earner)\nFull time Faculty of Basic Education SHS\nDepartment Learning Area Coordinator for Science and Research Project\nWork Immersion Focal Person\nTeaching General Chemistry (Organic)"
             ]
         ];
 

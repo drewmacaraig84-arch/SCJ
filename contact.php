@@ -37,6 +37,7 @@ require_once __DIR__ . '/includes/header.php';
                             School of Criminal Justice
                         </h3>
                         <p>
+                            1st Floor, SCJ Building<br>
                             Divine Word College of Calapan (DWCC)<br>
                             Gov. Infantado St., Calapan City, 5200 Oriental Mindoro, Philippines
                         </p>
@@ -48,7 +49,7 @@ require_once __DIR__ . '/includes/header.php';
                                 </div>
                                 <div>
                                     <strong class="contact-item-label">Email Address:</strong><br>
-                                    <a href="mailto:dean.scje@dwcc-scje.edu.ph" class="contact-item-link">dean.scje@dwcc-scje.edu.ph</a>
+                                    <a href="mailto:schoolofcriminaljusticeeducation@dwcc.edu.ph" class="contact-item-link">schoolofcriminaljusticeeducation@dwcc.edu.ph</a>
                                 </div>
                             </div>
 
